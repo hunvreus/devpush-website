@@ -87,11 +87,9 @@ You can also use:
    ./scripts/prod/db-migrate.sh
    ```
 
-You can use `./scripts/prod/ssh-tunnel.sh` to establish an SSH tunnel to access the PostgreSQL database locally (via `localhost:15432`).
-
 ## Update
 
-### Local development
+### Local development (MacOS)
 
 The app is mounted inside of its container, so any change will show up immediately. However, certain parts of the app are using SSE so changes may not appear until you closed the tabs with the app open (FastAPI won't reload until all active connections are closed).
 
@@ -99,9 +97,9 @@ The worker is also mounted but will usually require a restart: `docker-compose r
 
 ### Production
 
-Run `./scripts/prod/update.sh` and select whether you want to update the app or worker container.
+Run `./scripts/prod/update.sh` and select whether you want to update the app container, the worker containers, the [access list](#sign-in-access-control) or the runners (Docker images that match the runtimes).
 
-This will run a blue-green update process with Ansible (no downtime). This may take a while for the worker as it waits for all active jobs to be finished before cleaning up the old container.
+For containers, it will run a blue-green update process via Ansible (no downtime). For the worker containers specifically, this may take a while as it waits for all active jobs to be finished before cleaning up the old container.
 
 ## Environment variables
 
@@ -146,6 +144,8 @@ Variable | Comments | Default
 `ENV` | Environment (development/production). | `development`
 `ACCESS_EMAIL_DENIED_MESSAGE` | Message shown to users who are denied access based on  [sign-in access control](#sign-in-access-control). | `Sign-in not allowed for this email.`
 `ACCESS_EMAIL_DENIED_WEBHOOK_URL` | Optional webhook to receive denied events (read more about [Sign-in access control](#sign-in-access-control)). | `""`
+`LOGIN_ALERT_TITLE` | Title for a callout banner displayed on the login screen. Will be displayed only if either `LOGIN_ALERT_TITLE` or `LOGIN_ALERT_DESCRIPTION` is not empty. | `""`
+`LOGIN_ALERT_DESCRIPTION` | Description for a callout banner displayed on the login screen. Will be displayed only if either `LOGIN_ALERT_TITLE` or `LOGIN_ALERT_DESCRIPTION` is not empty. | `""`
 `NGROK_CUSTOM_DOMAIN` | **Local development only**. Used by `scripts/local/ngrok.sh` to start the [ngrok](https://ngrok.com/) http tunnel. | 
 
 ## GitHub App
