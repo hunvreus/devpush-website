@@ -1,0 +1,30 @@
+<div class="flex flex-col items-start gap-y-1">
+  <div class="btn-outline font-normal" tabindex="-1">
+    {% include "logos/python.svg" %}
+    Python
+    <span class="[&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:text-muted-foreground ml-2">
+      {% include "icons/chevron-down.svg" %}
+    </span>
+  </div>
+  <div class="[&_svg]:size-4 text-sm bg-popover text-popover-foreground rounded-md border shadow-md p-1">
+    <div class="flex items-center gap-x-2 rounded-sm px-2 py-1.5 bg-accent text-accent-foreground">
+      {% include "logos/python.svg" %}
+      Python
+      <span class="[&>svg]:size-4 [&>svg]:opacity-50 ml-2">
+        {% include "icons/check.svg" %}
+      </span>
+    </div>
+    <div class="flex items-center gap-x-2 rounded-sm px-2 py-1.5">
+      {% include "logos/fastapi.svg" %}
+      FastAPI
+    </div>
+    <div class="flex items-center gap-x-2 rounded-sm px-2 py-1.5">
+      {% include "logos/django.svg" %}
+      Django
+    </div>
+    <div class="flex items-center gap-x-2 rounded-sm px-2 py-1.5 max-xl:hidden">
+      {% include "logos/flask.svg" %}
+      Flask
+    </div>
+  </div>
+</div>

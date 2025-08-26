@@ -1,0 +1,262 @@
+---
+layout: layouts/page.njk
+title: /dev/push
+description: /dev/push is an open source alternative to Vercel and Render, allowing you to deploy your apps straight from GitHub.
+---
+
+<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-24">
+  <header class="mx-auto max-w-2xl text-center mb-12">
+    <h1 class="font-semibold tracking-tight text-4xl sm:text-5xl">Deploy your apps with a git push</h1>
+    <p class="mt-4 mb-6">/dev/push is an open source alternative to Vercel and Render, allowing you to deploy your apps straight from GitHub.</p>
+    <footer class="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
+      <a class="btn-lg max-sm:w-full" href="https://github.com/hunvreus/devpush">Sign up online</a>
+      <a class="btn-lg-outline max-sm:w-full" href="https://github.com/hunvreus/devpush">Source code</a>
+    </footer>
+  </header>
+  <div class="border rounded-xl mask-b-from-50% mask-b-to-100%">
+    <div class="flex items-center justify-start gap-x-1.5 py-3 px-4 border-b">
+      <span class="size-2.5 rounded-full bg-red-500"></span>
+      <span class="size-2.5 rounded-full bg-orange-500"></span>
+      <span class="size-2.5 rounded-full bg-green-500"></span>
+    </div>
+    <div class="overflow-hidden h-[650px] relative">
+      <img src="/assets/images/screenshot-dark.png" alt="Screenshot of /dev/push" class="w-full hidden dark:block">
+      <img src="/assets/images/screenshot-light.png" alt="Screenshot of /dev/push" class="w-full dark:hidden">
+      <button type="button" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-background rounded-full pl-2 pr-4 h-10 flex items-center gap-x-2 [&>svg]:size-6 [&>svg]:stroke-[1.5] font-medium ring-6 ring-background/50">
+        {% include "icons/circle-play.svg" %}
+        <span class="max-sm:hidden">Watch demo</span>
+        <span class="sm:hidden">Demo</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-16 sm:py-24">
+  <header class="mx-auto max-w-2xl text-center mb-12">
+    <h2 class="font-semibold tracking-tight text-3xl sm:text-4xl">Build, preview, and ship your apps without touching a server</h2>
+  </header>
+
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <li class="card">
+      <header>
+        <h2>Push to deploy</h2>
+        <p>Your app is deployed every time you push to GitHub. You can also deploy any commit.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none mask-r-from-80% mask-r-to-100% flex items-center overflow-hidden pl-12">
+        {% include "partials/features/deployment.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Environments</h2>
+        <p>Define multiple environments for your app, and map branches to them.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none mask-b-from-80% mask-b-to-100% flex items-start justify-center overflow-hidden">
+        {% include "partials/features/environments.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Zero‑downtime deploys</h2>
+        <p>New builds are seamlessly put in production as soon as they build and run successfully.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none mask-r-from-80% mask-r-to-100% flex items-center overflow-hidden pl-12">
+        {% include "partials/features/deployments.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Real‑time logs</h2>
+        <p>Build and runtime logs streamed in real-time for each deployment, fully searchable.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center mask-r-from-80% mask-r-to-100% overflow-hidden pl-12">
+        {% include "partials/features/logs.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Instant rollback</h2>
+        <p>Made a mistake? Roll back to the previous environment alias without rebuilding.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none mask-r-from-80% mask-r-to-100% flex items-center justify-center overflow-hidden">
+        {% include "partials/features/rollback.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Configurable build</h2>
+        <p>Customize the entire deployment process: build commands, start commands, and more.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center justify-center overflow-hidden">
+        {% include "partials/features/build.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Encrypted environment variables</h2>
+        <p>Add environment variables to your project and let your team access them safely.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center mask-r-from-80% mask-r-to-100% overflow-hidden pl-12">
+        {% include "partials/features/env-vars.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Preview URLs</h2>
+        <p>Get a URL for each deployment, and aliases for the latest deployment in an environment or branch.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center justify-center overflow-hidden">
+        {% include "partials/features/urls.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Framework agnostic</h2>
+        <p>We support Python (FastAPI, Flask, Django, ...), Node.js and soon PHP.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none mask-r-from-80% mask-r-to-100% flex items-center justify-center overflow-hidden">
+        {% include "partials/features/presets.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Custom domains and SSL</h2>
+        <p>Add your own domains and get SSL certificates automatically.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center mask-r-from-80% mask-r-to-100% overflow-hidden">
+        {% include "partials/features/domains.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>For individuals and teams</h2>
+        <p>Create teams, invite users, share projects and manage permissions.</p>
+      </header>
+      <section class="aspect-2/1 pointer-events-none flex items-center mask-r-from-80% mask-r-to-100% overflow-hidden pl-12">
+        {% include "partials/features/members.njk" %}
+      </section>
+    </li>
+    <li class="card">
+      <header>
+        <h2>Free and open source</h2>
+        <p>We're open source (MIT license), free to use and self-host.</p>
+      </header>
+      <section class="aspect-2/1 flex items-center justify-center overflow-hidden">
+        {% include "partials/features/github.njk" %}
+      </section>
+    </li>
+  </ul>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-16 sm:py-24">
+  <header class="mx-auto max-w-2xl text-center mb-12">
+    <h2 class="font-semibold tracking-tight text-3xl sm:text-4xl">And there's more in the works...</h2>
+  </header>
+
+  <div class="mx-auto overflow-hidden relative w-full mask-l-from-80% mask-l-to-100% mask-r-from-80% mask-r-to-100%">
+    <div class="w-full flex infinite-scroll">
+      {% include "partials/features/upcoming.njk" %}
+      {% include "partials/features/upcoming.njk" %}
+    </div>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-16 sm:py-24">
+  <header class="mx-auto max-w-2xl text-center mb-12">
+    <h2 class="font-semibold tracking-tight text-3xl sm:text-4xl">FAQ</h2>
+  </header>
+
+  <section class="accordion max-w-2xl mx-auto [&_a]:underline [&_a]:underline-offset-2 [&_a]:decoration-muted-foreground/50 [&_a]:hover:decoration-foreground/50 [&_a]:transition-all">
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          Is this free?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <p>Yes, /dev/push is 100% free and open source, you can host it on your own server. There is also an <a href="https://app.devpu.sh" target="_blank">online version</a> which is open to a few beta testers but won't be free since I have to pay for hosting.</p>
+      </section>
+    </details>
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          Do you only support GitHub?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <p>I may add support for GitLab and Bitbucket (it should be easy enough), but for now I've decided to focus on the more popular platform. If you want to help, feel free to send a PR: <a href="https://github.com/hunvreus/devpush" target="_blank">github.com/hunvreus/devpush</a>.
+        </p>
+      </section>
+    </details>
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          Who built this?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <p>My name is <a href="https://ronanberder.com">Ronan Berder</a> (<a href="https://x.com/hunvreus">@hunvreus</a>). I live in Singapore. I went back to writing software <a href="https://www.youtube.com/watch?v=SEzXTXo1D8I">after years of building (and ultimately selling) a consultancy in China</a>.</p>
+      </section>
+    </details>
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          Why did you build this?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <p>I went back to programming a little over a year ago. <a href="https://pagescms.org" target="_blank">My first project</a> was built with Next.js. I ended up being frustrated with the JavaScript ecosystem and switched to Python, but I still wanted to have an experience on par with Vercel. There weren't a lot of options for Python apps, so I thought I'd build my own thing.</p>
+      </section>
+    </details>
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          How is this built?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <p><a href="https://github.com/hunvreus/devpush?tab=readme-ov-file#devpush" target="_blank">You can find more info in the README</a>, but at its core it's a web app which helps orchestrate the deployment of your project in a Docker container. The web app is built with FastAPI, <a href="https://htmx.org/" target="_blank">HTMX</a> and <a href="https://basecoatui.com" target="_blank">Basecoat</a>. I use Docker Compose, Docker CLI and Traefik under the hood. You can pretty easily add a new stack with a base Docker image and a bit of metadata.</p>
+      </section>
+    </details>
+    <details class="group border-b last:border-b-0">
+      <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+        <h2 class="flex flex-1 items-center justify-between gap-4 py-4 text-lg text-left font-semibold hover:underline [&>svg]:size-4 [&>svg]:opacity-50 [&>svg]:shrink-0 [&>svg]:transition-transform [&>svg]:duration-200 [&>svg]:group-open:rotate-180">
+          How can I help?
+          {% include "icons/chevron-down.svg" %}
+        </h2>
+      </summary>
+      <section class="pb-4 text-sm">
+        <ul class="list-disc list-inside">
+          <li><a href="https://github.com/sponsors/hunvreus" target="_blank">Sponsor me</a></li>
+          <li><a href="https://github.com/hunvreus/devpush" target="_blank">Star the project on GitHub</a></li>
+          <li><a href="https://github.com/hunvreus/devpush/issues" target="_blank">Report issues</a></li>
+          <li><a href="https://github.com/hunvreus/devpush/pulls" target="_blank">Send pull requests</a></li>
+          <li><a href="https://devpu.sh/chat" target="_blank">Join the Discord chat</a></li>
+        </ul>
+      </section>
+    </details>
+  </section>
+  <script>
+    (() => {
+      const accordions = document.querySelectorAll(".accordion");
+      accordions.forEach((accordion) => {
+        accordion.addEventListener("click", (event) => {
+          const summary = event.target.closest("summary");
+          if (!summary) return;
+          const details = summary.closest("details");
+          if (!details) return;
+          accordion.querySelectorAll("details").forEach((detailsEl) => {
+            if (detailsEl !== details) {
+              detailsEl.removeAttribute("open");
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</section>

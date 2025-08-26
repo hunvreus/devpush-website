@@ -1,0 +1,31 @@
+<footer class="max-w-7xl mx-auto p-6 lg:p-8 max-md:text-center max-md:space-y-4 md:flex md:items-center md:justify-between [&_a]:text-muted-foreground [&_a]:hover:text-foreground [&_a]:transition-color text-sm">
+  <nav class="flex items-center gap-x-4 md:order-2 max-md:justify-center [&>a]:size-4">
+    <a href="https://github.com/hunvreus/devpush">
+      {% include "logos/github.svg" %}
+    </a>
+    <a href="https://devpu.sh/chat">
+      {% include "logos/discord.svg" %}
+    </a>
+    <a href="https://x.com/hunvreus">
+      {% include "logos/x.svg" %}
+    </a>
+    <button
+      type="button"
+      aria-label="Toggle dark mode"
+      onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+      class="btn-sm-icon-ghost size-6 text-muted-foreground hover:text-foreground"
+    >
+      <span class="hidden dark:block">
+        {% include "icons/sun.svg" %}
+      </span>
+      <span class="block dark:hidden">
+        {% include "icons/moon.svg" %}
+      </span>
+    </button>
+  </nav>
+  <nav class="flex items-center gap-x-4 md:order-1 max-md:justify-center">
+    <a href="https://ronanberder.com">&copy; Ronan Berder</a>
+    <a href="/terms">Terms</a>
+    <a href="/privacy">Privacy</a>
+  </nav>
+</footer>

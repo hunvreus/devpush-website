@@ -1,0 +1,98 @@
+{#
+  Renders a dialog component with optional trigger, header, body, and footer.
+
+  @param id {string} - Unique identifier for the dialog component.
+  @param trigger {string} [optional] - Text or HTML for the button that triggers the dialog.
+  @param title {string} [optional] - Title text displayed in the dialog header.
+  @param description {string} [optional] - Description text displayed below the title.
+  @param footer {string} [optional] - HTML content for the dialog footer.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content article.
+  @param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
+  @param body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
+  @param footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
+  @param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
+  @param close_button {boolean} [optional] [default=true] - Whether to include a close button.
+  @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
+#}
+{% macro command(
+  id=None,
+  name=None,
+  trigger=None,
+  items=None,
+  dialog_attrs={},
+  trigger_attrs={},
+  listbox_attrs={},
+  input_attrs={},
+  open=false,
+  search_placeholder="Search entries...",
+  close_on_overlay_click=true
+) %}
+{% set id = id or ("command-" + (range(100000, 999999) | random | string)) %}
+{% if trigger %}
+<button
+  type="button"
+  onclick="document.getElementById('{{ id }}').showModal()"
+  {% for key, value in trigger_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  {{ trigger | safe }} 
+</button>
+{% endif %}
+<dialog
+  id="{{ id }}"
+  class="dialog command {{ dialog_attrs.class }}"
+  aria-labelledby="{{ id }}-title"
+  {% if description %}aria-describedby="{{ id }}-description"{% endif %}
+  {% if close_on_overlay_click %}onclick="if (event.target === this) this.close()"{% endif %}
+  {% for key, value in dialog_attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <article>
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input
+        type="text"
+        value=""
+        placeholder="{{ search_placeholder }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-autocomplete="list"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="{{ id }}-listbox"
+        {% if trigger %}aria-labelledby="{{ id }}-trigger"{% endif %}
+      >
+    </header>
+    <div
+      role="listbox"
+      id="{{ id }}-listbox"
+      aria-orientation="vertical"
+      aria-labelledby="{{ id }}-trigger"
+      {% for key, value in listbox_attrs %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {% if items and items.length > 0 %}
+        {{ render_select_items(items, default_option.value, id ~ "-items" if id else "items") }}
+      {% else %}
+        {{ caller() if caller }}
+      {% endif %}
+    </div>
+  </article>
+</dialog>
+{% if name %}
+  <input
+    type="hidden"
+    name="{{ name or id ~ '-value' }}"
+    value="{{ (default_option.value if default_option) or '' }}"
+    {% for key, value in input_attrs %}
+      {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+{% endif %}
+{% endmacro %}

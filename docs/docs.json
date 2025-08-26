@@ -1,0 +1,24 @@
+{
+  "layout": "layouts/doc.njk",
+  "menu": [
+    {
+      "type": "group",
+      "label": "Getting started",
+      "items": [
+        { "label": "Introduction", "url": "/docs" },
+        { "label": "Installation", "url": "/docs/installation" },
+        { "label": "Deploy your app", "url": "/docs/deploy-your-app" }
+      ]
+    },
+    {
+      "type": "group",
+      "label": "Basics",
+      "items": [
+        { "label": "Overview", "url": "/docs/basics" },
+        { "label": "Teams", "url": "/docs/basics/teams" },
+        { "label": "Projects", "url": "/docs/basics/projects" },
+        { "label": "Deployments", "url": "/docs/basics/deployments" }
+      ]
+    }
+  ]
+}

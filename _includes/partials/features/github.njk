@@ -1,0 +1,32 @@
+<div class="space-y-2 text-sm border rounded-lg p-4 max-w-[80%]">
+  <a href="https://github.com/hunvreus/devpush" target="_blank" class="flex items-center gap-x-2 text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+    <img src="https://github.com/hunvreus.png" class="size-5 rounded-full">
+    hunvreus/devpush
+  </a>
+  <div>Like Vercel, but open source and for all languages.</div>
+  <div class="flex items-center gap-x-2 text-muted-foreground truncate">
+    <span class="flex items-center gap-x-2">
+      <span class="size-2 rounded-full bg-green-500"></span>
+      Python
+    </span>
+    &bull;
+    <span class="flex items-center gap-x-2 [&>svg]:size-4">
+      {% include "icons/star.svg" %}
+      <span id="github-stars">1</span>
+    </span>
+    &bull;
+    <span class="truncate">Updated on Aug 20, 2025</span>
+  </div>
+</div>
+<script>
+  (async () => {
+    try {
+      const GITHUB_REPO_FULL_NAME = "hunvreus/basecoat";
+      const githubResponse = await fetch(`https://img.shields.io/github/stars/${GITHUB_REPO_FULL_NAME}.json`);
+      const { message } = await githubResponse.json();
+      document.querySelector("#github-stars").textContent = message;
+    } catch (error) {
+      console.error('Failed to fetch GitHub data:', error);
+    }
+  })()
+</script>

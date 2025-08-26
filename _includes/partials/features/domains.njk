@@ -1,0 +1,40 @@
+<div class="space-y-2 pl-12 text-sm">
+  <div class="min-w-[600px]">
+    <div class="border-y flex items-center gap-x-2 border-border/50 h-12">
+      <div class="font-medium truncate w-32">devpu.sh</div>
+      <div class="flex-1 flex items-center gap-x-2 text-muted-foreground [&>svg]:size-4">
+        {% include "icons/globe.svg" %}
+        <span class="truncate">Proxy</span>
+      </div>
+      <div class="flex-1 text-muted-foreground">
+        <span class="flex items-center gap-x-2 min-w-0">
+          <span class="flex items-center justify-center size-4">
+            <span class="inline-block rounded h-2.5 w-2.5 shrink-0 bg-blue-500"></span>
+          </span>
+          <span class="truncate">Production</span>
+        </span>
+      </div>
+    </div>
+    <div class="border-b flex items-center gap-x-2 border-border/50 h-12">  
+      <div class="font-medium truncate w-32">www.devpu.sh</div>
+      <div class="flex-1 flex items-center gap-x-2 text-muted-foreground [&>svg]:size-4">
+        {% include "icons/corner-down-right.svg" %}
+        <span class="truncate">301 - Moved Permanently</span>
+      </div>
+      <div class="flex-1 text-muted-foreground">
+        <span class="flex items-center gap-x-2 min-w-0">
+          <span class="flex items-center justify-center size-4">
+            <span class="inline-block rounded h-2.5 w-2.5 shrink-0 bg-blue-500"></span>
+          </span>
+          <span class="truncate">Production</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-x-2">
+    <div class="btn-sm-outline pointer-events-none" tabindex="-1">
+      {% include "icons/plus.svg" %}
+      Add domain
+    </div>
+  </div>
+</div>

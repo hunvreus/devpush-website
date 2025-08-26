@@ -1,0 +1,60 @@
+<div class="flex h-14 w-full items-center justify-between gap-2 px-4">
+  <button
+    type="button"
+    onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))"
+    aria-label="Toggle sidebar"
+    data-tooltip="Toggle sidebar"
+    data-side="bottom"
+    data-align="start"
+    class="btn-sm-icon-ghost"
+  >
+    {% lucide "panel-left" %}
+  </button>
+
+  <nav class="items-center gap-2 hidden sm:flex">
+    <a class="btn-sm-ghost" href="/">Home</a>
+    <a class="btn-sm-ghost" href="/docs" aria-pressed="true">Docs</a>
+    <a class="btn-sm-icon-ghost" href="https://devpu.sh/chat">{% include "logos/discord.svg" %}</a>
+    <a class="btn-sm-icon-ghost" href="https://github.com/hunvreus/devpush">{% include "logos/github.svg" %}</a>
+    <a class="btn-sm-outline" href="https://app.devpu.sh">Sign in</a>
+    <button
+      type="button"
+      aria-label="Toggle dark mode"
+      data-tooltip="Toggle dark mode"
+      data-side="bottom"
+      data-align="end"
+      onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+      class="btn-sm-icon-ghost size-7"
+    >
+      <span class="hidden dark:block">{% lucide "sun" %}</span>
+      <span class="block dark:hidden">{% lucide "moon" %}</span>
+    </button>
+  </nav>
+
+  <div class="sm:hidden" x-data="{ isOpen: false }">
+    <button type="button" class="btn-sm-icon-ghost" @click="isOpen = !isOpen">
+      <span x-show="!isOpen" x-cloak>{% include "icons/menu.svg" %}</span>
+      <span x-show="isOpen" x-cloak>{% include "icons/x.svg" %}</span>
+    </button>
+    <nav class="fixed inset-0 top-16 bg-background z-50 flex flex-col gap-2 p-4 transition-all opacity-0 scale-95 -translate-y-16 invisible" :class="{ 'opacity-100 scale-100 translate-y-0 visible': isOpen }" x-cloak>
+      <a class="btn-lg-ghost justify-between px-4" href="/">
+        Home
+      </a>
+      <a class="btn-lg-ghost justify-between px-4" href="/docs">
+        Docs
+      </a>
+      <a class="btn-lg-ghost justify-between" href="https://devpu.sh/chat">
+        Discord
+        {% include "logos/discord.svg" %}
+      </a>
+      <a class="btn-lg-ghost justify-between" href="https://github.com/hunvreus/devpush">
+        GitHub
+        {% include "logos/github.svg" %}
+      </a>
+      <a class="btn-lg-ghost justify-between" href="https://app.devpu.sh">
+        Sign in
+        {% include "icons/arrow-right.svg" %}
+      </a>
+    </nav>
+  </div>
+</div>
