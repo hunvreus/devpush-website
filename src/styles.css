@@ -26,13 +26,17 @@
   > h2,
   > h3,
   > h4 {
-    @apply text-lg my-6 scroll-m-22 font-semibold tracking-tight;
+    @apply sm:text-lg my-6 scroll-m-18 font-semibold tracking-tight;
+
+    a {
+      @apply no-underline;
+    }
   }
   > h2 {
-    @apply text-2xl mt-8 lg:mt-12 first:mt-0;
+    @apply text-xl sm:text-2xl mt-8 lg:mt-12 first:mt-0;
   }
   > h3 {
-    @apply text-xl lg:mt-8;
+    @apply text-lg sm:text-xl lg:mt-8;
   }
   a {
     @apply underline underline-offset-2 decoration-muted-foreground/50 hover:decoration-foreground/50 transition-all;

@@ -12,7 +12,10 @@ export default async function(eleventyConfig) {
 		linkify: true,
 	};
   
-  let markdownLib = markdownIt(options).use(markdownItAnchor);
+  let markdownLib = markdownIt(options).use(
+    markdownItAnchor,
+    { permalink: markdownItAnchor.permalink.headerLink() }
+  );
 
   const defaultTableOpen = markdownLib.renderer.rules.table_open;
   const defaultTableClose = markdownLib.renderer.rules.table_close;
