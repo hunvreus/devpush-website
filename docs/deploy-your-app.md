@@ -22,7 +22,7 @@ You may need to connect your GitHub account if you did not log in with GitHub.
 
 ## Step 4: Fill in the project settings
 
-This includes the runtime and commands, making sure the commands will work for your app.
+This includes the Docker image and commands, making sure the commands will work for your app.
 
 ![Project details](/assets/images/deploy-your-app-project-details-4.png)
 

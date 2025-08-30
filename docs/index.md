@@ -26,9 +26,9 @@ I started working on /dev/push because I wanted a platform as user-friendly as V
 
 Under the hood, it's simply Docker.
 
-The app itself allows you to manage the configuration for your projects (GitHub repository, runtime, build and start commands, environment variables, ...).
+The app itself allows you to manage the configuration for your projects (GitHub repository, Docker image, build and start commands, environment variables, ...).
 
-Whenever it receives a webhook post from GitHub, it creates a new container for the selected runtime and proceeds to run a series of commands (git clone, build, ...). If the app builds successfully and is available, it is swapped for the matching environment.
+Whenever it receives a webhook post from GitHub, it creates a new container for the selected Docker image and proceeds to run a series of commands (git clone, build, ...). If the app builds successfully and is available, it is swapped for the matching environment.
 
 Most likely, you'll want to [install it on your own server](/docs/installation) (e.g. Hetzner), but [there is also an online version which you can sign up for](https://app.devpu.sh) (currently in beta testing, sign ups are reviewed individually).
 
