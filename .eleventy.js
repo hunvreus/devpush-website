@@ -51,13 +51,59 @@ export default async function(eleventyConfig) {
   
   eleventyConfig.addFilter('getNavigation', function(menu) {
     if (flattenedMenu === null) flattenedMenu = flattenMenu(menu);
-    const currentUrl = this.page.url.replace(/^\/|\/$/g, '')
-    const index = flattenedMenu.findIndex(item => item.url.replace(/^\/|\/$/g, '') === currentUrl);
+    
+    const currentUrl = this.page.url;
+    
+    const index = flattenedMenu.findIndex(item => {
+      const itemUrl = "/docs/" + item;
+      return itemUrl === currentUrl;
+    });
     
     if (index === -1) return { prev: null, next: null };
+    
     return {
-      prev: index > 0 ? flattenedMenu[index - 1] : null,
-      next: index < flattenedMenu.length - 1 ? flattenedMenu[index + 1] : null
+      prev: index > 0 ? {
+        url: "/docs/" + flattenedMenu[index - 1],
+        label: flattenedMenu[index - 1].split('/').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+      } : null,
+      next: index < flattenedMenu.length - 1 ? {
+        url: "/docs/" + flattenedMenu[index + 1],
+        label: flattenedMenu[index + 1].split('/').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+      } : null
     };
+  });
+
+  eleventyConfig.addFilter('processMenu', function(menu, collections) {
+    function slugToUrl(slug) {
+      if (slug === 'index') return '/docs/';
+      if (slug.endsWith('/index')) return '/docs/' + slug.replace(/\/index$/, '/');
+      return '/docs/' + slug + '/';
+    }
+
+    return menu.map(group => ({
+      ...group,
+      items: group.items.map(item => {
+        if (item.type === 'submenu') {
+          return {
+            ...item,
+            items: item.items.map(subitem => {
+              const url = slugToUrl(subitem);
+              const doc = collections.docs.find(d => d.url === url);
+              return {
+                url: url,
+                label: doc?.data?.title || subitem.replace(/\.md$/, '')
+              };
+            })
+          };
+        } else {
+          const url = slugToUrl(item);
+          const doc = collections.docs.find(d => d.url === url);
+          return {
+            url: url,
+            label: doc?.data?.title || item.replace(/\.md$/, '')
+          };
+        }
+      })
+    }));
   });
 }
