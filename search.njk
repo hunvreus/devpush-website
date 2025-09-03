@@ -1,0 +1,13 @@
+---
+layout: ""
+permalink: "/docs/search.json"
+---
+[
+  {% for doc in collections.docs %}
+  {
+    "title": "{{ doc.data.title or doc.data.page.fileSlug }}",
+    "url": "{{ doc.url }}",
+    "content": "{{ doc.templateContent | striptags | safe }}"
+  }{% if not loop.last %},{% endif %}
+  {% endfor %}
+]

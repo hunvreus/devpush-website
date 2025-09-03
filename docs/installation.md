@@ -1,105 +1,145 @@
 ---
 layout: layouts/doc.njk
-title: Install & Update
+title: Installation
 description: How to install and update locally or on a server.
 ---
 
-## Install
+## Install & Update
 
-### Local development (MacOS)
+### Prerequisites
 
-1. **Install Colima with the Loki driver** with [Homebrew](https://brew.sh):
+You will need a fresh Ubuntu/Debian server you can SSH into with sudo privileges. We recommend a CPX31 from [Hetzner](https://www.hetzner.com).
+
+You can use the provisioning script to get a server up and running:
+
+1. **Sign in or sign up for a Hetzner account**: [Hetzner Cloud Console](https://console.hetzner.cloud/)
+2. **Generate an API token**: [Creating an API token](https://docs.hetzner.com/cloud/api/getting-started/generating-api-token/)
+3. **Provision a server** (requires `--token`; optional: `--user`, `--name`, `--region`, `--type`):
    ```bash
-   ./scripts/local/install.sh
+   curl -fsSL https://raw.githubusercontent.com/hunvreus/devpush/main/scripts/prod/provision-hetzner.sh | bash -s -- --token <hetzner_api_key> [--user <login_user>] [--name <hostname>] [--region <fsn1|nbg1|hel1|ash|hil|sin>] [--type <cpx11|cpx21|cpx31|cpx41|cpx51>]
    ```
-
-2. **Set up environment variables** (see [Environment variables](#environment-variables)):
+   Tip: run `curl -fsSL https://raw.githubusercontent.com/hunvreus/devpush/main/scripts/prod/provision-hetzner.sh | bash -s -- --help` to list regions and types (with specs). Defaults: region `hil`, type `cpx31`.
+4. **Configure DNS Records**: Go to your DNS provider and create two A records pointing at the server IP for `APP_HOSTNAME` (e.g. `app.devpu.sh`) and a wildcard on subdomains of `DEPLOY_DOMAIN` (e.g. `*.devpush.app`). If you're using Cloudflare, set SSL/TLS to "Full (strict)" and keep the records proxied.
+5. **SSH into your new server**: The provision script will have created a user for you.
    ```bash
-   cp .env.example .env
+   ssh <login_user>@<server_ip>
    ```
+6. **Run hardening for system and SSH**:
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/hunvreus/devpush/main/scripts/prod/harden.sh | sudo bash -s -- --ssh
+  ```
 
-3. **Start your containers**:
+Even if you already have a server, we recommend you harden security (ufw, fail2ban, disabled root SSH, etc). You can do that using `scripts/prod/harden.sh`.
+
+### Install
+
+1. **SSH into the server**:
    ```bash
-   ./scripts/local/start.sh
+   ssh <login_user>@<server_ip>
    ```
-
-4. **Initialize your database** once the containers are up:
+2. **Install /dev/push**:
    ```bash
-   ./scripts/local/db-migrate.sh
+   curl -fsSL https://raw.githubusercontent.com/hunvreus/devpush/main/scripts/prod/install.sh | sudo bash
    ```
-
-5. **(Optional) Start ngrok**:
+3. **Switch to `devpush` user**:
+  ```bash
+  sudo -iu devpush
+  ```
+4. **Edit `.env`**:
+  ```bash
+  cd devpush && vi .env
+  ```
+  Tip: you will need to fill in at least the following: `LE_EMAIL`, `APP_HOSTNAME`, `DEPLOY_DOMAIN`, `EMAIL_SENDER_ADDRESS`, `RESEND_API_KEY` and your [GitHub app](#github-app) settings (see [environment-variables] for details). `SERVER_IP`, `SECRET_KEY`, `ENCRYPTION_KEY`, `POSTGRES_PASSWORD` should be pre-filled. **You can ignore all commented out environment variables**.
+5. Start services:
    ```bash
-   ./scripts/local/ngrok.sh
+   scripts/prod/start.sh --migrate
    ```
+6. Visit your URL: `https://<APP_HOSTNAME>`
 
-Start the app with `./scripts/local/start.sh`. You can clean up your local dev environment (files, Docker images/networks, ...) with `./scripts/local/clean.sh`.
+### Update
 
-You can also use:
+The follwing commands must be run as `devpush` user (`su - devpush`).
 
-- `./scripts/local/db-reset.sh` to drop the database and start fresh.
-- `./scripts/local/db-generate.sh` to generate a new migration file if you've made changes to the models.
-
-### Production
-
-#### Create the server
-
-**If you use Hetzner**, simply do the following:
-
-1. **Add your [Hetzner](https://hetzner.com) API key**:
-   ```bash
-   cp .env.devops.example .env.devops
-   ```
-
-2. **Create the server on Hetzner**. You will be prompted for size and location, CPX31 being the recommended default:
-   ```bash
-   ./scripts/prod/create.sh
-   ```
-
-3. **Set up the IP address**. Just add the IP address you got from Hetzner to the `.env.devops` file (`SERVER_IP`).
-
-**If you're not using Hetzner**:
-
-1. **Create the server**,
-2. **Add your SSH keys** and make sure your account has sudo privileges,
-3. **Set up the IP address**. Add the IP address to `env.devops` as `SERVER_IP`.
-
-#### Set up the server
+In most cases, you can run an update with:
 
 ```bash
-./scripts/prod/setup.sh
+scripts/prod/update.sh --all
 ```
 
-#### Deploy /dev/push
+Alternatively, you can force a full upgrade (**with downtime**) using:
 
-1. **Set up environment variables** (see [Environment variables](#environment-variables)). Do not forget to set the GitHub repository (`GITHUB_REPO`) and [Let's Encrypt](https://letsencrypt.org/) email (`LE_EMAIL`) for the SSL setup:
+```bash
+scripts/prod/update.sh --full -y
+```
+
+You can update specific components:
+
+```bash
+scripts/prod/update.sh --components <component_name>
+```
+
+## Development
+
+> ⚠️ Development scripts target macOS for now.
+
+### Install
+
+1. Install Colima and the Loki Docker plugin:
    ```bash
-   cp .env.prod.example .env.prod
+   scripts/dev/install.sh
    ```
-   
-2. **Deploy and start the app**:
+2. Set up environment variables:
    ```bash
-   ./scripts/prod/deploy.sh
+   cp .env.dev.example .env
    ```
-
-3. **Initialize your database** once the containers are up:
+3. Start the stack (streams logs):
    ```bash
-   ./scripts/prod/db-migrate.sh
+   scripts/dev/start.sh
+   ```
+   - Add `--prune` to prune dangling images before build
+   - Add `--cache` to use the build cache (default is no cache)
+4. Initialize your database once containers are up:
+   ```bash
+   scripts/dev/db-migrate.sh
    ```
 
-## Update
+See the [scripts](#scripts) section for more dev utilities.
 
-### Local development (MacOS)
+### Update
 
-The app is mounted inside of its container, so any change will show up immediately. However, certain parts of the app are using SSE so changes may not appear until you closed the tabs with the app open (FastAPI won't reload until all active connections are closed).
+- The app is mounted inside containers, so code changes reflect immediately. Some SSE endpoints may require closing browser tabs to trigger a reload.
+- The workers require a restart:
+  ```bash
+  docker-compose restart worker-arq
+  ```
+- To apply migrations:
+  ```bash
+  scripts/dev/db-migrate.sh
+  ```
 
-The worker is also mounted but will usually require a restart: `docker-compose restart worker`.
+## Scripts
 
-### Production
-
-Run `./scripts/prod/update.sh` and select whether you want to update the app container, the worker containers, the [access list](#sign-in-access-control) or the runners (Docker images the deployments run on).
-
-For containers, it will run a blue-green update process via Ansible (no downtime). For the worker containers specifically, this may take a while as it waits for all active jobs to be finished before cleaning up the old container.
+| Area | Script | What it does |
+|---|---|---|
+| Dev | `scripts/dev/install.sh` | Setup Colima and install Loki Docker plugin |
+| Dev | `scripts/dev/start.sh` | Start stack with logs (foreground); supports `--prune`, `--cache` |
+| Dev | `scripts/dev/build-runners.sh` | Build runner images (default no cache; `--cache` to enable) |
+| Dev | `scripts/dev/db-generate.sh` | Generate Alembic migration (prompts for message) |
+| Dev | `scripts/dev/db-migrate.sh` | Apply Alembic migrations |
+| Dev | `scripts/dev/db-reset.sh` | Drop and recreate `public` schema in DB |
+| Dev | `scripts/dev/clean.sh` | Stop stack and clean dev data (`--hard` for global) |
+| Prod | `scripts/prod/provision-hetzner.sh` | Provision a Hetzner server (API token, regions from API, fixed sizes) |
+| Prod | `scripts/prod/install.sh` | Server setup: Docker, Loki plugin, user, clone repo, create `.env` |
+| Prod | `scripts/prod/harden.sh` | System hardening (UFW, fail2ban, unattended-upgrades); add `--ssh` to harden SSH |
+| Prod | `scripts/prod/start.sh` | Start services; optional `--migrate` |
+| Prod | `scripts/prod/stop.sh` | Stop services (`--down` for hard stop) |
+| Prod | `scripts/prod/restart.sh` | Restart services; optional `--migrate` |
+| Prod | `scripts/prod/update.sh` | Update by tag; `--all` (app+workers), `--full` (downtime), or `--components` |
+| Prod | `scripts/prod/db-migrate.sh` | Apply DB migrations in production |
+| Prod | `scripts/prod/check-env.sh` | Validate required keys exist in `.env` |
+| Prod | `scripts/prod/update/app.sh` | Blue‑green update for app |
+| Prod | `scripts/prod/update/worker-arq.sh` | Drain‑aware blue‑green update for `worker-arq` |
+| Prod | `scripts/prod/update/worker-monitor.sh` | Blue‑green update for `worker-monitor` |
 
 ## Environment variables
 
@@ -107,13 +147,14 @@ Variable | Comments | Default
 --- | --- | ---
 `APP_NAME` | App name. | `/dev/push`
 `APP_DESCRIPTION` | App description. | `Deploy your Python app without touching a server.`
-`URL_SCHEME` | `http` (development) or `https` (production). | `http`
-`LE_EMAIL` | Email used to register the Let's Encrypt (ACME) account in Traefik; receives certificate issuance/renewal/expiry notifications. | `dev@devpu.sh`
-`HOSTNAME` | Hostname for the app (e.g. `app.devpu.sh`). | `localhost`
-`DEPLOY_DOMAIN` | Domain used for deployments (e.g. `devpush.app` if you want your deployments available at `*.devpush.app`). | `localhost`
-`SERVER_UP` | Public IP of the server | `127.0.0.1`
-`SECRET_KEY` | Secret key for JWT tokens, sessions, and CSRF protection. | `secret-key`
-`ENCRYPTION_KEY` | Encryption key for sensitive data (e.g. GitHub tokens). | `encryption-key`
+`URL_SCHEME` | `http` (development) or `https` (production). | `https`
+`LE_EMAIL` | Email used to register the Let's Encrypt (ACME) account in Traefik; receives certificate issuance/renewal/expiry notifications. | `""`
+`APP_HOSTNAME` | Domain for the app (e.g. `app.devpu.sh`). | `""`
+`STATIC_HOSTNAME` | Domain for serving the static assets (e.g. CSS, JS libraries, images). Useful for caching. No trailing slahe | `APP_HOSTNAME`
+`DEPLOY_DOMAIN` | Domain used for deployments (e.g. `devpush.app` if you want your deployments available at `*.devpush.app`). | `APP_HOSTNAME`
+`SERVER_IP` | Public IP of the server | `""`
+`SECRET_KEY` | App secret for sessions/CSRF. Generate: `openssl rand -hex 32` | `""`
+`ENCRYPTION_KEY` | Fernet key (urlsafe base64, 32 bytes). Generate: `openssl rand -base64 32 | tr '+/' '-_' | tr -d '\n'` | `""`
 `EMAIL_LOGO` | URL for email logo image. Only helpful for testing, as the app will use `app/logo-email.png` if left empty. | `""`
 `EMAIL_SENDER_NAME` | Name displayed as email sender for invites/login. | `""`
 `EMAIL_SENDER_ADDRESS` | Email sender used for invites/login. | `""`
@@ -126,13 +167,12 @@ Variable | Comments | Default
 `GITHUB_APP_CLIENT_SECRET` | GitHub OAuth app client secret. | `""`
 `GOOGLE_CLIENT_ID` | Google OAuth client ID. | `""`
 `GOOGLE_CLIENT_SECRET` | Google OAuth client secret. | `""`
-`POSTGRES_HOST` | PostgreSQL host address. | `pgsql`
 `POSTGRES_DB` | PostgreSQL database name. | `devpush`
 `POSTGRES_USER` | PostgreSQL username. | `devpush-app`
-`POSTGRES_PASSWORD` | PostgreSQL password. | `devpush`
+`POSTGRES_PASSWORD` | PostgreSQL password. Generate: `openssl rand -base64 24 | tr -d '\n'` | `""`
 `REDIS_URL` | Redis connection URL. | `redis://redis:6379`
 `DOCKER_HOST` | Docker daemon host address. | `tcp://docker-proxy:2375`
-`UPLOAD_DIR` | Directory for file uploads. | `/upload`
+`UPLOAD_DIR` | Directory for file uploads. | `/app/upload`
 `TRAEFIK_CONFIG_DIR` | Traefik configuration directory. | `/data/traefik`
 `DEFAULT_CPU_QUOTA` | Default CPU quota for containers (microseconds). | `100000`
 `DEFAULT_MEMORY_MB` | Default memory limit for containers (MB). | `4096`
@@ -142,11 +182,10 @@ Variable | Comments | Default
 `LOG_LEVEL` | Logging level. | `WARNING`
 `DB_ECHO` | Enable SQL query logging. | `false`
 `ENV` | Environment (development/production). | `development`
-`ACCESS_EMAIL_DENIED_MESSAGE` | Message shown to users who are denied access based on  [sign-in access control](#sign-in-access-control). | `Sign-in not allowed for this email.`
-`ACCESS_EMAIL_DENIED_WEBHOOK_URL` | Optional webhook to receive denied events (read more about [Sign-in access control](#sign-in-access-control)). | `""`
+`ACCESS_DENIED_MESSAGE` | Message shown to users who are denied access based on  [sign-in access control](#sign-in-access-control). | `Sign-in not allowed for this email.`
+`ACCESS_DENIED_WEBHOOK` | Optional webhook to receive denied events (read more about [Sign-in access control](#sign-in-access-control)). | `""`
 `LOGIN_ALERT_TITLE` | Title for a callout banner displayed on the login screen. Will be displayed only if either `LOGIN_ALERT_TITLE` or `LOGIN_ALERT_DESCRIPTION` is not empty. | `""`
 `LOGIN_ALERT_DESCRIPTION` | Description for a callout banner displayed on the login screen. Will be displayed only if either `LOGIN_ALERT_TITLE` or `LOGIN_ALERT_DESCRIPTION` is not empty. | `""`
-`NGROK_CUSTOM_DOMAIN` | **Local development only**. Used by `scripts/local/ngrok.sh` to start the [ngrok](https://ngrok.com/) http tunnel. | 
 
 ## GitHub App
 
@@ -183,13 +222,12 @@ You will need to configure a GitHub App with the following settings:
 
 ## Sign-in access control
 
-You can restrict who can sign up/sign in by adding an access rules file:
+Provide an access rules file to restrict who can sign up/sign in.
 
-```bash
-cp access.example.json access.json
-```
+- **Development**: edit `./access.json`. If missing, running `scripts/dev/start.sh` will sed an allow‑all file.
+- **Production**: edit `/srv/devpush/access.json` on the server.
 
-The file can contain a list of emails, a list of allowed email domains, globs and regexes:
+Rules format (any/all may be used):
 
 ```json
 {
@@ -200,7 +238,7 @@ The file can contain a list of emails, a list of allowed email domains, globs an
 }
 ```
 
-Globs use shell-style wildcards, regex are Python patterns. If the rules file is missing or empty, all valid emails are allowed.
+Globs use shell-style wildcards; regex are Python patterns. If the file is missing or empty, all valid emails are allowed.
 
 Additionally, if you set the `ACCESS_EMAIL_DENIED_WEBHOOK_URL` [environment variable](#environment-variables), denied sign-in attempts will be posted to the provided URL with the following payload:
 
