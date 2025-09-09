@@ -4,6 +4,22 @@ title: Installation
 description: How to install and update locally or on a server.
 ---
 
+## Quickstart
+
+<div class="alert">
+  {% lucide "triangle-alert" %}
+  <h2>Supported on Ubuntu/Debian.</h2>
+  <section>Other distros may work but aren't officially supported (yet).</section>
+</div>
+
+Log in your server, run the following command and follow instructions:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hunvreus/devpush/main/scripts/prod/install.sh | sudo bash
+```
+
+You user must have sudo privileges.
+
 ## Install & Update
 
 ### Prerequisites
@@ -80,7 +96,10 @@ scripts/prod/update.sh --components <component_name>
 
 ## Development
 
-> ⚠️ Development scripts target macOS for now.
+<div class="alert">
+  {% lucide "triangle-alert" %}
+  <h2>Development scripts target macOS for now.</h2>
+</div>
 
 ### Install
 
@@ -150,7 +169,6 @@ Variable | Comments | Default
 `URL_SCHEME` | `http` (development) or `https` (production). | `https`
 `LE_EMAIL` | Email used to register the Let's Encrypt (ACME) account in Traefik; receives certificate issuance/renewal/expiry notifications. | `""`
 `APP_HOSTNAME` | Domain for the app (e.g. `app.devpu.sh`). | `""`
-`STATIC_HOSTNAME` | Domain for serving the static assets (e.g. CSS, JS libraries, images). Useful for caching. No trailing slahe | `APP_HOSTNAME`
 `DEPLOY_DOMAIN` | Domain used for deployments (e.g. `devpush.app` if you want your deployments available at `*.devpush.app`). | `APP_HOSTNAME`
 `SERVER_IP` | Public IP of the server | `""`
 `SECRET_KEY` | App secret for sessions/CSRF. Generate: `openssl rand -hex 32` | `""`
