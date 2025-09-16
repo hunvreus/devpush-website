@@ -40,25 +40,25 @@
   {% if site.keywords %}<meta name="keywords" content="{{ site.keywords | join(',') }}" />{% endif %}
   
   {# Favicon #}
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="{{ siteUrl }}/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ siteUrl }}/assets/apple-touch-icon.png">
 
   {# Open Graph / Facebook #}
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:url" content="{{ siteUrl }}{{ page.url }}">
   <meta property="og:title" content="{{ meta_title }}">
   <meta property="og:description" content="{{ meta_description }}">
-  <meta property="og:image" content="{{ site.url }}/assets/social.png">
+  <meta property="og:image" content="{{ siteUrl }}/assets/social.png">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:locale" content="en_US">
   <meta property="og:author" content="{{ site.author.name }}">
 
   {# X/Twitter #}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  <meta name="twitter:url" content="{{ siteUrl }}{{ page.url }}">
   <meta name="twitter:title" content="{{ title if title else site.title }}">
   <meta name="twitter:description" content="{{ meta_description }}">
-  <meta name="twitter:image" content="{{ site.url }}/assets/social.png">
+  <meta name="twitter:image" content="{{ siteUrl }}/assets/social.png">
   <meta name="twitter:creator" content="{{ site.author.x }}">
 
   {# CSS #}

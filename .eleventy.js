@@ -11,6 +11,8 @@ export default async function(eleventyConfig) {
 		breaks: true,
 		linkify: true,
 	};
+
+  eleventyConfig.addGlobalData("siteUrl", process.env.SITE_URL || 'http://localhost:8080');
   
   let markdownLib = markdownIt(options).use(
     markdownItAnchor,
