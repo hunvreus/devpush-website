@@ -4,13 +4,20 @@ title: Uninstalling
 description: How to remove /dev/push from your server.
 ---
 
-## Automatic uninstall
+## Automated uninstall
 
 ```bash
 sudo /opt/devpush/scripts/uninstall.sh
 ```
 
 The script creates a backup, stops containers, removes Docker resources, and prompts before deleting data directories.
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/scripts#uninstall.sh" class="badge-outline">
+    uninstall.sh
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 ## Manual uninstall
 

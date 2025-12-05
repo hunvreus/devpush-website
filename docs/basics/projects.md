@@ -16,15 +16,15 @@ title: Overview
 
 The production environment can not be renamed or deleted.
 
-Each environment has a "Name", use for display, and an "Identifier" used in the deployment URLs (e.g. `flask-acme-env-staging.devpush.app`).
+Each environment has a "Name", used for display, and an "Identifier" used in the deployment URLs (e.g. `flask-acme-env-staging.devpush.app`).
 
 An environment can be associated with a single branch (e.g. `staging`) or use the wildcard operator to define a range of branches (e.g. `staging-*`).
 
 ## Environment variables
 
-You can addEnvironment variables can be added individually or by pasting the content of an `.env` file.
+Environment variables can be added individually or by pasting the content of an `.env` file.
 
-Each environment variable can be associated with a specific enviroment or all environments. These values can overrides each other. For example, if I have:
+Each environment variable can be associated with a specific environment or all environments. These values can override each other. For example, if I have:
 
 - `LOG_LEVEL` set to `INFO` for "All environments"
 - `LOG_LEVEL` set to `ERROR` for the "Staging" environment.
@@ -40,7 +40,7 @@ Domains can be:
 
 ## Logs
 
-Logs are collected in real-time, but a slight delay ( a few hundred milliseconds) might be noticeable. Logs can be searched by keyword and filtered by deployment, environments, dates or branches.
+Logs are collected in real-time, but a slight delay (a few hundred milliseconds) might be noticeable. Logs can be searched by keyword and filtered by deployment, environment, date, or branch.
 
 ## Deleting a project
 

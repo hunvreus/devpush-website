@@ -20,7 +20,7 @@ Some of the main features:
 
 ## Why did you build it?
 
-I started working on /dev/push because I wanted a platform as user-friendly as Vercel, but for Python apps. There were a few alternatives already, but they either didn't really match the user exeperience (e.g. Render), or were too technical (e.g. Coolify). I wanted something as simple and straightforward as Vercel, even if that meant less control.
+I started working on /dev/push because I wanted a platform as user-friendly as Vercel, but for Python apps. There were a few alternatives already, but they either didn't really match the user experience (e.g. Render), or were too technical (e.g. Coolify). I wanted something as simple and straightforward as Vercel, even if that meant less control.
 
 ## How does it work?
 

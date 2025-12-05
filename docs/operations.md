@@ -38,6 +38,13 @@ sudo /opt/devpush/scripts/compose.sh logs traefik
 sudo /opt/devpush/scripts/compose.sh logs worker-arq
 ```
 
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/scripts#compose.sh" class="badge-outline">
+    compose.sh
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
 ## File locations
 
 | Path | Description |
@@ -70,12 +77,12 @@ sudo /opt/devpush/scripts/restore.sh --archive /var/backups/devpush/backup-file.
 ```
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a href="/docs/updating/" class="badge-outline">
-    Updating
+  <a href="/docs/scripts#backup.sh" class="badge-outline">
+    backup.sh
     {% lucide "arrow-right" %}
   </a>
-  <a href="/docs/uninstalling/" class="badge-outline">
-    Uninstalling
+  <a href="/docs/scripts#restore.sh" class="badge-outline">
+    restore.sh
     {% lucide "arrow-right" %}
   </a>
 </div>

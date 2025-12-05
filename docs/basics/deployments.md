@@ -26,4 +26,4 @@ Any deployment can be deployed again using the "Redeploy" action in the dropdown
 
 ## Rollback
 
-You can swap the active deployments for any environment, allowing you to intantly rollback changes that may be causing issues.
+You can swap the active deployments for any environment, allowing you to instantly roll back changes that may be causing issues.

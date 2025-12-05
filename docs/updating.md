@@ -4,7 +4,7 @@ title: Updating
 description: How to update /dev/push to the latest version.
 ---
 
-## Automatic update
+## Automated update
 
 ```bash
 sudo /opt/devpush/scripts/update.sh
@@ -12,21 +12,24 @@ sudo /opt/devpush/scripts/update.sh
 
 This creates a backup, pulls the latest code, runs upgrade hooks, rebuilds containers, and restarts the service.
 
-### Updating to a specific version
-
 To update to a specific release or branch:
 
 ```bash
 sudo /opt/devpush/scripts/update.sh --ref v1.2.0
 ```
 
-### Installing pre-releases
-
 Pre-releases (e.g., `v1.0.0-rc.1`) aren't installed by default. Use `--ref` to install them explicitly:
 
 ```bash
 sudo /opt/devpush/scripts/update.sh --ref v1.0.0-rc.1
 ```
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/scripts#update.sh" class="badge-outline">
+    update.sh
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 ## Manual update
 

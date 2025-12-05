@@ -5,8 +5,8 @@ title: Overview
 ## Key concepts
 
 - **[Teams](/docs/basics/teams)**: Owns projects accessible to a group of members.
-- **[Projects](/docs/basics/projects)**: Applications to be deployed along with their settings (e.g.GitHub repository, environment variables, ...).
-- **[Deployments](/docs/basics/deployments)**: Instance of project deployment.
+- **[Projects](/docs/basics/projects)**: Applications to be deployed along with their settings (e.g. GitHub repository, environment variables, ...).
+- **[Deployments](/docs/basics/deployments)**: Instances of project deployments.
 
 ## Permissions
 

@@ -28,6 +28,13 @@ description: How to install /dev/push on a server.
 curl -fsSL https://install.devpu.sh | sudo bash
 ```
 
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/scripts/#install.sh" class="badge-outline">
+    install.sh
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
 ### 2. Create the GitHub App
 
 Use the widget below or [create one manually](#github-app-setup):
@@ -72,8 +79,12 @@ sudo systemctl start devpush.service
 Visit `https://example.com` (your `APP_HOSTNAME`).
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a href="/docs/scripts/#install.sh" class="badge-outline">
-    install.sh
+  <a href="/docs/operations/#service-management" class="badge-outline">
+    Service management
+    {% lucide "arrow-right" %}
+  </a>
+  <a href="/docs/scripts#start.sh" class="badge-outline">
+    start.sh
     {% lucide "arrow-right" %}
   </a>
 </div>
@@ -82,7 +93,7 @@ Visit `https://example.com` (your `APP_HOSTNAME`).
 
 <div class="alert">
   {% lucide "triangle-alert" %}
-  <h3>No automatic updates</h3>
+  <h3>No automated updates</h3>
   <section>
     <p>Manual installations don't create <code>/var/lib/devpush/version.json</code>, which tracks the installed version. The <a href="/docs/updating/">update script</a> won't run upgrade hooks without it.</p>
   </section>
@@ -113,27 +124,20 @@ Visit `https://example.com` (your `APP_HOSTNAME`).
 4. Create `.env` with [all required variables](/docs/configuration/#environment-variables)
 5. [Create a GitHub App](#github-app-setup) and add credentials to `.env`
 6. Build runner images: `sudo /opt/devpush/scripts/build-runners.sh`
-7. Install the systemd service:
+7. Ensure code and data are owned by the system user:
+   ```bash
+   sudo chown -R devpush:devpush /opt/devpush /var/lib/devpush
+   ```
+8. Install the systemd service:
    ```bash
    sudo install -m 0644 /opt/devpush/scripts/devpush.service /etc/systemd/system/
    sudo systemctl daemon-reload
    sudo systemctl enable --now devpush.service
    ```
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a href="/docs/scripts/#install.sh" class="badge-outline">
-    install.sh
-    {% lucide "arrow-right" %}
-  </a>
-  <a href="/docs/scripts/#build-runners.sh" class="badge-outline">
-    build-runners.sh
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
 ## GitHub App setup
 
-If you prefer to create the GitHub App manually, [go to github.com/settings/apps/new](https://github.com/settings/apps/new) (replace `example.com` with your app hostname):
+If you prefer to create the GitHub App manually, [go to github.com/settings/apps/new](https://github.com/settings/apps/new) and create an app with the following settings (replace `example.com` with your app hostname):
 
 - **Identifying and authorizing users**:
   - **Callback URL**: add two callback URLs with your domain:
