@@ -16,6 +16,10 @@
   }
 }
 
+[x-cloak] {
+  /* @apply hidden;   */
+}
+
 .infinite-scroll {
   animation: scroll 40s linear infinite;
 }
@@ -38,7 +42,12 @@
   > h3 {
     @apply text-lg sm:text-xl lg:mt-8;
   }
-  a {
+  p > a,
+  li > a,
+  dt > a,
+  dd > a,
+  td > a,
+  th > a {
     @apply underline underline-offset-2 decoration-muted-foreground/50 hover:decoration-foreground/50 transition-all;
   }
   code:not(pre > code) {
@@ -88,7 +97,6 @@
   ul,
   ol,
   dl,
-  table,
   pre {
     @apply my-6;
   }

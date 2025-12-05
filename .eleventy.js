@@ -23,7 +23,7 @@ export default async function(eleventyConfig) {
   const defaultTableClose = markdownLib.renderer.rules.table_close;
 
   markdownLib.renderer.rules.table_open = (tokens, idx, options, env, self) => {
-    return '<div class="relative w-full overflow-auto"><table>' + (defaultTableOpen ? defaultTableOpen(tokens, idx, options, env, self) : '');
+    return '<div class="relative w-full overflow-auto my-6"><table>' + (defaultTableOpen ? defaultTableOpen(tokens, idx, options, env, self) : '');
   };
 
   markdownLib.renderer.rules.table_close = (tokens, idx, options, env, self) => {

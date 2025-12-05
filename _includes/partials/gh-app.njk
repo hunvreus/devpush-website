@@ -1,0 +1,264 @@
+<div x-data="ghApp" x-init="init()">
+  
+  <!-- Input form -->
+  <div class="card" x-show="!hasCredentials && !loading" x-cloak>
+    <header>
+      <h2>Step 1: Fill in the details</h2>
+      <p>You will be sent to GitHub to confirm and then redirected here to copy the configuration you can paste into your <code>.env</code> file. You must be logged in to GitHub before creating the app.</p>
+    </header>
+    <section class="space-y-6 form">
+      <form class="space-y-6" method="POST" :action="githubUrl" @submit="if (!canSubmit) { $event.preventDefault(); return; } updateManifest()">
+        <input type="hidden" name="manifest" :value="manifest">
+        <div class="space-y-3">
+          <label for="hostname">App hostname</label>
+          <input type="text" name="hostname" id="hostname" x-model="hostname" @input="updateManifest" placeholder="App hostname (e.g. example.com)" required>
+          <p class="text-sm text-muted-foreground">Enter the domain without <code>https://</code> (e.g., <code>example.com</code>).</p>
+        </div>
+        <div class="space-y-3">
+          <label class="label gap-x-3">
+            <input type="checkbox" role="switch" x-model="useOrg" @change="if (!useOrg) orgId = ''">
+            Use organization account
+          </label>
+        </div>
+        <div class="space-y-3" x-show="useOrg">
+          <label for="orgId">Organization ID</label>
+          <input type="text" name="orgId" id="orgId" x-model="orgId" @input="updateManifest" :required="useOrg" placeholder="Organization ID (e.g. acme-inc)">
+          <p class="text-sm text-muted-foreground">Find this on your organization's settings page.</p>
+        </div>
+        <footer class="flex justify-end">
+          <button type="submit" class="btn" :disabled="!canSubmit">Create GitHub App</button>
+        </footer>
+      </form>
+    </section>
+  </div>
+
+  <!-- Environment variables -->
+  <div class="card" x-show="hasCredentials || loading" x-cloak>
+    <header>
+      <h2>Step 2: Copy the environment variables</h2>
+      <p>Copy the following environment variables into your <code>.env</code> file.</p>
+    </header>
+    <section>
+      <div class="h-64 flex items-center justify-center border border-input rounded-md dark:bg-input/30 shadow-xs" :class="{ 'hidden': !loading }">
+        <span class="flex items-center gap-x-2 text-muted-foreground [&>svg]:size-4 [&>svg]:animate-spin">
+          {% include "icons/loader.svg" %}
+          <span>Retrieving credentials...</span>
+        </span>
+      </div>
+      <textarea class="textarea w-full font-mono h-64 overflow-y-auto" :value="envOutput" readonly :class="{ 'hidden': loading }"></textarea>
+    </section>
+    <footer class="flex items-center gap-2 justify-between">
+      <button
+        type="button"
+        class="btn-ghost"
+        @click="reset"
+        :disabled="loading"
+      >
+        Reset
+      </button>
+      <button
+        type="button"
+        class="btn"
+        :class="{ 'opacity-50': copied }"
+        @click="copyToClipboard"
+        :disabled="loading"
+      >
+        <span x-show="!copied">Copy to clipboard</span>
+        <span x-show="copied">Copied!</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const HOSTNAME_KEY = 'devpush_github_hostname';
+    const CREDENTIALS_KEY = 'devpush_github_credentials';
+    const STORAGE_TTL = 10 * 60 * 1000;
+    const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
+    const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
+
+    function getStorage(key) {
+      const item = sessionStorage.getItem(key);
+      if (!item) return null;
+      try {
+        const { value, expires } = JSON.parse(item);
+        if (Date.now() > expires) {
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return value;
+      } catch {
+        return null;
+      }
+    }
+
+    function setStorage(key, value) {
+      const item = { value, expires: Date.now() + STORAGE_TTL };
+      sessionStorage.setItem(key, JSON.stringify(item));
+    }
+
+    function ghApp() {
+      return {
+        hostname: getStorage(HOSTNAME_KEY) || '',
+        manifest: '',
+        credentials: null,
+        copied: false,
+        loading: false,
+        useOrg: false,
+        orgId: '',
+
+        get hasCredentials() {
+          return this.credentials !== null;
+        },
+
+        get isHostnameValid() {
+          const h = this.hostname.trim();
+          return HOST_RE.test(h);
+        },
+
+        get isOrgValid() {
+          if (!this.useOrg) return true;
+          const o = this.orgId.trim();
+          return ORG_RE.test(o);
+        },
+
+        get canSubmit() {
+          return this.isHostnameValid && this.isOrgValid;
+        },
+
+        get githubUrl() {
+          if (this.useOrg && this.orgId.trim()) {
+            return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/new`;
+          }
+          return 'https://github.com/settings/apps/new';
+        },
+
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const code = params.get('code');
+          
+          if (code) {
+            this.loading = true;
+            this.exchangeCode(code);
+            window.history.replaceState({}, '', window.location.pathname);
+          } else {
+            const saved = getStorage(CREDENTIALS_KEY);
+            if (saved) {
+              this.credentials = saved;
+            }
+            if (this.hostname) this.updateManifest();
+          }
+        },
+
+        updateManifest() {
+          const h = this.hostname.trim();
+          if (!this.isHostnameValid) {
+            this.manifest = '';
+            return;
+          }
+          setStorage(HOSTNAME_KEY, h);
+          const appBaseUrl = `https://${h}`;
+          const callbackUrl = window.location.origin + window.location.pathname;
+          const appName = `devpush-${this.useOrg && this.orgId ? this.orgId.trim() : Math.random().toString(36).substring(2, 8)}`;
+          this.manifest = JSON.stringify({
+            name: appName,
+            url: appBaseUrl,
+            hook_attributes: {
+              url: `${appBaseUrl}/api/github/webhook`,
+              active: true
+            },
+            redirect_url: `${callbackUrl}`,
+            callback_urls: [
+              `${appBaseUrl}/api/github/authorize/callback`,
+              `${appBaseUrl}/auth/github/callback`
+            ],
+            setup_url: `${appBaseUrl}/api/github/install/callback`,
+            setup_on_update: true,
+            public: false,
+            default_permissions: {
+              administration: "write",
+              checks: "write",
+              statuses: "write",
+              contents: "write",
+              deployments: "write",
+              issues: "write",
+              metadata: "read",
+              pull_requests: "write",
+              repository_hooks: "write",
+              emails: "read"
+            },
+            default_events: ["installation_target", "push", "repository"]
+          });
+        },
+
+        async exchangeCode(code) {
+          try {
+            const res = await fetch(`https://api.github.com/app-manifests/${code}/conversions`, {
+              method: 'POST',
+              headers: { 'Accept': 'application/vnd.github+json' }
+            });
+            if (!res.ok) throw new Error('Failed to exchange code');
+            this.credentials = await res.json();
+            setStorage(CREDENTIALS_KEY, this.credentials);
+          } catch (e) {
+            alert(`Error: ${e.message}. The code may have expired. Please try again.`);
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        async copyToClipboard() {
+          const value = this.envOutput;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(value);
+            } else {
+              const temp = document.createElement('textarea');
+              temp.value = value;
+              document.body.appendChild(temp);
+              temp.select();
+              document.execCommand('copy');
+              document.body.removeChild(temp);
+            }
+            this.copied = true;
+            setTimeout(() => this.copied = false, 2000);
+          } catch (e) {
+            alert('Failed to copy to clipboard');
+          }
+        },
+
+        reset() {
+          this.credentials = null;
+          this.hostname = '';
+          this.manifest = '';
+          this.copied = false;
+          this.loading = false;
+          this.useOrg = false;
+          this.orgId = '';
+          sessionStorage.removeItem(HOSTNAME_KEY);
+          sessionStorage.removeItem(CREDENTIALS_KEY);
+        },
+
+        get envOutput() {
+          if (!this.credentials) return '';
+          const c = this.credentials;
+          return `GITHUB_APP_ID=${c.id}
+GITHUB_APP_NAME=${c.slug}
+GITHUB_APP_CLIENT_ID=${c.client_id}
+GITHUB_APP_CLIENT_SECRET=${c.client_secret}
+GITHUB_APP_WEBHOOK_SECRET=${c.webhook_secret}
+GITHUB_APP_PRIVATE_KEY="${c.pem.replace(/\n/g, '\\n')}"`;
+        }
+      };
+    }
+
+    if (typeof window !== 'undefined' && window.Alpine) {
+      window.Alpine.data('ghApp', ghApp);
+    } else {
+      document.addEventListener('alpine:init', () => {
+        window.Alpine.data('ghApp', ghApp);
+      });
+    }
+  })();
+</script>

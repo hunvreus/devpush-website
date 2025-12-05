@@ -20,6 +20,17 @@
         "basics/projects",
         "basics/deployments"
       ]
+    },
+    {
+      "type": "group",
+      "label": "Administration & Operations",
+      "items": [
+        "configuration",
+        "operations",
+        "updating",
+        "uninstalling",
+        "scripts"
+      ]
     }
   ]
 }
