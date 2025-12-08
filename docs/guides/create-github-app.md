@@ -1,6 +1,6 @@
 ---
 layout: layouts/doc.njk
-title: Create a GitHub App
+title: Create the GitHub App
 description: How to create a GitHub App for /dev/push authentication and repository access.
 ---
 
