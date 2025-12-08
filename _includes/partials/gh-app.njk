@@ -72,45 +72,45 @@
 
 <script>
   (function() {
-    const HOSTNAME_KEY = 'devpush_github_hostname';
-    const CREDENTIALS_KEY = 'devpush_github_credentials';
+  const HOSTNAME_KEY = 'devpush_github_hostname';
+  const CREDENTIALS_KEY = 'devpush_github_credentials';
     const STORAGE_TTL = 10 * 60 * 1000;
     const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
     const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
 
-    function getStorage(key) {
-      const item = sessionStorage.getItem(key);
-      if (!item) return null;
-      try {
-        const { value, expires } = JSON.parse(item);
-        if (Date.now() > expires) {
-          sessionStorage.removeItem(key);
-          return null;
-        }
-        return value;
-      } catch {
+  function getStorage(key) {
+    const item = sessionStorage.getItem(key);
+    if (!item) return null;
+    try {
+      const { value, expires } = JSON.parse(item);
+      if (Date.now() > expires) {
+        sessionStorage.removeItem(key);
         return null;
       }
+      return value;
+    } catch {
+      return null;
     }
+  }
 
-    function setStorage(key, value) {
-      const item = { value, expires: Date.now() + STORAGE_TTL };
-      sessionStorage.setItem(key, JSON.stringify(item));
-    }
+  function setStorage(key, value) {
+    const item = { value, expires: Date.now() + STORAGE_TTL };
+    sessionStorage.setItem(key, JSON.stringify(item));
+  }
 
     function ghApp() {
-      return {
-        hostname: getStorage(HOSTNAME_KEY) || '',
-        manifest: '',
-        credentials: null,
-        copied: false,
-        loading: false,
+    return {
+      hostname: getStorage(HOSTNAME_KEY) || '',
+      manifest: '',
+      credentials: null,
+      copied: false,
+      loading: false,
         useOrg: false,
         orgId: '',
 
-        get hasCredentials() {
-          return this.credentials !== null;
-        },
+      get hasCredentials() {
+        return this.credentials !== null;
+      },
 
         get isHostnameValid() {
           const h = this.hostname.trim();
@@ -134,124 +134,124 @@
           return 'https://github.com/settings/apps/new';
         },
 
-        init() {
-          const params = new URLSearchParams(window.location.search);
-          const code = params.get('code');
-          
-          if (code) {
-            this.loading = true;
-            this.exchangeCode(code);
-            window.history.replaceState({}, '', window.location.pathname);
-          } else {
-            const saved = getStorage(CREDENTIALS_KEY);
-            if (saved) {
-              this.credentials = saved;
-            }
-            if (this.hostname) this.updateManifest();
+      init() {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        
+        if (code) {
+          this.loading = true;
+          this.exchangeCode(code);
+          window.history.replaceState({}, '', window.location.pathname);
+        } else {
+          const saved = getStorage(CREDENTIALS_KEY);
+          if (saved) {
+            this.credentials = saved;
           }
-        },
+          if (this.hostname) this.updateManifest();
+        }
+      },
 
-        updateManifest() {
+      updateManifest() {
           const h = this.hostname.trim();
           if (!this.isHostnameValid) {
-            this.manifest = '';
-            return;
-          }
+          this.manifest = '';
+          return;
+        }
           setStorage(HOSTNAME_KEY, h);
           const appBaseUrl = `https://${h}`;
-          const callbackUrl = window.location.origin + window.location.pathname;
+        const callbackUrl = window.location.origin + window.location.pathname;
           const appName = `devpush-${this.useOrg && this.orgId ? this.orgId.trim() : Math.random().toString(36).substring(2, 8)}`;
-          this.manifest = JSON.stringify({
-            name: appName,
-            url: appBaseUrl,
-            hook_attributes: {
-              url: `${appBaseUrl}/api/github/webhook`,
-              active: true
-            },
-            redirect_url: `${callbackUrl}`,
-            callback_urls: [
-              `${appBaseUrl}/api/github/authorize/callback`,
-              `${appBaseUrl}/auth/github/callback`
-            ],
-            setup_url: `${appBaseUrl}/api/github/install/callback`,
-            setup_on_update: true,
-            public: false,
-            default_permissions: {
-              administration: "write",
-              checks: "write",
-              statuses: "write",
-              contents: "write",
-              deployments: "write",
-              issues: "write",
-              metadata: "read",
-              pull_requests: "write",
-              repository_hooks: "write",
-              emails: "read"
-            },
-            default_events: ["installation_target", "push", "repository"]
+        this.manifest = JSON.stringify({
+          name: appName,
+          url: appBaseUrl,
+          hook_attributes: {
+            url: `${appBaseUrl}/api/github/webhook`,
+            active: true
+          },
+          redirect_url: `${callbackUrl}`,
+          callback_urls: [
+            `${appBaseUrl}/api/github/authorize/callback`,
+            `${appBaseUrl}/auth/github/callback`
+          ],
+          setup_url: `${appBaseUrl}/api/github/install/callback`,
+          setup_on_update: true,
+          public: false,
+          default_permissions: {
+            administration: "write",
+            checks: "write",
+            statuses: "write",
+            contents: "write",
+            deployments: "write",
+            issues: "write",
+            metadata: "read",
+            pull_requests: "write",
+            repository_hooks: "write",
+            emails: "read"
+          },
+          default_events: ["installation_target", "push", "repository"]
+        });
+      },
+
+      async exchangeCode(code) {
+        try {
+          const res = await fetch(`https://api.github.com/app-manifests/${code}/conversions`, {
+            method: 'POST',
+            headers: { 'Accept': 'application/vnd.github+json' }
           });
-        },
-
-        async exchangeCode(code) {
-          try {
-            const res = await fetch(`https://api.github.com/app-manifests/${code}/conversions`, {
-              method: 'POST',
-              headers: { 'Accept': 'application/vnd.github+json' }
-            });
-            if (!res.ok) throw new Error('Failed to exchange code');
-            this.credentials = await res.json();
-            setStorage(CREDENTIALS_KEY, this.credentials);
-          } catch (e) {
-            alert(`Error: ${e.message}. The code may have expired. Please try again.`);
-          } finally {
-            this.loading = false;
-          }
-        },
-
-        async copyToClipboard() {
-          const value = this.envOutput;
-          try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              await navigator.clipboard.writeText(value);
-            } else {
-              const temp = document.createElement('textarea');
-              temp.value = value;
-              document.body.appendChild(temp);
-              temp.select();
-              document.execCommand('copy');
-              document.body.removeChild(temp);
-            }
-            this.copied = true;
-            setTimeout(() => this.copied = false, 2000);
-          } catch (e) {
-            alert('Failed to copy to clipboard');
-          }
-        },
-
-        reset() {
-          this.credentials = null;
-          this.hostname = '';
-          this.manifest = '';
-          this.copied = false;
+          if (!res.ok) throw new Error('Failed to exchange code');
+          this.credentials = await res.json();
+          setStorage(CREDENTIALS_KEY, this.credentials);
+        } catch (e) {
+          alert(`Error: ${e.message}. The code may have expired. Please try again.`);
+        } finally {
           this.loading = false;
+        }
+      },
+
+      async copyToClipboard() {
+        const value = this.envOutput;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            const temp = document.createElement('textarea');
+            temp.value = value;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+          }
+          this.copied = true;
+          setTimeout(() => this.copied = false, 2000);
+        } catch (e) {
+          alert('Failed to copy to clipboard');
+        }
+      },
+
+      reset() {
+        this.credentials = null;
+        this.hostname = '';
+        this.manifest = '';
+        this.copied = false;
+        this.loading = false;
           this.useOrg = false;
           this.orgId = '';
-          sessionStorage.removeItem(HOSTNAME_KEY);
-          sessionStorage.removeItem(CREDENTIALS_KEY);
-        },
+        sessionStorage.removeItem(HOSTNAME_KEY);
+        sessionStorage.removeItem(CREDENTIALS_KEY);
+      },
 
-        get envOutput() {
-          if (!this.credentials) return '';
-          const c = this.credentials;
-          return `GITHUB_APP_ID=${c.id}
+      get envOutput() {
+        if (!this.credentials) return '';
+        const c = this.credentials;
+        return `GITHUB_APP_ID=${c.id}
 GITHUB_APP_NAME=${c.slug}
 GITHUB_APP_CLIENT_ID=${c.client_id}
 GITHUB_APP_CLIENT_SECRET=${c.client_secret}
 GITHUB_APP_WEBHOOK_SECRET=${c.webhook_secret}
 GITHUB_APP_PRIVATE_KEY="${c.pem.replace(/\n/g, '\\n')}"`;
-        }
-      };
-    }
+      }
+    };
+  }
 
     if (typeof window !== 'undefined' && window.Alpine) {
       window.Alpine.data('ghApp', ghApp);

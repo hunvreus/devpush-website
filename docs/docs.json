@@ -31,6 +31,14 @@
         "uninstalling",
         "scripts"
       ]
+    },
+    {
+      "type": "group",
+      "label": "Guides",
+      "items": [
+        "guides/create-hetzner-server",
+        "guides/create-github-app"
+      ]
     }
   ]
 }

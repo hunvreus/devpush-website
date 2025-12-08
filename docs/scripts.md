@@ -70,7 +70,7 @@ sudo /opt/devpush/scripts/build-runners.sh
 
 ## clean.sh
 
-Stop the stack and remove development data. **Development only.**
+Stop services and remove all Docker resources (containers, volumes, networks, images) and data directory.
 
 ```bash
 ./scripts/clean.sh
@@ -80,17 +80,15 @@ Stop the stack and remove development data. **Development only.**
 
 | Option | Description |
 |--------|-------------|
-| `--remove-all` | Remove everything (data, containers, images) |
-| `--remove-data` | Remove data directory only |
-| `--remove-containers` | Remove containers only |
-| `--remove-images` | Remove Docker images only |
+| `--keep-docker` | Keep Docker resources (containers, volumes, networks, images) |
+| `--keep-data` | Keep data directory |
 | `--yes` | Skip confirmation prompts |
 
 <div class="alert">
   {% lucide "triangle-alert" %}
-  <h3>Development only</h3>
+  <h3>Destructive operation</h3>
   <section>
-    <p>This script is for local development. Do not use in production—use <a href="#uninstall.sh">uninstall.sh</a> instead.</p>
+    <p>This script removes all Docker resources and data. Use with caution, especially in production.</p>
   </section>
 </div>
 

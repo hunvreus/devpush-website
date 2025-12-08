@@ -1,10 +1,10 @@
 ---
 layout: layouts/doc.njk
 title: Configuration
-description: Environment variables and SSL provider setup.
+description: Environment variables and certificate challenge setup.
 ---
 
-All configuration is stored in `/var/lib/devpush/.env`.
+All configuration is stored in `/var/lib/devpush/.env`. For a starting point, use the `.env.example` file in the repository.
 
 ## Environment variables
 
@@ -34,7 +34,7 @@ All configuration is stored in `/var/lib/devpush/.env`.
 | `SERVICE_UID` | Container user UID (matches host user) |
 | `SERVICE_GID` | Container user GID (matches host user) |
 | `SERVER_IP` | Public IP of the server |
-| `SSL_PROVIDER` | SSL provider: `default`, `cloudflare`, `route53`, `gcloud`, `digitalocean`, `azure` |
+| `CERT_CHALLENGE_PROVIDER` | ACME challenge provider: `default` (HTTP-01) or `cloudflare`, `route53`, `gcloud`, `digitalocean`, `azure` (DNS-01) |
 
 ### Optional
 
@@ -48,16 +48,20 @@ All configuration is stored in `/var/lib/devpush/.env`.
 | `POSTGRES_DB` | Database name | `devpush` |
 | `POSTGRES_USER` | Database user | `devpush-app` |
 | `REDIS_URL` | Redis URL | `redis://redis:6379` |
-| `DEFAULT_MEMORY_MB` | Container memory limit (MB) | `2048` |
+| `DEFAULT_CPUS` | Default CPU cores per container | `0.5` |
+| `DEFAULT_MEMORY_MB` | Default memory limit (MB) | `2048` |
+| `MAX_CPUS` | Maximum CPU cores per container | `4.0` |
+| `MAX_MEMORY_MB` | Maximum memory limit (MB) | `8192` |
+| `ALLOW_CUSTOM_RESOURCES` | Allow projects to override CPU/memory | `false` |
 | `JOB_TIMEOUT` | Job timeout (seconds) | `320` |
 | `DEPLOYMENT_TIMEOUT` | Deployment timeout (seconds) | `300` |
 | `LOG_LEVEL` | Logging level | `WARNING` |
 
-## SSL providers
+## Certificate challenge providers
 
-By default, /dev/push uses Let's Encrypt with HTTP-01 challenge. For wildcard certificates or CDN compatibility, set `SSL_PROVIDER` in `.env`:
+By default, /dev/push uses Let's Encrypt with HTTP-01 challenge. Set `CERT_CHALLENGE_PROVIDER` in `.env` to switch providers. Leave it blank or set `default` to keep HTTP-01, or choose a DNS provider for DNS-01/wildcard support:
 
-| Provider | `SSL_PROVIDER` | Required Variables |
+| Provider | `CERT_CHALLENGE_PROVIDER` | Required Variables |
 |----------|----------------|-------------------|
 | Default (HTTP-01) | `default` | None |
 | Cloudflare | `cloudflare` | `CF_DNS_API_TOKEN` |
@@ -82,7 +86,7 @@ Use Cloudflare DNS for certificate validation. Requires a Cloudflare API token w
 2. Grant "Zone:DNS:Edit" permissions for your domain
 3. Add the token to your `.env` file:
    ```bash
-   SSL_PROVIDER=cloudflare
+   CERT_CHALLENGE_PROVIDER=cloudflare
    CF_DNS_API_TOKEN=your_token_here
    ```
 
@@ -100,7 +104,7 @@ Use AWS Route53 for DNS challenge validation.
 2. Grant the IAM user "Route53:ChangeResourceRecordSets" permission
 3. Add the credentials to your `.env` file:
    ```bash
-   SSL_PROVIDER=route53
+   CERT_CHALLENGE_PROVIDER=route53
    AWS_ACCESS_KEY_ID=your_access_key
    AWS_SECRET_ACCESS_KEY=your_secret_key
    AWS_REGION=us-east-1
@@ -119,8 +123,8 @@ Use Google Cloud DNS for certificate validation.
 2. [Create a service account](https://console.cloud.google.com/iam-admin/serviceaccounts) with "DNS Administrator" role
 3. Download the JSON key file and save it as `/var/lib/devpush/gcloud-sa.json`
 4. Add the project ID to your `.env` file:
-   ```bash
-   SSL_PROVIDER=gcloud
+```bash
+   CERT_CHALLENGE_PROVIDER=gcloud
    GCE_PROJECT=your-project-id
    ```
 
@@ -135,8 +139,8 @@ Use DigitalOcean DNS for certificate validation.
 1. [Generate a personal access token](https://cloud.digitalocean.com/account/api/tokens) in DigitalOcean
 2. Grant "read" and "write" scopes
 3. Add the token to your `.env` file:
-   ```bash
-   SSL_PROVIDER=digitalocean
+```bash
+   CERT_CHALLENGE_PROVIDER=digitalocean
    DO_AUTH_TOKEN=your_token_here
    ```
 
@@ -159,11 +163,11 @@ Use Azure DNS for certificate validation.
 5. [Find your subscription ID](https://portal.azure.com/#view/Microsoft_Azure_Billing/SubscriptionsBlade) as `AZURE_SUBSCRIPTION_ID`
 6. Note the resource group name containing your DNS zone as `AZURE_RESOURCE_GROUP`
 7. Add all values to your `.env` file:
-   ```bash
-   SSL_PROVIDER=azure
+```bash
+   CERT_CHALLENGE_PROVIDER=azure
    AZURE_CLIENT_ID=your_client_id
    AZURE_CLIENT_SECRET=your_client_secret
    AZURE_TENANT_ID=your_tenant_id
    AZURE_SUBSCRIPTION_ID=your_subscription_id
    AZURE_RESOURCE_GROUP=your_resource_group
-   ``` 
+```
