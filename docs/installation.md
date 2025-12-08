@@ -55,7 +55,7 @@ sudo nano /var/lib/devpush/.env
   {% lucide "triangle-alert" %}
   <h3>We recommend you use Cloudflare (DNS-01)</h3>
   <section>
-    <p>With DNS-01, you get a wildcard certificate. The wildcard is issued once: you don't run into Let's Encrypt quotas and don't experience any potential delays with new deployments.</p>
+    <p>With DNS-01, you get a wildcard certificate in one go, which reduces issuance churn for new deployments. Let's Encrypt rate limits still apply on renewals.</p>
     <p>Set <code>CERT_CHALLENGE_PROVIDER=cloudflare</code> (leave it as <code>default</code> for HTTP-01) and add <code>CF_DNS_API_TOKEN</code>. See <a href="/docs/configuration/#cloudflare">Cloudflare setup</a>.</p>
   </section>
 </div>
