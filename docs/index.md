@@ -30,7 +30,7 @@ The app itself allows you to manage the configuration for your projects (GitHub 
 
 Whenever it receives a webhook post from GitHub, it creates a new container for the selected Docker image and proceeds to run a series of commands (git clone, build, ...). If the app builds successfully and is available, it is swapped for the matching environment.
 
-Most likely, you'll want to [install it on your own server](/docs/installation) (e.g. Hetzner), but [there is also an online version which you can sign up for](https://app.devpu.sh) (currently in beta testing, sign ups are reviewed individually).
+You can [install it on your own server](/docs/installation) (e.g. Hetzner), but [there is also an online demo: demo.devpu.sh](https://demo.devpu.sh) (WARNING: this demo server resets every hour, all deployments and configuration will be wiped out).
 
 ## How can I help?
 
