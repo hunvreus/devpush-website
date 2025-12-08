@@ -53,8 +53,9 @@ sudo nano /var/lib/devpush/.env
 
 <div class="alert">
   {% lucide "triangle-alert" %}
-  <h3>We recommend Cloudflare for DNS-01</h3>
+  <h3>We recommend you use Cloudflare (DNS-01)</h3>
   <section>
+    <p>With DNS-01, you get a wildcard certificate. The challenge is only done once: you don't run into Let's Encrypt quotas and don't experience any potential delays with new deployments.</p>
     <p>Set <code>CERT_CHALLENGE_PROVIDER=cloudflare</code> (leave it as <code>default</code> for HTTP-01) and add <code>CF_DNS_API_TOKEN</code>. See <a href="/docs/configuration/#cloudflare">Cloudflare setup</a>.</p>
   </section>
 </div>
@@ -70,7 +71,7 @@ sudo nano /var/lib/devpush/.env
   </a>
 </div>
 
-### 4. Configure DNS
+### 4. Set DNS
 
 Before starting the service, ensure your DNS records are configured and propagated. You can keep the app and deployments on separate domains/subdomains if you want extra isolation.
 
@@ -101,6 +102,8 @@ sudo systemctl start devpush.service
 ```
 
 Visit `https://example.com` (your `APP_HOSTNAME`).
+
+If you run into issues, see the [troubleshooting section](#troubleshooting) below.
 
 <div class="flex flex-wrap gap-2 my-6">
   <a href="/docs/operations/#service-management" class="badge-outline">
@@ -158,3 +161,29 @@ Visit `https://example.com` (your `APP_HOSTNAME`).
    sudo systemctl daemon-reload
    sudo systemctl enable --now devpush.service
    ```
+
+If you run into issues, see the [troubleshooting section](#troubleshooting) below.
+
+## Troubleshooting
+
+If the service fails to start, check the status and logs:
+
+```bash
+# Service status + recent logs
+sudo systemctl status devpush.service
+sudo journalctl -u devpush.service -e -f
+```
+
+If you're running into issues, it's likely with the app or Traefik. You can get more detailed logs with:
+
+```bash
+# Container logs (e.g., Traefik/TLS or app)
+sudo /opt/devpush/scripts/compose.sh logs -f traefik
+sudo /opt/devpush/scripts/compose.sh logs -f app
+```
+
+Common errors with Traefik:
+
+- DNS doesn't resolve to the server IP yet.
+- Provider API token (e.g., `CF_DNS_API_TOKEN`) is missing zone access (`Zone:Read` + `Zone:DNS:Edit`) or points to the wrong account/zone.
+- Let's Encrypt rate limit hit after repeated failures; wait about an hour before retrying.
