@@ -7,7 +7,7 @@ description: How to install /dev/push on a server.
 ## Prerequisites
 
 - **Server**: Ubuntu 20.04+ or Debian 11+ with SSH access and sudo privileges. 4GB+ RAM recommended. A [Hetzner CPX31](https://www.hetzner.com/cloud/) (~$15/mo) works well. If you're using Hetzner Cloud, you can provision a hardened server with the [`devpush-hetzner` helper](https://github.com/hunvreus/devpush-hetzner).
-- **Domains**: Two A records pointing to your server's IP—one for the app (e.g. `example.com`) and a wildcard for deployments (e.g. `*.example.com`). We recommend [Cloudflare](https://cloudflare.com).
+- **DNS**: We recommend [Cloudflare](https://cloudflare.com).
 - **GitHub account**: You'll create a GitHub App for login and repository access.
 - **Email provider**: A [Resend](https://resend.com) account for login emails and invitations.
 
