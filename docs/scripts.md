@@ -196,6 +196,7 @@ sudo /opt/devpush/scripts/restore.sh --archive /var/backups/devpush/backup.tar.g
 | `--no-code` | Skip code restore |
 | `--no-restart` | Don't restart after restore |
 | `--no-backup` | Don't create backup before restore |
+| `--remove-runners` | Remove runner containers before restoring |
 | `--timeout <sec>` | Timeout for database operations |
 | `--yes` | Skip confirmation prompts |
 | `--verbose` | Show detailed output |
