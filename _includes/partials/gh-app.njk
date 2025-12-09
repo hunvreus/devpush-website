@@ -243,11 +243,11 @@
       get envOutput() {
         if (!this.credentials) return '';
         const c = this.credentials;
-        return `GITHUB_APP_ID=${c.id}
-GITHUB_APP_NAME=${c.slug}
-GITHUB_APP_CLIENT_ID=${c.client_id}
-GITHUB_APP_CLIENT_SECRET=${c.client_secret}
-GITHUB_APP_WEBHOOK_SECRET=${c.webhook_secret}
+        return `GITHUB_APP_ID="${c.id}"
+GITHUB_APP_NAME="${c.slug}"
+GITHUB_APP_CLIENT_ID="${c.client_id}"
+GITHUB_APP_CLIENT_SECRET="${c.client_secret}"
+GITHUB_APP_WEBHOOK_SECRET="${c.webhook_secret}"
 GITHUB_APP_PRIVATE_KEY="${c.pem.replace(/\n/g, '\\n')}"`;
       }
     };
