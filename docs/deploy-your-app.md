@@ -2,6 +2,7 @@
 layout: layouts/doc.njk
 title: Deploy your app
 description: How to deploy your first application with /dev/push.
+icon: cloud-upload
 ---
 
 ## Step 1: Sign up/Sign in

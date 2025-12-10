@@ -1,5 +1,48 @@
 {% from "macros/sidebar.njk" import sidebar %}
-{% from "macros/command.njk" import command %}
+{% from "macros/command.njk" import command, command_dialog %}
+
+
+
+{% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
+<div role="group" aria-labelledby="{{ suggestions_id }}">
+  <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
+  <div role="menuitem" onclick="console.log('Open calendar')">
+    {% lucide "calendar" %}
+    <span>Calendar</span>
+  </div>
+  <div role="menuitem" onclick="console.log('Search emoji')">
+    {% lucide "smile" %}
+    <span>Search Emoji</span>
+  </div>
+  <div role="menuitem" aria-disabled="true">
+    {% lucide "calculator" %}
+    <span>Calculator</span>
+  </div>
+</div>
+<hr role="separator" />
+<div role="group" aria-labelledby="{{ settings_id }}">
+  <span role="heading" id="{{ settings_id }}">Settings</span>
+  <div role="menuitem" onclick="console.log('Open profile')" data-filter="Profile">
+    {% lucide "user" %}
+    <span>Profile</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
+  </div>
+  <div role="menuitem" onclick="console.log('Open billing')" data-filter="Billing">
+    {% lucide "credit-card" %}
+    <span>Billing</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
+  </div>
+  <div role="menuitem" onclick="console.log('Open settings')" data-filter="Settings">
+    {% lucide "settings" %}
+    <span>Settings</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
+  </div>
+</div>
+{% endmacro %}
+
+{% set commandMenu = menu | commandMenu(collections) %}
+{% call command_dialog(id="command-search", items=commandMenu, placeholder="Search the docs...") %}
+{% endcall %}
 
 {% set header %}
 <a href="/docs" class="btn-ghost p-2 h-12 w-full justify-start">
@@ -12,17 +55,29 @@
   </div>
 </a>
 
-{# <div class="flex flex-col gap-2 px-2 text-sm">
-  <div class="sr-only">Search</div>
-  {% set trigger %}
-    Search the docs...
-    {% lucide "search", { "class": "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" } %}
-  {% endset %}
-  {{ command(
-    trigger=trigger,
-    trigger_attrs={ "class": "relative text-muted-foreground bg-background dark:bg-input/30 border-input flex items-center h-8 w-full min-w-0 rounded-md border pr-3 py-1 pl-8 text-base md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none cursor-text" }
-  ) }}
-</div> #}
+<button
+  type="button"
+  class="relative text-muted-foreground bg-background dark:bg-input/30 border-input flex items-center h-8 w-full min-w-0 rounded-md border px-3 py-1 gap-x-2 text-base md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none cursor-text"
+  onclick="document.getElementById('command-search').showModal()"
+>
+  {% lucide "search", { "class": "size-4" } %}
+  Search the docs...
+  <kbd class="kbd ml-auto bg-input/50">⌘K</kbd>
+</button>
+<script>
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const dialog = document.getElementById('command-search');
+      if (dialog.open) {
+        dialog.close();
+      } else {
+        dialog.showModal();
+        dialog.querySelector('header input')?.focus();
+      }
+    }
+  });
+</script>
 {% endset %}
 
 {{ sidebar(
@@ -31,5 +86,5 @@
   header=header,
   footer=footer,
   content_attrs={ "class": "scrollbar" },
-  menu=menu | processMenu(collections)
+  menu=menu | sidebarMenu(collections)
 ) }}

@@ -1,5 +1,7 @@
 ---
+layout: layouts/doc.njk
 title: Overview
+description: Key concepts and permissions for teams, projects, and deployments.
 ---
 
 ## Key concepts

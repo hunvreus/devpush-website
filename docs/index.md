@@ -2,6 +2,7 @@
 layout: layouts/doc.njk
 title: Introduction
 description: "An open source, self-hosted platform that automates building and deploying any app: Python, Node.js, PHP..."
+icon: info
 ---
 
 ## What is it?

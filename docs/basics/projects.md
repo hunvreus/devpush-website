@@ -1,6 +1,7 @@
 ---
 layout: layouts/doc.njk
-title: Overview
+title: Projects
+description: Projects define applications to deploy with their GitHub repository, environments, variables, and domains.
 ---
 
 ## Project settings

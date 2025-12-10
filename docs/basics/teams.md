@@ -1,6 +1,7 @@
 ---
 layout: layouts/doc.njk
 title: Teams
+description: Teams own projects and manage member access with role-based permissions.
 ---
 
 ## Default team

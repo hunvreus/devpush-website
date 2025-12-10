@@ -1,4 +1,5 @@
 import eleventyLucideicons from "@grimlink/eleventy-plugin-lucide-icons";
+import * as lucideIcons from "lucide-static";
 import markdownIt from "markdown-it"
 import markdownItAnchor from "markdown-it-anchor"
 import pluginTOC from "eleventy-plugin-toc"
@@ -75,37 +76,90 @@ export default async function(eleventyConfig) {
     };
   });
 
-  eleventyConfig.addFilter('processMenu', function(menu, collections) {
+  let cachedMenus = null;
+
+  function buildMenus(menu, collections) {
+    if (cachedMenus) return cachedMenus;
+
     function slugToUrl(slug) {
       if (slug === 'index') return '/docs/';
       if (slug.endsWith('/index')) return '/docs/' + slug.replace(/\/index$/, '/');
       return '/docs/' + slug + '/';
     }
 
-    return menu.map(group => ({
-      ...group,
-      items: group.items.map(item => {
+    function processMenuItem(slug) {
+      const url = slugToUrl(slug);
+      const doc = collections.docs.find(d => d.url === url);
+      const iconName = doc?.data?.icon;
+      let iconSvg = null;
+      if (iconName) {
+        const pascalName = iconName.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+        const iconComponent = lucideIcons[pascalName];
+        if (iconComponent) {
+          iconSvg = iconComponent.replace('class="lucide', `class="lucide lucide-${iconName}`);
+        }
+      }
+      const sidebarItem = {
+        icon: iconSvg,
+        url: url,
+        label: doc?.data?.title || slug.replace(/\.md$/, ''),
+        description: doc?.data?.description || ''
+      };
+      const iconHtml = iconSvg ? iconSvg : '';
+      const keywords = [sidebarItem.label, sidebarItem.description].filter(Boolean).join(' ');
+      const commandItem = {
+        type: 'item',
+        label: sidebarItem.label,
+        content: `${iconHtml}<span>${sidebarItem.label}</span>`,
+        keywords: keywords,
+        attrs: {
+          onclick: `window.location.href='${url}'; this.closest('dialog')?.close();`
+        }
+      };
+      return { sidebar: sidebarItem, command: commandItem };
+    }
+
+    function processGroup(group) {
+      const sidebarItems = group.items.map(item => {
         if (item.type === 'submenu') {
           return {
             ...item,
-            items: item.items.map(subitem => {
-              const url = slugToUrl(subitem);
-              const doc = collections.docs.find(d => d.url === url);
-              return {
-                url: url,
-                label: doc?.data?.title || subitem.replace(/\.md$/, '')
-              };
-            })
+            items: item.items ? item.items.map(subitem => processMenuItem(subitem).sidebar) : []
           };
         } else {
-          const url = slugToUrl(item);
-          const doc = collections.docs.find(d => d.url === url);
-          return {
-            url: url,
-            label: doc?.data?.title || item.replace(/\.md$/, '')
-          };
+          return processMenuItem(item).sidebar;
         }
-      })
-    }));
+      });
+      const commandItems = group.items.map(item => {
+        if (item.type === 'submenu') {
+          return {
+            type: 'group',
+            label: item.label,
+            items: item.items ? item.items.map(subitem => processMenuItem(subitem).command) : []
+          };
+        } else {
+          return processMenuItem(item).command;
+        }
+      });
+      return {
+        sidebar: { ...group, items: sidebarItems },
+        command: { type: 'group', label: group.label, items: commandItems }
+      };
+    }
+
+    const processed = menu.map(processGroup);
+    cachedMenus = {
+      sidebar: processed.map(p => p.sidebar),
+      command: processed.map(p => p.command)
+    };
+    return cachedMenus;
+  }
+
+  eleventyConfig.addFilter('sidebarMenu', function(menu, collections) {
+    return buildMenus(menu, collections).sidebar;
+  });
+
+  eleventyConfig.addFilter('commandMenu', function(menu, collections) {
+    return buildMenus(menu, collections).command;
   });
 }

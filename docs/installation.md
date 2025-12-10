@@ -2,6 +2,7 @@
 layout: layouts/doc.njk
 title: Installation
 description: How to install /dev/push on a server.
+icon: square-terminal
 ---
 
 ## Prerequisites

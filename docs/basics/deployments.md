@@ -1,6 +1,7 @@
 ---
 layout: layouts/doc.njk
 title: Deployments
+description: Deployments are instances of your project built from specific commits, with URLs, logs, and rollback capabilities.
 ---
 
 ## Active deployments
