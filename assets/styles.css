@@ -335,6 +335,15 @@
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
+  .-mr-1\.5 {
+    margin-right: calc(var(--spacing) * -1.5);
+  }
+  .-mr-2 {
+    margin-right: calc(var(--spacing) * -2);
+  }
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
   }
@@ -463,9 +472,6 @@
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
-  }
-  .max-w-24 {
-    max-width: calc(var(--spacing) * 24);
   }
   .max-w-72 {
     max-width: calc(var(--spacing) * 72);

@@ -37,7 +37,7 @@
   >
     {% lucide "search", { "class": "size-4" } %}
     Search the docs...
-    <kbd class="kbd ml-auto bg-input/50">⌘K</kbd>
+    <kbd class="kbd ml-auto -mr-1.5">⌘K</kbd>
   </button>
 
   <nav class="items-center gap-2 hidden sm:flex">
@@ -62,8 +62,8 @@
 
   <div class="sm:hidden" x-data="{ isOpen: false }">
     <button type="button" class="btn-sm-icon-ghost" @click="isOpen = !isOpen">
-      <span x-show="!isOpen" x-cloak>{% include "icons/menu.svg" %}</span>
-      <span x-show="isOpen" x-cloak>{% include "icons/x.svg" %}</span>
+      <span x-show="!isOpen" x-cloak>{% lucide "menu" %}</span>
+      <span x-show="isOpen" x-cloak>{% lucide "x" %}</span>
     </button>
     <nav class="fixed inset-0 top-16 bg-background z-50 flex flex-col gap-2 p-4 transition-all opacity-0 scale-95 -translate-y-16 invisible" :class="{ 'opacity-100 scale-100 translate-y-0 visible': isOpen }" x-cloak>
       <a class="btn-lg-ghost justify-between px-4" href="/">
@@ -82,7 +82,7 @@
       </a>
       <a class="btn-lg-ghost justify-between" href="https://demo.devpu.sh">
         Demo
-        {% include "icons/arrow-right.svg" %}
+        {% lucide "arrow-right" %}
       </a>
     </nav>
   </div>

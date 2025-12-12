@@ -7,7 +7,7 @@ description: Available scripts for managing /dev/push.
 All scripts are in `/opt/devpush/scripts/`.
 
 <div class="alert">
-  {% include "icons/info.svg" %}
+  {% lucide "info" %}
   <h3>Is sudo required?</h3>
   <section><p>Scripts that manage services (<code>start.sh</code>, <code>stop.sh</code>, <code>restart.sh</code>, <code>install.sh</code>, <code>update.sh</code>, <code>uninstall.sh</code>) or access system directories (<code>backup.sh</code>, <code>restore.sh</code>) require <code>sudo</code>. Development scripts (<code>db-generate.sh</code>, <code>clean.sh</code>, <code>status.sh</code>, <code>compose.sh</code>) can run without sudo if your user is in the <code>docker</code> group.</p></section>
 </div>
