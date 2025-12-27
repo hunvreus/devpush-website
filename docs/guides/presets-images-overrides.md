@@ -4,6 +4,8 @@ title: Customize presets and images
 description: Override the framework presets and Docker images used for building and deploying your apps.
 ---
 
+![Presets and images](/media/presets-and-images.png)
+
 ## File format
 
 ### Presets
