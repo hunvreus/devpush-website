@@ -106,6 +106,8 @@ Visit `https://example.com` (your `APP_HOSTNAME`).
 
 If you run into issues, see the [troubleshooting section](#troubleshooting) below.
 
+You can now start [deploying your apps](/docs/guides/deploy-your-app).
+
 <div class="flex flex-wrap gap-2 my-6">
   <a href="/docs/operations/#service-management" class="badge-outline">
     Service management
@@ -154,14 +156,14 @@ If you run into issues, see the [troubleshooting section](#troubleshooting) belo
 6. Build runner images: `sudo /opt/devpush/scripts/build-runners.sh`
 7. Ensure code and data are owned by the system user:
 ```bash
-   sudo chown -R devpush:devpush /opt/devpush /var/lib/devpush
+sudo chown -R devpush:devpush /opt/devpush /var/lib/devpush
 ```
 8. Install the systemd service:
 ```bash
-   sudo install -m 0644 /opt/devpush/scripts/devpush.service /etc/systemd/system/
-   sudo systemctl daemon-reload
-   sudo systemctl enable --now devpush.service
-   ```
+sudo install -m 0644 /opt/devpush/scripts/devpush.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now devpush.service
+```
 
 If you run into issues, see the [troubleshooting section](#troubleshooting) below.
 

@@ -6,6 +6,8 @@ import pluginTOC from "eleventy-plugin-toc"
 
 export default async function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy("media");
+  eleventyConfig.addWatchTarget("docs/docs.json");
   eleventyConfig.addPlugin(eleventyLucideicons);
   let options = {
 		html: true,
@@ -35,6 +37,7 @@ export default async function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginTOC);
 
   var flattenedMenu = null;
+  var flattenedMenuHash = null;
 
   function flattenMenu(menu) {
     let flat = [];
@@ -53,7 +56,11 @@ export default async function(eleventyConfig) {
   }
   
   eleventyConfig.addFilter('getNavigation', function(menu) {
-    if (flattenedMenu === null) flattenedMenu = flattenMenu(menu);
+    const menuHash = JSON.stringify(menu);
+    if (flattenedMenu === null || flattenedMenuHash !== menuHash) {
+      flattenedMenu = flattenMenu(menu);
+      flattenedMenuHash = menuHash;
+    }
     
     const currentUrl = this.page.url;
     
@@ -77,9 +84,13 @@ export default async function(eleventyConfig) {
   });
 
   let cachedMenus = null;
+  let cachedMenuHash = null;
 
   function buildMenus(menu, collections) {
-    if (cachedMenus) return cachedMenus;
+    const menuHash = JSON.stringify(menu);
+    if (cachedMenus && cachedMenuHash === menuHash) return cachedMenus;
+    
+    cachedMenuHash = menuHash;
 
     function slugToUrl(slug) {
       if (slug === 'index') return '/docs/';

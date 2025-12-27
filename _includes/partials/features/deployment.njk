@@ -2,17 +2,17 @@
   <ul class="flex gap-x-6 items-start">
     <li class="flex items-center gap-x-2" data-tooltip="Status">
       <span class="text-green-600 dark:text-green-500 [&>svg]:text-green-600 dark:[&>svg]:text-green-500 [&>svg]:size-4 flex items-center gap-x-2">
-        {% include "icons/circle-check.svg" %}
+        {% lucide "circle-check" %}
         Succeeded
       </span>
     </li>
     <li class="flex items-center gap-x-2 text-muted-foreground [&>svg]:opacity-50 [&>svg]:dark:opacity-60 [&>svg]:size-4 [&>svg]:shrink-0" data-tooltip="Duration">
-      {% include "icons/timer.svg" %}
+      {% lucide "timer" %}
       24s (5 minutes ago)
     </li>
     <li class="h-5">
       <span class="badge-secondary">
-        {% include "icons/sparkle.svg" %}
+        {% lucide "sparkle" %}
         Current
       </span>
     </li>
@@ -30,18 +30,18 @@
       </div>
     </li>
     <li class="flex items-center gap-x-2 text-muted-foreground [&>svg]:opacity-50 [&>svg]:dark:opacity-60 [&>svg]:size-4 [&>svg]:shrink-0 min-w-0">
-      {% include "icons/zap.svg" %}
+      {% lucide "zap" %}
       <span class="truncate">Commit by <a href="https://github.com/hunvreus" class="hover:text-foreground transition-colors" target="_blank">@hunvreus</a></span>
     </li>
     <li class="min-w-0">
       <a href="https://github.com/hunvreus/flask-basics/tree/main" target="_blank" class="flex items-center gap-x-2 text-muted-foreground hover:text-foreground transition-colors [&>svg]:opacity-50 [&>svg]:dark:opacity-60 [&>svg]:size-4 [&>svg]:shrink-0" data-tooltip="Branch">
-        {% include "icons/git-branch.svg" %}
+        {% lucide "git-branch" %}
         <span class="truncate">main</span>
       </a>
     </li>
     <li class="min-w-0">
       <a class="flex items-center gap-x-2 text-muted-foreground hover:text-foreground transition-colors [&>svg]:opacity-50 [&>svg]:dark:opacity-60 [&>svg]:size-4 [&>svg]:shrink-0" href="https://github.com/hunvreus/flask-basics/commit/c591d501e164f7b723b0f4b8589bb3c4aabe426c" target="_blank" data-tooltip="Commit ({sha})">
-        {% include "icons/git-commit-horizontal.svg" %}
+        {% lucide "git-commit-horizontal" %}
         <span class="truncate">feat: add user authentication middleware</span>
       </a>
     </li>
