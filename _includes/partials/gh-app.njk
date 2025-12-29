@@ -43,7 +43,14 @@
         {% lucide "triangle-alert" %}
         <h3>Update webhook URL</h3>
         <section>
-          <p>The webhook URL was set to <code>http://example.com/api/github/webhook</code> because GitHub cannot reach <code>localhost</code>. If you want to receive events from GitHub, you will need to use tunnel (e.g. ngrok) and then <a :href="githubAppUrl" target="_blank" rel="noopener noreferrer">update the GitHub App</a>.</p>
+          <p>The webhook URL was set to <code>http://example.com/api/github/webhook</code> because GitHub cannot reach <code>localhost</code>. If you want to receive events from GitHub, you will need to use a tunnel (e.g. ngrok) and <a :href="githubAppUrl" target="_blank" rel="noopener noreferrer">update the webhook URL in the GitHub App settings</a>.</p>
+        </section>
+      </div>
+      <div class="alert" x-show="!loading && hasCredentials" x-cloak>
+        {% lucide "triangle-alert" %}
+        <h3>User-to-server token expiration</h3>
+        <section>
+          <p>By default, GitHub expires user tokens. To prevent users from being logged out regularly, <a :href="githubAppBetaUrl" target="_blank" rel="noopener noreferrer">opt out of it in the GitHub App settings</a>.</p>
         </section>
       </div>
       <div class="h-64 flex items-center justify-center border border-input rounded-md dark:bg-input/30 shadow-xs" :class="{ 'hidden': !loading }">
@@ -272,6 +279,10 @@
           return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/${c.slug}`;
         }
         return `https://github.com/settings/apps/${c.slug}`;
+      },
+
+      get githubAppBetaUrl() {
+        return this.githubAppUrl ? `${this.githubAppUrl}/beta` : '';
       },
 
       get envOutput() {
