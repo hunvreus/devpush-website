@@ -75,7 +75,7 @@
   const HOSTNAME_KEY = 'devpush_github_hostname';
   const CREDENTIALS_KEY = 'devpush_github_credentials';
     const STORAGE_TTL = 10 * 60 * 1000;
-    const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
+    const HOST_RE = /^(localhost|[a-z0-9]+(\.[a-z0-9-]+)+)$/;
     const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
 
   function getStorage(key) {
@@ -113,8 +113,8 @@
       },
 
         get isHostnameValid() {
-          const h = this.hostname.trim();
-          return HOST_RE.test(h);
+          const hostname = this.hostname.trim();
+          return HOST_RE.test(hostname);
         },
 
         get isOrgValid() {
@@ -152,15 +152,16 @@
       },
 
       updateManifest() {
-          const h = this.hostname.trim();
-          if (!this.isHostnameValid) {
+        const hostname = this.hostname.trim();
+        if (!this.isHostnameValid) {
           this.manifest = '';
           return;
         }
-          setStorage(HOSTNAME_KEY, h);
-          const appBaseUrl = `https://${h}`;
+        setStorage(HOSTNAME_KEY, hostname);
+        const protocol = (hostname === 'localhost' || hostname.endsWith('.local')) ? 'http' : 'https';
+        const appBaseUrl = `${protocol}://${hostname}`;
         const callbackUrl = window.location.origin + window.location.pathname;
-          const appName = `devpush-${this.useOrg && this.orgId ? this.orgId.trim() : Math.random().toString(36).substring(2, 8)}`;
+        const appName = `devpush-${this.useOrg && this.orgId ? this.orgId.trim() : Math.random().toString(36).substring(2, 8)}`;
         this.manifest = JSON.stringify({
           name: appName,
           url: appBaseUrl,
