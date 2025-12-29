@@ -56,16 +56,29 @@
       >
         Reset
       </button>
-      <button
-        type="button"
-        class="btn"
-        :class="{ 'opacity-50': copied }"
-        @click="copyToClipboard"
-        :disabled="loading"
-      >
-        <span x-show="!copied">Copy to clipboard</span>
-        <span x-show="copied">Copied!</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <a
+          :href="githubAppUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-icon-outline"
+          data-tooltip="View on GitHub"
+          aria-label="View on GitHub"
+          :disabled="loading"
+        >
+          {% include "logos/github.svg" %}
+        </a>
+        <button
+          type="button"
+          class="btn"
+          :class="{ 'opacity-50': copied }"
+          @click="copyToClipboard"
+          :disabled="loading"
+        >
+          <span x-show="!copied">Copy to clipboard</span>
+          <span x-show="copied">Copied!</span>
+        </button>
+      </div>
     </footer>
   </div>
 </div>
@@ -75,7 +88,7 @@
   const HOSTNAME_KEY = 'devpush_github_hostname';
   const CREDENTIALS_KEY = 'devpush_github_credentials';
     const STORAGE_TTL = 10 * 60 * 1000;
-    const HOST_RE = /^(localhost|[a-z0-9]+(\.[a-z0-9-]+)+)$/;
+    const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
     const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
 
   function getStorage(key) {
@@ -113,7 +126,9 @@
       },
 
         get isHostnameValid() {
-          const hostname = this.hostname.trim();
+          const hostname = this.hostname.trim().toLowerCase();
+          if (!hostname) return false;
+          if (hostname === 'localhost') return true;
           return HOST_RE.test(hostname);
         },
 
@@ -152,7 +167,7 @@
       },
 
       updateManifest() {
-        const hostname = this.hostname.trim();
+        const hostname = this.hostname.trim().toLowerCase();
         if (!this.isHostnameValid) {
           this.manifest = '';
           return;
@@ -239,6 +254,15 @@
           this.orgId = '';
         sessionStorage.removeItem(HOSTNAME_KEY);
         sessionStorage.removeItem(CREDENTIALS_KEY);
+      },
+
+      get githubAppUrl() {
+        if (!this.credentials) return '';
+        const c = this.credentials;
+        if (this.useOrg && this.orgId.trim()) {
+          return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/${c.slug}`;
+        }
+        return `https://github.com/settings/apps/${c.slug}`;
       },
 
       get envOutput() {
