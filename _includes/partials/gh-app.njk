@@ -38,7 +38,14 @@
       <h2>Step 2: Copy the environment variables</h2>
       <p>Copy the following environment variables into your <code>.env</code> file.</p>
     </header>
-    <section>
+    <section class="space-y-4">
+      <div class="alert" x-show="!loading && hasCredentials && hostname.trim().toLowerCase() === 'localhost'" x-cloak>
+        {% lucide "triangle-alert" %}
+        <h3>Update webhook URL</h3>
+        <section>
+          <p>The webhook URL was set to <code>http://example.com/api/github/webhook</code> because GitHub cannot reach <code>localhost</code>. If you want to receive events from GitHub, you will need to use tunnel (e.g. ngrok) and then <a :href="githubAppUrl" target="_blank" rel="noopener noreferrer">update the GitHub App</a>.</p>
+        </section>
+      </div>
       <div class="h-64 flex items-center justify-center border border-input rounded-md dark:bg-input/30 shadow-xs" :class="{ 'hidden': !loading }">
         <span class="flex items-center gap-x-2 text-muted-foreground [&>svg]:size-4 [&>svg]:animate-spin">
           {% lucide "loader" %}
@@ -84,12 +91,12 @@
 </div>
 
 <script>
-  (function() {
+(function() {
   const HOSTNAME_KEY = 'devpush_github_hostname';
   const CREDENTIALS_KEY = 'devpush_github_credentials';
-    const STORAGE_TTL = 10 * 60 * 1000;
-    const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
-    const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
+  const STORAGE_TTL = 10 * 60 * 1000;
+  const HOST_RE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
+  const ORG_RE = /^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$/;
 
   function getStorage(key) {
     const item = sessionStorage.getItem(key);
@@ -111,43 +118,43 @@
     sessionStorage.setItem(key, JSON.stringify(item));
   }
 
-    function ghApp() {
+  function ghApp() {
     return {
       hostname: getStorage(HOSTNAME_KEY) || '',
       manifest: '',
       credentials: null,
       copied: false,
       loading: false,
-        useOrg: false,
-        orgId: '',
+      useOrg: false,
+      orgId: '',
 
       get hasCredentials() {
         return this.credentials !== null;
       },
 
-        get isHostnameValid() {
-          const hostname = this.hostname.trim().toLowerCase();
-          if (!hostname) return false;
-          if (hostname === 'localhost') return true;
-          return HOST_RE.test(hostname);
-        },
+      get isHostnameValid() {
+        const hostname = this.hostname.trim().toLowerCase();
+        if (!hostname) return false;
+        if (hostname === 'localhost') return true;
+        return HOST_RE.test(hostname);
+      },
 
-        get isOrgValid() {
-          if (!this.useOrg) return true;
-          const o = this.orgId.trim();
-          return ORG_RE.test(o);
-        },
+      get isOrgValid() {
+        if (!this.useOrg) return true;
+        const o = this.orgId.trim();
+        return ORG_RE.test(o);
+      },
 
-        get canSubmit() {
-          return this.isHostnameValid && this.isOrgValid;
-        },
+      get canSubmit() {
+        return this.isHostnameValid && this.isOrgValid;
+      },
 
-        get githubUrl() {
-          if (this.useOrg && this.orgId.trim()) {
-            return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/new`;
-          }
-          return 'https://github.com/settings/apps/new';
-        },
+      get githubUrl() {
+        if (this.useOrg && this.orgId.trim()) {
+          return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/new`;
+        }
+        return 'https://github.com/settings/apps/new';
+      },
 
       init() {
         const params = new URLSearchParams(window.location.search);
@@ -181,7 +188,9 @@
           name: appName,
           url: appBaseUrl,
           hook_attributes: {
-            url: hostname === 'localhost' ? 'http://example.com/api/github/webhook' : `${appBaseUrl}/api/github/webhook`,
+            url: hostname === 'localhost'
+              ? 'http://example.com/api/github/webhook'
+              : `${appBaseUrl}/api/github/webhook`,
             active: true
           },
           redirect_url: `${callbackUrl}`,
@@ -278,12 +287,12 @@ GITHUB_APP_PRIVATE_KEY="${c.pem.replace(/\n/g, '\\n')}"`;
     };
   }
 
-    if (typeof window !== 'undefined' && window.Alpine) {
+  if (typeof window !== 'undefined' && window.Alpine) {
+    window.Alpine.data('ghApp', ghApp);
+  } else {
+    document.addEventListener('alpine:init', () => {
       window.Alpine.data('ghApp', ghApp);
-    } else {
-      document.addEventListener('alpine:init', () => {
-        window.Alpine.data('ghApp', ghApp);
-      });
-    }
-  })();
+    });
+  }
+})();
 </script>
