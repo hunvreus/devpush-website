@@ -275,8 +275,8 @@
       get githubAppUrl() {
         if (!this.credentials) return '';
         const c = this.credentials;
-        if (this.useOrg && this.orgId.trim()) {
-          return `https://github.com/organizations/${this.orgId.trim()}/settings/apps/${c.slug}`;
+        if (c.owner && c.owner.type === 'Organization') {
+          return `https://github.com/organizations/${c.owner.login}/settings/apps/${c.slug}`;
         }
         return `https://github.com/settings/apps/${c.slug}`;
       },
