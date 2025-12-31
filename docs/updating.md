@@ -39,7 +39,7 @@ If you need more control or installed manually:
 cd /opt/devpush
 sudo -u devpush git fetch origin
 sudo -u devpush git checkout v1.2.0
-sudo /opt/devpush/scripts/build-runners.sh
+sudo ./scripts/build-runners.sh
 sudo systemctl restart devpush.service
 ```
 
