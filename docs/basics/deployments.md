@@ -28,3 +28,41 @@ Any deployment can be deployed again using the "Redeploy" action in the dropdown
 ## Rollback
 
 You can swap the active deployments for any environment, allowing you to instantly roll back changes that may be causing issues.
+
+## Environment variables
+
+You can define environment variables in your project settings. Variables can be scoped to a specific environment or apply to all deployments. These are injected into your container at runtime.
+
+In addition, every deployment receives the following system environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `DEVPUSH` | Always `true` when running in /dev/push |
+| `DEVPUSH_IP` | Server public IP address |
+| `DEVPUSH_URL` | Deployment URL (e.g. `https://flask-acme-id-548f851.devpush.app`) |
+| `DEVPUSH_DOMAIN` | Deployment domain without scheme |
+| `DEVPUSH_URL_BRANCH` | Branch alias URL, if available |
+| `DEVPUSH_DOMAIN_BRANCH` | Branch alias domain |
+| `DEVPUSH_URL_ENVIRONMENT` | Environment alias URL, if available |
+| `DEVPUSH_DOMAIN_ENVIRONMENT` | Environment alias domain |
+| `DEVPUSH_TEAM_ID` | Team ID |
+| `DEVPUSH_PROJECT_ID` | Project ID |
+| `DEVPUSH_ENVIRONMENT` | Environment slug or ID |
+| `DEVPUSH_DEPLOYMENT_ID` | Deployment ID |
+| `DEVPUSH_DEPLOYMENT_CREATED_AT` | Deployment timestamp (ISO 8601) |
+| `DEVPUSH_GIT_PROVIDER` | Git provider (e.g. `github`) |
+| `DEVPUSH_GIT_REPO` | Full repository name (e.g. `owner/repo`) |
+| `DEVPUSH_GIT_REPO_OWNER` | Repository owner |
+| `DEVPUSH_GIT_REPO_NAME` | Repository name |
+| `DEVPUSH_GIT_REF` | Git ref (branch name or tag) |
+| `DEVPUSH_GIT_COMMIT_SHA` | Full commit SHA |
+| `DEVPUSH_GIT_COMMIT_AUTHOR` | Commit author, if available |
+| `DEVPUSH_GIT_COMMIT_MESSAGE` | Commit message, if available |
+
+<div class="alert">
+  {% lucide "triangle-alert" %}
+  <h3>Overriding system variables</h3>
+  <section>
+    <p>Your environment variables take precedence. If you define a variable with the same name as a system variable, your value will be used.</p>
+  </section>
+</div>

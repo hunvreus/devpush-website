@@ -54,7 +54,13 @@ All configuration is stored in `/var/lib/devpush/.env`. For a starting point, us
 | `MAX_MEMORY_MB` | Maximum memory limit (MB) | `8192` |
 | `ALLOW_CUSTOM_RESOURCES` | Allow projects to override CPU/memory | `false` |
 | `JOB_TIMEOUT` | Job timeout (seconds) | `320` |
+| `JOB_MAX_TRIES` | Max retries per background job | `3` |
 | `DEPLOYMENT_TIMEOUT` | Deployment timeout (seconds) | `300` |
+| `MAGIC_LINK_TTL_SECONDS` | Magic link validity (seconds) | `900` |
+| `AUTH_TOKEN_TTL_DAYS` | Auth cookie/JWT lifetime (days) | `30` |
+| `AUTH_TOKEN_REFRESH_THRESHOLD_DAYS` | Refresh auth token when expiring within N days | `1` |
+| `AUTH_TOKEN_ISSUER` | JWT issuer for auth_token | `devpush-app` |
+| `AUTH_TOKEN_AUDIENCE` | JWT audience for auth_token | `devpush-web` |
 | `LOG_LEVEL` | Logging level | `WARNING` |
 
 ## Certificate challenge providers
