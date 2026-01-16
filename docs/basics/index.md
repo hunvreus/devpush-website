@@ -9,6 +9,7 @@ description: Key concepts and permissions for teams, projects, and deployments.
 - **[Teams](/docs/basics/teams)**: Owns projects accessible to a group of members.
 - **[Projects](/docs/basics/projects)**: Applications to be deployed along with their settings (e.g. GitHub repository, environment variables, ...).
 - **[Deployments](/docs/basics/deployments)**: Instances of project deployments.
+- **[Storage](/docs/basics/storage)**: Persistent volumes and SQLite databases shared across projects.
 
 ## Permissions
 

@@ -24,9 +24,12 @@ Example:
     "build_command": "pip install -r requirements.txt",
     "pre_deploy_command": "",
     "start_command": "gunicorn -w 3 -b 0.0.0.0:8000 main:app",
-    "logo": "<svg>...</svg>"
-  },
-  (...)
+    "logo": "<svg>...</svg>",
+    "detection": {
+      "priority": 30,
+      "any_files": ["requirements.txt", "pyproject.toml"]
+    }
+  }
 ]
 ```
 
@@ -44,6 +47,45 @@ Each preset has the following fields:
 | <code class="text-fuchsia-600 dark:text-fuchsia-400">start_command</code>  | `string` | Yes | Command used to start the app. |
 | <code class="text-fuchsia-600 dark:text-fuchsia-400">beta</code>  | `boolean` | No | Marks the preset as beta in the UI. |
 | <code class="text-fuchsia-600 dark:text-fuchsia-400">logo</code>  | `string` | Yes | SVG markup used as the preset icon. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">detection</code>  | `object` | No | Auto-detection rules for this preset. |
+
+### Detection
+
+The `detection` object enables automatic preset detection when creating a new project. When a user selects a repository, DevPush scans its file tree and matches against detection rules to suggest the appropriate preset.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">priority</code> | `number` | Higher values win when multiple presets match (default: 0). |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">any_files</code> | `array` | At least one file must exist. Supports globs (e.g. `*/settings.py`). |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">all_files</code> | `array` | All files must exist. Supports globs. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">any_paths</code> | `array` | Alias for `any_files` (supports globs). |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">none_files</code> | `array` | None of these files should exist. Used for exclusions. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">package_check</code> | `string` | Dependency name to find in `requirements.txt`, `pyproject.toml`, or `package.json`. |
+
+Example detection rules:
+
+```json
+{
+  "slug": "django",
+  "detection": {
+    "priority": 100,
+    "any_files": ["manage.py", "*/manage.py"],
+    "any_paths": ["*/settings.py", "*/wsgi.py"]
+  }
+}
+```
+
+```json
+{
+  "slug": "fastapi",
+  "detection": {
+    "priority": 95,
+    "any_files": ["requirements.txt", "pyproject.toml"],
+    "none_files": ["manage.py"],
+    "package_check": "fastapi"
+  }
+}
+```
 
 ### Images
 

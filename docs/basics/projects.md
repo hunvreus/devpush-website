@@ -39,6 +39,17 @@ Domains can be:
 - **A route**, which will require a `ANAME`, `ALIAS` or `A` record to be added to your DNS.
 - **A redirect** (301, 302, 307 or 308) which will require a `CNAME` record.
 
+## Storage
+
+Storage can be connected to a project and scoped to specific environments.
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/basics/storage" class="badge-outline">
+    Storage
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
 ## Logs
 
 Logs are collected in real-time, but a slight delay (a few hundred milliseconds) might be noticeable. Logs can be searched by keyword and filtered by deployment, environment, date, or branch.

@@ -49,7 +49,7 @@ In addition, every deployment receives the following system environment variable
 | `DEVPUSH_PROJECT_ID` | Project ID |
 | `DEVPUSH_ENVIRONMENT` | Environment slug or ID |
 | `DEVPUSH_DEPLOYMENT_ID` | Deployment ID |
-| `DEVPUSH_DEPLOYMENT_CREATED_AT` | Deployment timestamp (ISO 8601) |
+| `DEVPUSH_DEPLOYMENT_CREATED_AT` | ISO 8601 timestamp in UTC (e.g. `2025-01-15T10:30:00Z`) |
 | `DEVPUSH_GIT_PROVIDER` | Git provider (e.g. `github`) |
 | `DEVPUSH_GIT_REPO` | Full repository name (e.g. `owner/repo`) |
 | `DEVPUSH_GIT_REPO_OWNER` | Repository owner |
