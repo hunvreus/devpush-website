@@ -113,21 +113,21 @@ Fields:
 
 ### Dockerfiles
 
-Runner Dockerfiles live in `docker/runner/` inside the DevPush app source. Each file is named `Dockerfile.<slug>` and is used to build the runner image for that slug (for example, `Dockerfile.python-3.12`).
+Runner Dockerfiles live in `docker/runner/` inside the DevPush app source `/opt/devpush/`. Each file is named `Dockerfile.<slug>` and is used to build the runner image for that slug (for example, `Dockerfile.python-3.12`).
 
 ## Overriding
 
 To override presets and/or images, place JSON files in the data directory with the correct ownership and permissions. You can override only one file or both.
 
 ```bash
-sudo install -m 0644 -o devpush -g devpush ./presets.json /var/lib/devpush/presets.json
-sudo install -m 0644 -o devpush -g devpush ./images.json /var/lib/devpush/images.json
+sudo install -m 0644 -o devpush -g devpush /opt/devpush/app/settings/presets.json /var/lib/devpush/presets.json
+sudo install -m 0644 -o devpush -g devpush /opt/devpush/app/settings/images.json /var/lib/devpush/images.json
 ```
 
 Runner images are built from Dockerfiles based on the `slug` provided in the `images.json` file. This means you can override a runner without changing `images.json`.
 
 ```bash
 sudo install -d -m 0755 -o devpush -g devpush /var/lib/devpush/runner
-sudo install -m 0644 -o devpush -g devpush ./Dockerfile.python-3.12 \
+sudo install -m 0644 -o devpush -g devpush /opt/devpush/docker/runner/Dockerfile.python-3.12 \
   /var/lib/devpush/runner/Dockerfile.python-3.12
 ```

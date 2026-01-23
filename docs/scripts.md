@@ -73,7 +73,7 @@ sudo /opt/devpush/scripts/build-runners.sh
 Stop services and remove all Docker resources (containers, volumes, networks, images) and data directory.
 
 ```bash
-./scripts/clean.sh
+/opt/devpush/scripts/clean.sh
 ```
 
 **Note**: Can run without sudo if your user is in the `docker` group.
@@ -97,8 +97,8 @@ Stop services and remove all Docker resources (containers, volumes, networks, im
 Wrapper around `docker compose` that automatically loads the correct configuration files and environment.
 
 ```bash
-./scripts/compose.sh logs -f app
-./scripts/compose.sh exec app bash
+/opt/devpush/scripts/compose.sh logs -f app
+/opt/devpush/scripts/compose.sh exec app bash
 ```
 
 **Note**: Can run without sudo if your user is in the `docker` group.
@@ -106,7 +106,7 @@ Wrapper around `docker compose` that automatically loads the correct configurati
 Pass any Docker Compose command after `--`:
 
 ```bash
-./scripts/compose.sh -- ps
+/opt/devpush/scripts/compose.sh -- ps
 ```
 
 ## db-generate.sh
@@ -114,7 +114,7 @@ Pass any Docker Compose command after `--`:
 Generate a new Alembic database migration. Prompts for a migration message.
 
 ```bash
-./scripts/db-generate.sh
+/opt/devpush/scripts/db-generate.sh
 ```
 
 **Note**: Can run without sudo if your user is in the `docker` group.
@@ -235,7 +235,7 @@ sudo /opt/devpush/scripts/start.sh
 Show the current status of all services.
 
 ```bash
-./scripts/status.sh
+/opt/devpush/scripts/status.sh
 ```
 
 **Note**: Can run without sudo if your user is in the `docker` group.
