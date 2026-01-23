@@ -35,7 +35,7 @@ View specific service logs:
 ```bash
 sudo /opt/devpush/scripts/compose.sh logs app
 sudo /opt/devpush/scripts/compose.sh logs traefik
-sudo /opt/devpush/scripts/compose.sh logs worker-arq
+sudo /opt/devpush/scripts/compose.sh logs worker-jobs
 ```
 
 <div class="flex flex-wrap gap-2 my-6">

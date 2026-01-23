@@ -53,9 +53,12 @@ All configuration is stored in `/var/lib/devpush/.env`. For a starting point, us
 | `MAX_CPUS` | Maximum CPU cores per container | `4.0` |
 | `MAX_MEMORY_MB` | Maximum memory limit (MB) | `8192` |
 | `ALLOW_CUSTOM_RESOURCES` | Allow projects to override CPU/memory | `false` |
-| `JOB_TIMEOUT` | Job timeout (seconds) | `320` |
+| `JOB_TIMEOUT_SECONDS` | Job timeout (seconds) | `320` |
 | `JOB_MAX_TRIES` | Max retries per background job | `3` |
-| `DEPLOYMENT_TIMEOUT` | Deployment timeout (seconds) | `300` |
+| `JOB_COMPLETION_WAIT_SECONDS` | How long the worker waits for in-flight jobs to finish on shutdown/rollout (seconds) | `300` |
+| `DEPLOYMENT_TIMEOUT_SECONDS` | Deployment timeout (seconds) | `300` |
+| `CONTAINER_DELETE_GRACE_SECONDS` | Wait before deleting containers after stop/failure to allow logs to ship | `3` |
+| `LOG_STREAM_GRACE_SECONDS` | Grace window for deployment log streaming (when to connect/close SSE around terminal states) | `5` |
 | `MAGIC_LINK_TTL_SECONDS` | Magic link validity (seconds) | `900` |
 | `AUTH_TOKEN_TTL_DAYS` | Auth cookie/JWT lifetime (days) | `30` |
 | `AUTH_TOKEN_REFRESH_THRESHOLD_DAYS` | Refresh auth token when expiring within N days | `1` |
