@@ -124,6 +124,35 @@ Example detection:
 }
 ```
 
+### Detection variants
+
+Use `detection.variants[]` to override parts of a preset when additional conditions are met.
+Variants inherit the base preset config and only replace the fields they define.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">priority</code> | `number` | Higher values win when multiple variants match (default: base priority). |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">any_files</code> | `array` | At least one file must exist. Supports globs. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">all_files</code> | `array` | All files must exist. Supports globs. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">any_paths</code> | `array` | Alias for `any_files` (supports globs). |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">none_files</code> | `array` | None of these files should exist. Used for exclusions. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">package_check</code> | `string` | Dependency name to find in `requirements.txt`, `pyproject.toml`, or `package.json`. |
+| <code class="text-fuchsia-600 dark:text-fuchsia-400">config</code> | `object` | Partial preset config overrides (e.g., `runner`, `build_command`, `pre_deploy_command`, `start_command`, `root_directory`). |
+
+Example variant:
+
+```json
+{
+  "config": {
+    "runner": "frankenphp-node-8.3",
+    "build_command": "composer install --no-dev --optimize-autoloader --no-interaction --no-progress && if [ -f package-lock.json ]; then npm ci; else npm install; fi && npm run build"
+  },
+  "priority": 200,
+  "all_files": ["composer.json", "package.json"],
+  "any_files": ["artisan"]
+}
+```
+
 ## Overrides
 
 Edit `overrides.json` to enable/disable entries or add custom ones. Do **not** edit `catalog.json`.
