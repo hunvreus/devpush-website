@@ -32,6 +32,19 @@ Each environment variable can be associated with a specific environment or all e
 
 Then in the "Production" environment, the value will be `INFO`, but for "Staging" it will be `ERROR`.
 
+## Registry catalog
+
+The **registry catalog** controls which **runners** and **presets** are available when creating or editing a project.
+
+Admins can update the catalog and manage overrides in **Admin → Registry**.
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a href="/docs/guides/presets-images-overrides" class="badge-outline">
+    Registry catalog
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
 ## Domains
 
 Domains can be:

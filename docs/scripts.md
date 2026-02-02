@@ -15,7 +15,6 @@ All scripts are in `/opt/devpush/scripts/`.
 | Script | Description |
 |--------|-------------|
 | [backup.sh](#backup.sh) | Create backup of data, database, and metadata |
-| [build-runners.sh](#build-runners.sh) | Build runner Docker images |
 | [clean.sh](#clean.sh) | Stop stack and clean development data |
 | [compose.sh](#compose.sh) | Docker Compose wrapper with correct config |
 | [db-generate.sh](#db-generate.sh) | Generate Alembic migration |
@@ -54,19 +53,6 @@ Backups are saved to `/var/backups/devpush/` by default.
     {% lucide "arrow-right" %}
   </a>
 </div>
-
-## build-runners.sh
-
-Build the Docker images used for running deployments. Called automatically during installation and updates.
-
-```bash
-sudo /opt/devpush/scripts/build-runners.sh
-```
-
-| Option | Description |
-|--------|-------------|
-| `--no-cache` | Build without using Docker cache |
-| `--image <name>` | Build only a specific runner image |
 
 ## clean.sh
 

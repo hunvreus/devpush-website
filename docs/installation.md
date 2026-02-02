@@ -153,12 +153,11 @@ You can now start [deploying your apps](/docs/guides/deploy-your-app).
 3. Clone the repository to `/opt/devpush`
 4. Create `.env` (you can start from `/opt/devpush/.env.example`) with [all required variables](/docs/configuration/#environment-variables)
 5. [Create a GitHub App](/docs/guides/create-github-app/) and add credentials to `.env`
-6. Build runner images: `sudo /opt/devpush/scripts/build-runners.sh`
-7. Ensure code and data are owned by the system user:
+6. Ensure code and data are owned by the system user:
 ```bash
 sudo chown -R devpush:devpush /opt/devpush /var/lib/devpush
 ```
-8. Install the systemd service:
+7. Install the systemd service:
 ```bash
 sudo install -m 0644 /opt/devpush/scripts/devpush.service /etc/systemd/system/
 sudo systemctl daemon-reload

@@ -40,7 +40,7 @@
         "guides/create-github-app",
         "guides/deploy-your-app",
         "guides/restrict-access-allowlist",
-        "guides/presets-images-overrides"
+        "guides/customize-registry-catalog"
       ]
     }
   ]
