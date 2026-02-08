@@ -18,6 +18,7 @@
         "basics/teams",
         "basics/projects",
         "basics/deployments",
+        "basics/presets-and-runners",
         "basics/storage"
       ]
     },
