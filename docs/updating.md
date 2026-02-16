@@ -10,7 +10,15 @@ description: How to update /dev/push to the latest version.
 sudo /opt/devpush/scripts/update.sh
 ```
 
-This creates a backup, pulls the latest code, runs upgrade hooks, rebuilds containers, and restarts the service.
+This fetches the target ref, runs upgrade hooks, and applies the update. A backup can be created via prompt or with `--backup`.
+
+By default, update scope is `app` only. Expand scope with:
+
+```bash
+sudo /opt/devpush/scripts/update.sh --all
+sudo /opt/devpush/scripts/update.sh --components app,traefik
+sudo /opt/devpush/scripts/update.sh --full
+```
 
 To update to a specific release or branch:
 

@@ -22,6 +22,14 @@ sudo /opt/devpush/scripts/restart.sh
 sudo /opt/devpush/scripts/status.sh
 ```
 
+Target specific services when needed:
+
+```bash
+sudo /opt/devpush/scripts/restart.sh --components traefik
+sudo /opt/devpush/scripts/stop.sh --components worker-monitor
+sudo /opt/devpush/scripts/start.sh --components app,worker-jobs
+```
+
 ## Logs
 
 View all container logs:
@@ -86,4 +94,3 @@ sudo /opt/devpush/scripts/restore.sh --archive /var/backups/devpush/backup-file.
     {% lucide "arrow-right" %}
   </a>
 </div>
-

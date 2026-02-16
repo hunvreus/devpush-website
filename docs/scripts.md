@@ -156,7 +156,7 @@ sudo /opt/devpush/scripts/install.sh
 
 ## restart.sh
 
-Restart all services. Runs database migrations by default.
+Restart services. Runs database migrations by default when `app` is included.
 
 ```bash
 sudo /opt/devpush/scripts/restart.sh
@@ -164,6 +164,7 @@ sudo /opt/devpush/scripts/restart.sh
 
 | Option | Description |
 |--------|-------------|
+| `--components <csv>` | Restart only selected services (for example: `app,traefik`) |
 | `--no-migrate` | Skip database migrations |
 
 ## restore.sh
@@ -212,8 +213,9 @@ sudo /opt/devpush/scripts/start.sh
 
 | Option | Description |
 |--------|-------------|
+| `--components <csv>` | Start only selected services |
 | `--no-migrate` | Skip database migrations |
-| `--timeout <sec>` | Health check timeout (default: 120s) |
+| `--timeout <sec>` | Health check timeout (default: 60s) |
 | `--verbose` | Show detailed output |
 
 ## status.sh
@@ -228,7 +230,7 @@ Show the current status of all services.
 
 ## stop.sh
 
-Stop all services.
+Stop services.
 
 ```bash
 sudo /opt/devpush/scripts/stop.sh
@@ -236,7 +238,8 @@ sudo /opt/devpush/scripts/stop.sh
 
 | Option | Description |
 |--------|-------------|
-| `--hard` | Force stop and remove containers |
+| `--components <csv>` | Stop only selected services |
+| `--hard` | Force stop running containers (for selected services when combined with `--components`) |
 
 ## uninstall.sh
 
@@ -262,7 +265,7 @@ sudo /opt/devpush/scripts/uninstall.sh
 
 ## update.sh
 
-Update to a new version. Creates a backup, pulls code, runs upgrade hooks, rebuilds containers, and restarts.
+Update to a new version. By default, updates `app` only. Scope can be expanded with flags or upgrade metadata.
 
 ```bash
 sudo /opt/devpush/scripts/update.sh
@@ -271,7 +274,10 @@ sudo /opt/devpush/scripts/update.sh
 | Option | Description |
 |--------|-------------|
 | `--ref <ref>` | Target version, branch, or commit (default: latest stable) |
-| `--skip-backup` | Skip pre-update backup |
+| `--all` | Update `app`, `worker-jobs`, and `worker-monitor` |
+| `--components <csv>` | Update only selected services |
+| `--full` | Full stack update (downtime) |
+| `--backup` | Force creating a backup before update |
 | `--no-migrate` | Skip database migrations |
 | `--no-telemetry` | Disable anonymous update telemetry |
 | `--yes` | Skip confirmation prompts |
