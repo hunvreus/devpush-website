@@ -1,0 +1,81 @@
+---
+import branch from 'lucide-static/icons/git-branch.svg?raw';
+import link from 'lucide-static/icons/link-2.svg?raw';
+import check from 'lucide-static/icons/circle-check.svg?raw';
+import timer from 'lucide-static/icons/clock.svg?raw';
+import sparkle from 'lucide-static/icons/sparkle.svg?raw';
+import plus from 'lucide-static/icons/plus.svg?raw';
+import chevron from 'lucide-static/icons/chevron-down.svg?raw';
+import ellipsis from 'lucide-static/icons/ellipsis.svg?raw';
+import undo from 'lucide-static/icons/undo-2.svg?raw';
+import redo from 'lucide-static/icons/redo-2.svg?raw';
+import key from 'lucide-static/icons/key-round.svg?raw';
+import github from '../assets/github.svg?raw';
+interface Props {
+  kind: 'deploy' | 'compose' | 'environments' | 'variables' | 'domains' | 'logs' | 'rollback' | 'metrics' | 'backups' | 'teams' | 'api' | 'source';
+}
+const { kind } = Astro.props;
+---
+<div class:list={['feature-preview', `feature-preview-${kind}`]} aria-hidden="true" inert>
+  {kind === 'deploy' && <div class="mini-deployment">
+    <div class="mini-inline"><span class="mini-success"><Fragment set:html={check} /> Succeeded</span><span class="mini-muted mini-inline"><Fragment set:html={timer} /> 24s</span><span class="badge" data-variant="secondary"><Fragment set:html={sparkle} /> Current</span></div>
+    <div class="mini-inline mini-muted"><span class="mini-inline"><i class="mini-dot"></i>Production</span><span class="mini-inline"><Fragment set:html={branch} />main</span></div>
+    <div class="mini-commit"><code>a82f9c1</code><span>Update checkout flow</span></div>
+  </div>}
+  {kind === 'compose' && <div class="mini-form">
+    <label>Compose file path<input class="input" value="compose.yml" readonly tabindex="-1" /></label>
+    <label>Pre-deploy command<input class="input font-mono" value="npm run migrate" readonly tabindex="-1" /></label>
+    <div class="mini-actions"><span class="btn" data-size="sm" data-variant="ghost">Cancel</span><span class="btn" data-size="sm">Save</span></div>
+  </div>}
+  {kind === 'environments' && <div class="mini-environments">
+    {[{ name: 'Production', host: 'app.example.com', branch: 'main', color: 'blue' }, { name: 'Staging', host: 'staging.example.com', branch: 'staging', color: 'violet' }].map(env => <div class="mini-environment">
+      <div class="mini-inline mini-medium"><i class:list={['mini-dot', env.color === 'violet' && 'mini-dot-violet']}></i>{env.name}</div>
+      <div class="mini-inline mini-muted"><Fragment set:html={link} /><span>{env.host}</span></div>
+      <div class="mini-inline mini-muted"><Fragment set:html={branch} />{env.branch}</div>
+    </div>)}
+  </div>}
+  {kind === 'variables' && <div class="mini-variables">
+    {['POSTGRES_DB', 'POSTGRES_USER', 'POSTGRES_PASSWORD'].map(name => <div class="mini-variable-row"><input class="input font-mono" value={name} readonly tabindex="-1" /><input class="input" type="text" value="••••••••••" autocomplete="off" readonly tabindex="-1" /></div>)}
+    <span class="btn" data-size="sm" data-variant="outline"><Fragment set:html={plus} /> Add variable</span>
+  </div>}
+  {kind === 'domains' && <div class="mini-domains">
+    <div class="mini-table-header"><span>Host</span><span>Environment</span><span>HTTPS</span></div>
+    {['app.example.com', 'api.example.com'].map(host => <div class="mini-domain-row"><span class="mini-medium">{host}</span><span class="mini-inline mini-muted"><i class="mini-dot"></i>Production</span><input class="input" type="checkbox" role="switch" checked tabindex="-1" /></div>)}
+    <span class="btn" data-size="sm" data-variant="outline"><Fragment set:html={plus} /> Add domain</span>
+  </div>}
+  {kind === 'logs' && <div class="mini-logs">
+    <p><time>18:34:02</time><span>Building Compose services.</span></p>
+    <p><time>18:34:03</time><span>Starting application…</span></p>
+    <p><time>18:34:03</time><span>Listening on :3000</span></p>
+    <p><time>18:34:04</time><span>GET /health 200</span></p>
+    <p class="mini-success"><time>18:34:05</time><span>Deployment completed.</span></p>
+  </div>}
+  {kind === 'rollback' && <div class="mini-rollback">
+    <span class="btn" data-size="icon-sm" data-variant="ghost"><Fragment set:html={ellipsis} /></span>
+    <!-- Static illustration: retain Basecoat menu styles without installing handlers. -->
+    <div class="dropdown-menu" data-dropdown-menu-initialized="true"><div role="menu" class="rounded-lg border bg-popover p-1 shadow-sm"><div role="menuitem" class="active"><Fragment set:html={undo} />Roll back</div><div role="menuitem"><Fragment set:html={redo} />Redeploy</div></div></div>
+  </div>}
+  {kind === 'metrics' && <div class="mini-metrics">
+    <div class="mini-inline mini-metric-heading"><span class="mini-medium">Network traffic</span><span class="mini-muted">↓ 12.4 KB/s  ↑ 2.1 KB/s</span></div>
+    <svg class="mini-chart" viewBox="0 0 320 100" preserveAspectRatio="none"><path class="mini-chart-grid" d="M0 25H320M0 50H320M0 75H320" /><path class="mini-chart-sent" d="M0 78L20 76L40 77L60 76L80 72L100 73L120 72L140 70L160 71L180 70L200 69L220 71L240 70L260 68L280 70L300 69L320 70" /><path class="mini-chart-received" d="M0 83L20 80L40 82L60 71L80 78L100 30L120 66L140 73L160 68L180 80L200 64L220 72L240 77L260 65L280 73L300 69L320 76" /></svg>
+    <div class="mini-inline mini-muted mini-metric-legend"><span><i></i>Received</span><span><i></i>Sent</span></div>
+  </div>}
+  {kind === 'backups' && <div class="mini-form mini-backup">
+    <div class="mini-inline mini-medium">Daily backup<input class="input" type="checkbox" role="switch" checked tabindex="-1" /></div>
+    <label>Schedule<span class="input mini-select">Every day at 02:00<Fragment set:html={chevron} /></span></label>
+    <label>Local retention<span class="mini-inline"><input class="input" value="7" readonly tabindex="-1" /><span class="mini-muted">days</span></span></label>
+  </div>}
+  {kind === 'teams' && <div class="mini-members">
+    {[{ name: 'Alex Chen', avatar: 'alex', username: 'alex', role: 'Owner' }, { name: 'Sam Rivera', avatar: 'sam', username: 'sam', role: 'Admin' }].map(user => <div class="mini-member-row"><img class="mini-avatar" src={`/images/avatar-${user.avatar}.jpg`} width="32" height="32" alt="" loading="lazy" /><span class="mini-member-identity"><span class="mini-medium">{user.name}</span><span class="mini-muted">{user.username}</span></span><span class="input mini-select">{user.role}<Fragment set:html={chevron} /></span><span class="btn" data-size="icon-sm" data-variant="ghost"><Fragment set:html={ellipsis} /></span></div>)}
+    <span class="btn" data-size="sm" data-variant="outline"><Fragment set:html={plus} /> Invite member</span>
+  </div>}
+  {kind === 'api' && <div class="mini-api">
+    <div class="mini-api-key"><Fragment set:html={key} /><div><strong>Deploy automation</strong><p>Acme · All projects</p><p>Read and write · Expires in 30 days</p></div><span class="btn" data-size="icon-sm" data-variant="ghost"><Fragment set:html={ellipsis} /></span></div>
+    <span class="btn" data-size="sm" data-variant="outline"><Fragment set:html={plus} /> Create API key</span>
+  </div>}
+  {kind === 'source' && <div class="mini-source">
+    <div class="mini-inline mini-medium"><Fragment set:html={github} />hunvreus/devpush<span class="badge" data-variant="outline">Public</span></div>
+    <p>Deploy your apps with a git push.</p>
+    <div class="mini-inline mini-muted"><span>TypeScript</span><span>Go</span><span>MIT license</span></div>
+  </div>}
+</div>
