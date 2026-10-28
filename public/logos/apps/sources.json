@@ -1,0 +1,207 @@
+{
+  "collection": "homarr-labs/dashboard-icons",
+  "revision": "6d31345986eba2067a63eb41c1a5a87d4e8e850a",
+  "license": "Apache-2.0; project logos remain subject to their respective trademark rights.",
+  "assets": [
+    {
+      "name": "Gitea",
+      "file": "/logos/apps/gitea.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/gitea.svg"
+    },
+    {
+      "name": "Forgejo",
+      "file": "/logos/apps/forgejo.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/forgejo.svg"
+    },
+    {
+      "name": "GitLab",
+      "file": "/logos/apps/gitlab.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/gitlab.svg"
+    },
+    {
+      "name": "WordPress",
+      "file": "/logos/apps/wordpress.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/wordpress.svg"
+    },
+    {
+      "name": "Ghost",
+      "file": "/logos/apps/ghost.webp",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/webp/ghost.webp"
+    },
+    {
+      "name": "Directus",
+      "file": "/logos/apps/directus.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/directus.svg"
+    },
+    {
+      "name": "n8n",
+      "file": "/logos/apps/n8n.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/n8n.svg"
+    },
+    {
+      "name": "Activepieces",
+      "file": "/logos/apps/activepieces.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/activepieces.svg"
+    },
+    {
+      "name": "Uptime Kuma",
+      "file": "/logos/apps/uptime-kuma.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/uptime-kuma.svg"
+    },
+    {
+      "name": "Beszel",
+      "file": "/logos/apps/beszel.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/beszel.svg"
+    },
+    {
+      "name": "Beszel (dark theme)",
+      "file": "/logos/apps/beszel-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/beszel-light.svg"
+    },
+    {
+      "name": "Grafana",
+      "file": "/logos/apps/grafana.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/grafana.svg"
+    },
+    {
+      "name": "Vaultwarden",
+      "file": "/logos/apps/vaultwarden.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/vaultwarden.svg"
+    },
+    {
+      "name": "Vaultwarden (dark theme)",
+      "file": "/logos/apps/vaultwarden-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/vaultwarden-light.svg"
+    },
+    {
+      "name": "Immich",
+      "file": "/logos/apps/immich.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/immich.svg"
+    },
+    {
+      "name": "Nextcloud",
+      "file": "/logos/apps/nextcloud.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/nextcloud.svg"
+    },
+    {
+      "name": "Jellyfin",
+      "file": "/logos/apps/jellyfin.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/jellyfin.svg"
+    },
+    {
+      "name": "Audiobookshelf",
+      "file": "/logos/apps/audiobookshelf.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/audiobookshelf.svg"
+    },
+    {
+      "name": "Homepage",
+      "file": "/logos/apps/homepage.webp",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/webp/homepage.webp"
+    },
+    {
+      "name": "Mealie",
+      "file": "/logos/apps/mealie.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/mealie.svg"
+    },
+    {
+      "name": "linkding",
+      "file": "/logos/apps/linkding.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/linkding.svg"
+    },
+    {
+      "name": "Paperless-ngx",
+      "file": "/logos/apps/paperless-ngx.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/paperless-ngx.svg"
+    },
+    {
+      "name": "Outline",
+      "file": "/logos/apps/outline.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/outline.svg"
+    },
+    {
+      "name": "Memos",
+      "file": "/logos/apps/memos.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/memos.svg"
+    },
+    {
+      "name": "Plausible",
+      "file": "/logos/apps/plausible.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/plausible.svg"
+    },
+    {
+      "name": "Stirling PDF",
+      "file": "/logos/apps/stirling-pdf.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/stirling-pdf.svg"
+    },
+    {
+      "name": "metabase",
+      "file": "/logos/apps/metabase.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/metabase.svg"
+    },
+    {
+      "name": "penpot",
+      "file": "/logos/apps/penpot.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/penpot.svg"
+    },
+    {
+      "name": "penpot-light",
+      "file": "/logos/apps/penpot-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/penpot-light.svg"
+    },
+    {
+      "name": "open-webui",
+      "file": "/logos/apps/open-webui.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/open-webui.svg"
+    },
+    {
+      "name": "open-webui-light",
+      "file": "/logos/apps/open-webui-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/open-webui-light.svg"
+    },
+    {
+      "name": "mattermost",
+      "file": "/logos/apps/mattermost.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/mattermost.svg"
+    },
+    {
+      "name": "Hermes Agent",
+      "file": "/logos/apps/hermes-agent-alt.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/hermes-agent-alt.svg"
+    },
+    {
+      "name": "Hermes Agent",
+      "file": "/logos/apps/hermes-agent-alt-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/hermes-agent-alt-light.svg"
+    },
+    {
+      "name": "Strapi",
+      "file": "/logos/apps/strapi.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/strapi.svg"
+    },
+    {
+      "name": "Bitwarden",
+      "file": "/logos/apps/bitwarden.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/bitwarden.svg"
+    },
+    {
+      "name": "PostHog",
+      "file": "/logos/apps/posthog.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/posthog.svg"
+    },
+    {
+      "name": "PostHog",
+      "file": "/logos/apps/posthog-light.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/posthog-light.svg"
+    },
+    {
+      "name": "Home Assistant",
+      "file": "/logos/apps/home-assistant.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/home-assistant.svg"
+    },
+    {
+      "name": "AppFlowy",
+      "file": "/logos/apps/appflowy.svg",
+      "source": "https://github.com/homarr-labs/dashboard-icons/blob/6d31345986eba2067a63eb41c1a5a87d4e8e850a/svg/appflowy.svg"
+    }
+  ]
+}

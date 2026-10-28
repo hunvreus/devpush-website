@@ -1,0 +1,10 @@
+---
+import sunSvg from 'lucide-static/icons/sun.svg?raw';
+import moonSvg from 'lucide-static/icons/moon.svg?raw';
+const sun = sunSvg.replace('<svg', '<svg aria-hidden="true"');
+const moon = moonSvg.replace('<svg', '<svg aria-hidden="true"');
+---
+<button class="btn" data-variant="ghost" data-size="icon-sm" type="button" aria-label="Toggle dark mode" onclick="window.basecoat?.theme.toggle()">
+  <span class="hidden dark:block"><Fragment set:html={sun} /></span>
+  <span class="block dark:hidden"><Fragment set:html={moon} /></span>
+</button>

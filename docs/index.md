@@ -1,44 +1,25 @@
 ---
-layout: layouts/doc.njk
-title: Introduction
-description: "An open source, self-hosted platform that automates building and deploying any app: Python, Node.js, PHP..."
-icon: info
+description: What devpush is, why it exists and how it works.
 ---
 
-## What is it?
+# Overview
 
-In short, /dev/push is an open-source, self-hostable alternative to platforms like Vercel, Render or Laravel Cloud. It deploys your app straight from GitHub every time you push new code to your repository.
+devpush is an open-source deployment platform for applications running on your own servers. Connect a GitHub repository, configure its Docker Compose services and push to deploy.
 
-Some of the main features:
+## Why devpush?
 
-- **Git-based deployments**: Push to deploy from GitHub with zero-downtime release and instant rollback.
-- **Multi-language support**: Python, Node.js, PHP... basically anything that can run on Docker.
-- **Environment management**: Multiple environments with branch mapping and encrypted environment variables.
-- **Real-time monitoring**: Live and searchable build and runtime logs.
-- **Team collaboration**: Role-based access control with team invitations and permissions.
-- **Custom domains**: Support for custom domains and automatic Let's Encrypt SSL certificates.
-- **Self-hosted and open source**: Run on your own servers, MIT-licensed.
+devpush started with a simple goal: make deploying Python applications as straightforward as deploying with Vercel. That goal extends to any application that runs with Docker Compose.
 
-## Why did you build it?
+You choose the infrastructure and keep control of your data. devpush brings deployments, domains, logs, monitoring and backups into one interface, so you spend less time assembling and maintaining deployment scripts.
 
-I started working on /dev/push because I wanted a platform as user-friendly as Vercel, but for Python apps. There were a few alternatives already, but they either didn't really match the user experience (e.g. Render), or were too technical (e.g. Coolify). I wanted something as simple and straightforward as Vercel, even if that meant less control.
+## How it works
 
-## How does it work?
+The dashboard runs on Cloudflare Workers or as a Node app; the supplied Node installation uses Docker Compose. An agent on each Linux server connects to it, runs Docker Compose and reports progress and health. Application traffic goes directly to your servers.
 
-Under the hood, it's simply Docker.
+Projects connect repositories to environments, such as production and staging. Each environment has its own variables and server assignment. GitHub pushes trigger deployments for matching branches.
 
-The app itself allows you to manage the configuration for your projects (GitHub repository, Docker image, build and start commands, environment variables, ...).
+Compose is required; Dockerfiles can be used within it. Updates happen in place and do not guarantee zero downtime. Deploy only trusted code: Docker workloads can access their host.
 
-Whenever it receives a webhook post from GitHub, it creates a new container for the selected Docker image and proceeds to run a series of commands (git clone, build, ...). If the app builds successfully and is available, it is swapped for the matching environment.
+## Get started
 
-You can [install it on your own server](/docs/installation) (e.g. Hetzner), but [there is also an online demo: demo.devpu.sh](https://demo.devpu.sh) (WARNING: this demo server resets every hour, all deployments and configuration will be wiped out).
-
-## How can I help?
-
-/dev/push is 100% open source and free.
-
-- [Sponsor the project](https://github.com/sponsors/hunvreus)
-- [Star the project on GitHub](https://github.com/hunvreus/devpush)
-- [Report issues or request features](https://github.com/hunvreus/devpush/issues)
-- [Send pull requests](https://github.com/hunvreus/devpush/pulls)
-- [Join the Discord chat](https://devpu.sh/chat)
+[Install devpush](/docs/self-hosting/) to run your own dashboard, or follow [Your first deployment](/docs/getting-started/) if one is already available.

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Sentry",
+    "image": "/logos/community/sentry.svg",
+    "profile": "https://github.com/untitaker",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/sentry.svg"
+  },
+  {
+    "name": "Docker",
+    "image": "/logos/community/docker.svg",
+    "profile": "https://github.com/cmrigney",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/docker.svg"
+  },
+  {
+    "name": "Cloudflare",
+    "image": "/logos/community/cloudflare.svg",
+    "profile": "https://github.com/markphelps",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/cloudflare.svg"
+  },
+  {
+    "name": "Tailscale",
+    "image": "/logos/community/tailscale.svg",
+    "profile": "https://github.com/armstrongl",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/tailscale.svg"
+  },
+  {
+    "name": "Pydantic",
+    "image": "/logos/community/pydantic.svg",
+    "profile": "https://github.com/Kludex",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/pydantic.svg"
+  },
+  {
+    "name": "PagerDuty",
+    "image": "/logos/community/pagerduty.svg",
+    "profile": "https://github.com/waxidiotic",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/pagerduty.svg"
+  },
+  {
+    "name": "Shopify",
+    "image": "/logos/community/shopify.svg",
+    "profile": "https://github.com/karmakaze",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/shopify.svg"
+  },
+  {
+    "name": "Spotify",
+    "image": "/logos/community/spotify.svg",
+    "profile": "https://github.com/lrabbit",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/spotify.svg"
+  },
+  {
+    "name": "Netflix",
+    "image": "/logos/community/netflix.svg",
+    "profile": "https://github.com/mujuni88",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/netflix.svg"
+  },
+  {
+    "name": "Microsoft",
+    "image": "/logos/community/microsoft.svg",
+    "profile": "https://github.com/prabirshrestha",
+    "assetSource": "https://raw.githubusercontent.com/pheralb/svgl/main/static/library/microsoft.svg"
+  },
+  {
+    "name": "Google",
+    "image": "/logos/community/google.svg",
+    "profile": "https://github.com/mbrukman",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/google.svg"
+  },
+  {
+    "name": "Amazon",
+    "image": "/logos/community/amazon.svg",
+    "profile": "https://github.com/arindam89",
+    "assetSource": "https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/amazon.svg"
+  }
+]

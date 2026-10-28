@@ -1,47 +1,54 @@
 {
-  "layout": "layouts/doc.njk",
-  "tags": "docs",
   "menu": [
     {
       "type": "group",
       "label": "Getting started",
       "items": [
         "index",
-        "installation"
+        "self-hosting",
+        "getting-started"
       ]
     },
     {
       "type": "group",
       "label": "Basics",
       "items": [
-        "basics/index",
-        "basics/teams",
-        "basics/projects",
-        "basics/deployments",
-        "basics/presets-and-runners",
-        "basics/storage"
+        "projects",
+        "compose-deployments",
+        "servers",
+        "domains",
+        "backups",
+        "accounts-and-teams",
+        "notifications"
       ]
     },
     {
       "type": "group",
       "label": "Administration & Operations",
       "items": [
-        "configuration",
-        "operations",
-        "updating",
-        "uninstalling",
-        "scripts"
+        "cloudflare-deployment",
+        "production-operations",
+        "agent-maintenance",
+        "deletion-recovery"
       ]
     },
     {
       "type": "group",
-      "label": "Guides",
+      "label": "Reference",
       "items": [
-        "guides/create-hetzner-server",
-        "guides/create-github-app",
-        "guides/deploy-your-app",
-        "guides/restrict-access-allowlist",
-        "guides/customize-registry-catalog"
+        "configuration",
+        "api",
+        "api-operations"
+      ]
+    },
+    {
+      "type": "group",
+      "label": "Development",
+      "items": [
+        "local-setup",
+        "development",
+        "package-installation",
+        "agent-releases"
       ]
     }
   ]

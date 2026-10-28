@@ -1,0 +1,206 @@
+---
+import branch from 'lucide-static/icons/git-branch.svg?raw';
+import commit from 'lucide-static/icons/git-commit-horizontal.svg?raw';
+import check from 'lucide-static/icons/circle-check.svg?raw';
+import loader from 'lucide-static/icons/loader.svg?raw';
+import clock from 'lucide-static/icons/clock-3.svg?raw';
+import server from 'lucide-static/icons/server.svg?raw';
+import sparkle from 'lucide-static/icons/sparkle.svg?raw';
+import link from 'lucide-static/icons/link-2.svg?raw';
+import ellipsis from 'lucide-static/icons/ellipsis.svg?raw';
+
+const installCommand = `(tmp="$(mktemp)" && curl -fsSL 'https://app.devpu.sh/api/install/agent/dps_AZ6waXT1-q_bclAkxylFcKE-YbNJ4rOD6p-bCAG4bjI' -o "$tmp" && sudo bash "$tmp"; status=$?; test -z "\${tmp:-}" || rm -f "$tmp"; exit "$status")`;
+const banner = [
+  '    ██╗██████╗ ███████╗██╗   ██╗   ██╗██████╗ ██╗   ██╗███████╗██╗  ██╗',
+  '   ██╔╝██╔══██╗██╔════╝██║   ██║  ██╔╝██╔══██╗██║   ██║██╔════╝██║  ██║',
+  '  ██╔╝ ██║  ██║█████╗  ██║   ██║ ██╔╝ ██████╔╝██║   ██║███████╗███████║',
+  ' ██╔╝  ██║  ██║██╔══╝  ╚██╗ ██╔╝██╔╝  ██╔═══╝ ██║   ██║╚════██║██╔══██║',
+  '██╔╝   ██████╔╝███████╗ ╚████╔╝██╔╝   ██║     ╚██████╔╝███████║██║  ██║',
+  '╚═╝    ╚═════╝ ╚══════╝  ╚═══╝ ╚═╝    ╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═╝',
+];
+const installLines = [
+  [1700, 'Git is available'], [1800, 'Docker is available'],
+  [2300, 'Enabling Docker'], [2400, 'Docker Compose is available'],
+  [2500, 'rclone is available'], [3200, 'Downloading devpush agent'],
+  [3500, 'Downloading agent checksum'], [3800, 'Verifying agent checksum'],
+  [4200, 'Validating agent configuration'], [4300, 'Installed devpush-agent 1.0.0'],
+  [4600, 'Registering the systemd service'], [4900, 'Enabling the devpush agent'],
+  [5500, 'Starting the devpush agent'],
+] as const;
+const pushLines = [
+  [1300, 'Enumerating objects: 7, done.'],
+  [1400, 'Counting objects: 100% (7/7), done.'],
+  [1450, 'Delta compression using up to 8 threads'],
+  [1550, 'Compressing objects: 100% (4/4), done.'],
+  [1800, 'Writing objects: 100% (4/4), 1.02 KiB | 1.02 MiB/s, done.'],
+  [1850, 'Total 4 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)'],
+  [2400, 'remote: Resolving deltas: 100% (3/3), completed with 3 local objects.'],
+  [2700, 'To github.com:acme/storefront.git'],
+  [2700, '   a1b2c3d..e4f5a6b  main -> main'],
+] as const;
+const deployLogs = [
+  [200, 'Queued acme/storefront from GitHub push to main.'],
+  [900, 'Deployment configuration received.'], [1400, 'Fetched acme/storefront:main.'],
+  [1600, 'Resolved compose.yml.'], [1900, 'Building Compose services.'],
+  [2400, '#9 [web 4/6] RUN pnpm install --frozen-lockfile'],
+  [2900, '#11 [web 6/6] RUN pnpm build'], [3500, ' web  Built'],
+  [3700, 'Compose images are ready.'], [3900, 'Starting Compose services.'],
+  [4300, ' Container dp_8c41e2d0b7_3fa9c1e2d4-web-1  Started'],
+  [4600, 'Compose services are running and healthy.'],
+  [4900, 'Checking storefront.acme.com/ through Traefik.'],
+  [5300, 'Verified storefront.acme.com/.'],
+  [5500, 'Deployment finished on the target server.'], [5600, 'Deployment completed.'],
+] as const;
+const logTime = (at: number) => {
+  const seconds = 131 + Math.round(at / 100);
+  return `14:${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+};
+---
+<div class="workflow-layout" data-deployment-workflow>
+  <div class="workflow-copy">
+    <div class="section-heading"><h2 id="workflow-title">Connect once. Deploy with a push.</h2></div>
+    <div class="workflow-tabs" role="tablist" aria-label="Deployment steps" aria-orientation="vertical">
+      <button class="workflow-tab" type="button" role="tab" id="workflow-tab-connect" aria-controls="workflow-panel-connect" aria-selected="true" tabindex="0"><i class="workflow-progress" aria-hidden="true"><i></i></i><span>Connect your server</span><span class="workflow-description"><span>Run the installer on your Linux server to connect it to devpush.</span></span></button>
+      <button class="workflow-tab" type="button" role="tab" id="workflow-tab-push" aria-controls="workflow-panel-push" aria-selected="false" tabindex="-1"><i class="workflow-progress" aria-hidden="true"><i></i></i><span>Push your code</span><span class="workflow-description"><span>Link your GitHub repository and Compose file. Push a commit to deploy.</span></span></button>
+      <button class="workflow-tab" type="button" role="tab" id="workflow-tab-deploy" aria-controls="workflow-panel-deploy" aria-selected="false" tabindex="-1"><i class="workflow-progress" aria-hidden="true"><i></i></i><span>Deploy</span><span class="workflow-description"><span>Follow the build logs, then open your app. It runs on your server.</span></span></button>
+    </div>
+  </div>
+  <div class="workflow-stage">
+    <div class="workflow-panel" role="tabpanel" id="workflow-panel-connect" aria-labelledby="workflow-tab-connect" data-duration="8500">
+      <figure class="workflow-terminal" aria-label="devpush agent installation on a Linux server">
+        <figcaption>ubuntu@production-01: ~</figcaption>
+        <div class="workflow-terminal-output" data-scroll>
+          <div data-at="300"><span class="workflow-prompt">ubuntu@production-01:~$</span> {installCommand}</div>
+          <div class="workflow-banner" data-at="900">{banner.map(line => <div>{line}</div>)}</div>
+          <div data-at="1300">
+<b>Installation summary</b>
+
+  Host          Ubuntu 24.04.1 LTS
+  Architecture  amd64
+  Control plane https://app.devpu.sh
+  Agent user    devpush
+  Auto-update   true
+</div>
+          {installLines.map(([at, text]) => <div data-at={at}>  <span class="workflow-terminal-success">OK</span> {text}</div>)}
+          <div data-at="5800">
+<span class="workflow-terminal-success">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  devpush agent installation complete
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+  Agent       devpush-agent 1.0.0
+  Service     active
+  Config      /etc/devpush/agent.env</div>
+          <div data-at="6200"><span class="workflow-prompt">ubuntu@production-01:~$</span> <span class="workflow-cursor"></span></div>
+        </div>
+      </figure>
+    </div>
+    <div class="workflow-panel" role="tabpanel" id="workflow-panel-push" aria-labelledby="workflow-tab-push" data-duration="5500">
+      <figure class="workflow-terminal" aria-label="Pushing a commit to GitHub">
+        <figcaption>storefront — zsh</figcaption>
+        <div class="workflow-terminal-output" data-scroll>
+          <div data-at="200"><span class="workflow-prompt">~/code/storefront $</span> <span data-type>git push origin main</span></div>
+          {pushLines.map(([at, text]) => <div data-at={at}>{text}</div>)}
+          <div data-at="3000"><span class="workflow-prompt">~/code/storefront $</span> <span class="workflow-cursor"></span></div>
+        </div>
+      </figure>
+    </div>
+    <div class="workflow-panel" role="tabpanel" id="workflow-panel-deploy" aria-labelledby="workflow-tab-deploy" data-duration="8500">
+      <figure class="workflow-deployment" aria-label="Deployment progress from queued to succeeded">
+        <div class="workflow-deployment-body">
+          <div class="workflow-deployment-heading"><span>Deployments</span><span class="workflow-separator">/</span><code>e4f5a6b</code><span class="workflow-deployment-actions"><span class="workflow-visit"><Fragment set:html={link} />Visit</span><Fragment set:html={ellipsis} /></span></div>
+          <div class="workflow-deployment-status">
+            <span class="workflow-state" data-status-at="0:queued,700:running,5600:succeeded" data-state="succeeded"><span data-state-label="queued"><Fragment set:html={clock} />Queued</span><span data-state-label="running"><Fragment set:html={loader} />Running</span><span data-state-label="succeeded"><Fragment set:html={check} />Succeeded</span></span>
+            <span data-at="5600"><Fragment set:html={clock} />47s</span><span class="workflow-current" data-at="5600"><Fragment set:html={sparkle} />Current</span>
+          </div>
+          <div class="workflow-deployment-target"><span><i></i>Production</span><span><Fragment set:html={server} />production-01</span><span><Fragment set:html={branch} />main</span></div>
+          <div class="workflow-deployment-commit"><Fragment set:html={commit} />Update the storefront</div>
+          <div class="workflow-deployment-logs" data-scroll>{deployLogs.map(([at,text]) => <div data-at={at}><time>{logTime(at)}</time>{text}</div>)}</div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-deployment-workflow]')) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = tabs.map(tab => root.querySelector<HTMLElement>(`#${tab.getAttribute('aria-controls')}`)!);
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let current = 0;
+    let autoplay = true;
+    let visible = false;
+    let timers: number[] = [];
+    root.querySelectorAll<HTMLElement>('[data-type]').forEach(el => { el.dataset.text = el.textContent ?? ''; });
+    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+    function later(ms: number, fn: () => void) { timers.push(window.setTimeout(fn, ms)); }
+    function scroll(panel: HTMLElement) { panel.querySelectorAll<HTMLElement>('[data-scroll]').forEach(el => { el.scrollTop = el.scrollHeight; }); }
+    function final(panel: HTMLElement) {
+      panel.querySelectorAll('[data-at]').forEach(el => el.classList.add('is-shown'));
+      panel.querySelectorAll<HTMLElement>('[data-type]').forEach(el => { el.textContent = el.dataset.text ?? ''; });
+      panel.querySelectorAll<HTMLElement>('[data-status-at]').forEach(el => { el.dataset.state = el.dataset.statusAt!.split(',').at(-1)!.split(':')[1]; });
+      scroll(panel);
+    }
+    function play(panel: HTMLElement) {
+      panel.querySelectorAll('[data-at]').forEach(el => el.classList.remove('is-shown'));
+      panel.querySelectorAll<HTMLElement>('[data-type]').forEach(el => { el.textContent = ''; });
+      scroll(panel);
+      panel.querySelectorAll<HTMLElement>('[data-at]').forEach(el => later(Number(el.dataset.at), () => {
+        el.classList.add('is-shown');
+        scroll(panel);
+        const typed = el.querySelector<HTMLElement>('[data-type]');
+        if (typed) {
+          const text = typed.dataset.text ?? '';
+          for (let i = 1; i <= text.length; i++) later(i * 45, () => { typed.textContent = text.slice(0, i); });
+        }
+      }));
+      panel.querySelectorAll<HTMLElement>('[data-status-at]').forEach(el => {
+        for (const entry of el.dataset.statusAt!.split(',')) {
+          const [at,state] = entry.split(':');
+          later(Number(at), () => { el.dataset.state = state; });
+        }
+      });
+    }
+    function select(index: number, focus = false) {
+      clearTimers();
+      current = index;
+      root.removeAttribute('data-playing');
+      tabs.forEach((tab,i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+        tab.querySelector('.workflow-description')?.setAttribute('aria-hidden', String(i !== index));
+        panels[i].hidden = i !== index;
+      });
+      if (focus) tabs[index].focus();
+      const panel = panels[index];
+      if (motion.matches || !visible || document.hidden) { final(panel); return; }
+      const duration = Number(panel.dataset.duration);
+      root.style.setProperty('--workflow-duration', `${duration}ms`);
+      void root.offsetWidth;
+      root.toggleAttribute('data-playing', autoplay);
+      play(panel);
+      if (autoplay) later(duration, () => select((index + 1) % tabs.length));
+    }
+    tabs.forEach((tab,index) => {
+      tab.addEventListener('click', () => { autoplay = false; select(index); });
+      tab.addEventListener('keydown', event => {
+        let next: number;
+        switch (event.key) {
+          case 'ArrowDown': case 'ArrowRight': next = (index + 1) % tabs.length; break;
+          case 'ArrowUp': case 'ArrowLeft': next = (index + tabs.length - 1) % tabs.length; break;
+          case 'Home': next = 0; break;
+          case 'End': next = tabs.length - 1; break;
+          default: return;
+        }
+        event.preventDefault(); autoplay = false; select(next,true);
+      });
+    });
+    root.dataset.enhanced = '';
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      select(current);
+    }, { threshold: .35 }).observe(root);
+    document.addEventListener('visibilitychange', () => select(current));
+    motion.addEventListener('change', () => select(current));
+    select(0);
+  }
+</script>

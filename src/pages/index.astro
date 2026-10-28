@@ -1,53 +1,51 @@
 ---
 import Site from '../layouts/Site.astro';
+import { homepageApps } from '../content/homepage-apps';
 import ProductPreview from '../components/ProductPreview.astro';
 import FeaturePreview from '../components/FeaturePreview.astro';
+import DeploymentWorkflow from '../components/DeploymentWorkflow.astro';
+import CommunityLogos from '../components/CommunityLogos.astro';
+import chevron from 'lucide-static/icons/chevron-down.svg?raw';
 import arrowSvg from 'lucide-static/icons/arrow-right.svg?raw';
-import githubSvg from '../assets/github.svg?raw';
 const arrow = arrowSvg.replace('<svg', '<svg aria-hidden="true"');
-const github = githubSvg;
 const questions = [
-  { title: 'What can I deploy?', answer: 'Applications defined with Docker Compose: a single service or an app with workers, databases and other services. A Dockerfile can be used as a Compose build input. Dockerfile-only projects and Docker Swarm are not supported.' },
-  { title: 'Where does everything run?', answer: 'Your applications run on your Linux servers. The dashboard and API run separately, either as a Node.js container or on Cloudflare Workers. A Go agent on each deployment server runs Docker Compose and manages routing.' },
-  { title: 'What happens if the control plane goes offline?', answer: 'Existing containers keep running on their servers. New deployments and control-plane operations wait until the connection is restored. The control plane is not in the path of requests to your apps.' },
-  { title: 'Is it free?', answer: 'devpush is MIT-licensed open-source software. You pay your infrastructure providers for servers, storage and any control-plane hosting you use. devpush includes the API and MCP server.' },
-  { title: 'Does it guarantee zero-downtime deployments?', answer: 'No. Compose updates can replace running containers, and default updates do not guarantee zero downtime. Configure health checks and deployment commands for the needs of your application.' },
+  { title: 'What can I deploy?', answer: 'Web apps, APIs, workers and databases defined in Docker Compose. Use the languages and frameworks you prefer. A Dockerfile can be used by a Compose service; Dockerfile-only projects and Docker Swarm are not supported yet.' },
+  { title: 'Is self-hosting free?', answer: 'Yes. devpush is MIT licensed, including its API and MCP server. You pay your providers for servers, storage and control-plane hosting.' },
+  { title: 'What does my server need?', answer: 'A supported Linux host, Docker with Compose, and an outbound connection to your devpush installation. The agent supports AMD64 and ARM64. Choose enough memory and storage for the applications and builds you plan to run.' },
+  { title: 'What happens if devpush goes offline?', answer: 'Existing containers keep running on their servers. New deployments and dashboard operations wait until the connection returns. Application requests go directly to your servers, not through the devpush control plane.' },
+  { title: 'Can I back up my application data?', answer: 'When backups are enabled for the installation, team owners and admins can configure database and named-volume backups, retention and local or S3-compatible storage. Redeploying or rolling back code does not restore database contents; data recovery uses a separate restore operation.' },
+  { title: 'Are deployments zero downtime?', answer: 'Not guaranteed. Docker Compose updates can replace running containers. Health checks and deployment commands let you tailor the process to your application.' },
 ];
 const features = [
   { preview: 'deploy' as const, title: 'Push to deploy', text: 'Connect a GitHub repository and deploy when you push to a configured branch. You can also select a commit and deploy it manually.', href: '/docs/compose-deployments/' },
   { preview: 'compose' as const, title: 'Docker Compose', text: 'Run web apps, APIs, workers and databases together. Use the languages and frameworks that work for you, with your Compose file defining the services.', href: '/docs/compose-deployments/' },
   { preview: 'environments' as const, title: 'Environments', text: 'Map branches to production, staging or other environments. Choose a default server and override it for individual environments.', href: '/docs/projects/' },
-  { preview: 'variables' as const, title: 'Environment variables', text: 'Manage variables for your project or a specific environment. Values are encrypted in the database and passed to builds and running services.', href: '/docs/projects/#environments-and-variables' },
-  { preview: 'domains' as const, title: 'Custom domains and HTTPS', text: 'Connect your domains, route requests to the right service and let Traefik manage HTTPS certificates on your server.', href: '/docs/projects/' },
+  { preview: 'variables' as const, title: 'Environment variables', text: 'Manage variables for your project or a specific environment. Values are encrypted in the database and passed to builds and running services.', href: '/docs/projects/#variables' },
+  { preview: 'domains' as const, title: 'Custom domains and HTTPS', text: 'Connect your domains, route requests to the right service and let Traefik manage HTTPS certificates on your server.', href: '/docs/domains/' },
   { preview: 'logs' as const, title: 'Build and application logs', text: 'Follow deployment progress and inspect application output from the dashboard. Filter logs to find the service or deployment you need.', href: '/docs/compose-deployments/' },
   { preview: 'rollback' as const, title: 'Redeploy and roll back', text: 'Choose a previous deployment to run again, or roll back to an earlier version using its recorded configuration and your current routes.', href: '/docs/compose-deployments/' },
   { preview: 'metrics' as const, title: 'Server monitoring', text: 'Check CPU, memory, disk and network activity. Keep track of your connected servers and their agents from the same dashboard.', href: '/docs/servers/' },
   { preview: 'backups' as const, title: 'Backups and restores', text: 'Schedule database and volume backups, set retention policies and restore retained data. Store archives locally or in S3-compatible storage.', href: '/docs/backups/' },
   { preview: 'teams' as const, title: 'Teams and permissions', text: 'Invite teammates, share projects and servers, and control access with owner, admin and member roles.', href: '/docs/accounts-and-teams/' },
-  { preview: 'api' as const, title: 'API and MCP', text: 'Automate with scoped API keys or connect an AI assistant. MCP supports browser sign-in and API keys, with the permissions you grant.', href: '/docs/api-and-mcp/' },
+  { preview: 'api' as const, title: 'API and MCP', text: 'Automate with scoped API keys or connect an AI assistant. MCP supports browser sign-in and API keys, with the permissions you grant.', href: '/docs/api/' },
   { preview: 'source' as const, title: 'Free and open source', text: 'Self-host the full platform under the MIT license, including the API and MCP server. You pay for the infrastructure you choose.', href: 'https://github.com/hunvreus/devpush' },
 ];
 ---
 <Site>
   <section class="hero wrap" aria-labelledby="hero-title">
-    <div class="hero-intro">
-      <h1 id="hero-title">Deploy your apps<br />with a git push.</h1>
+    <div>
+      <h1 id="hero-title">Deploy your apps with a git push.</h1>
       <div><p class="hero-description">An open-source deployment platform for Docker Compose. Connect GitHub and run your apps, APIs, workers and databases on your own Linux servers.</p>
-        <div class="hero-actions"><a class="btn" data-size="lg" href="/docs/getting-started/">Get started <Fragment set:html={arrow} /></a><a class="btn" data-variant="ghost" data-size="lg" href="https://github.com/hunvreus/devpush"><Fragment set:html={github} /> GitHub</a></div>
+        <div class="hero-actions"><a class="btn" data-size="lg" href="/docs/self-hosting/">Get started <Fragment set:html={arrow} /></a><a class="btn" data-variant="outline" data-size="lg" href="https://github.com/hunvreus/devpush">View on GitHub</a></div>
       </div>
     </div>
     <ProductPreview />
     
   </section>
 
+  <CommunityLogos />
   <section class="wrap section workflow" id="how-it-works" aria-labelledby="workflow-title">
-    <div class="section-heading"><h2 id="workflow-title">Your servers run the apps.<br />devpush runs the deploys.</h2></div>
-    <ol class="workflow-steps" role="list">
-      <li><span class="badge workflow-step-number" data-variant="outline" aria-hidden="true">1</span><h3>Connect your server</h3><p>Run the generated installer on a Linux server. The agent builds and runs your applications there.</p></li>
-      <li><span class="badge workflow-step-number" data-variant="outline" aria-hidden="true">2</span><h3>Add your project</h3><p>Select a GitHub repository and its Compose file. Map branches to environments and set your variables.</p></li>
-      <li><span class="badge workflow-step-number" data-variant="outline" aria-hidden="true">3</span><h3>Push to deploy</h3><p>Push to a configured branch or deploy a commit manually. Follow the build logs, then open your app.</p></li>
-    </ol>
-    <p class="workflow-note">Application traffic goes straight to your servers. Run the devpush dashboard and API separately, as a Node.js container or on Cloudflare Workers.</p>
+    <DeploymentWorkflow />
   </section>
 
   <section class="wrap section features" id="features" aria-labelledby="features-title">
@@ -57,6 +55,11 @@ const features = [
 
 
 
-  <section class="wrap section faq" aria-labelledby="faq-title"><div class="section-heading"><h2 id="faq-title">Before you deploy.</h2></div><div>{questions.map((item) => <details><summary>{item.title}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div></section>
-  <section class="wrap final-cta"><div><h2>Deploy on your own terms.</h2></div><div><a class="btn" data-size="lg" href="/docs/getting-started/">Get started <Fragment set:html={arrow} /></a><a class="btn" data-variant="ghost" data-size="lg" href="https://github.com/hunvreus/devpush"><Fragment set:html={github} /> GitHub</a></div></section>
+  <section class="wrap section apps" aria-labelledby="apps-title">
+    <div class="section-heading"><h2 id="apps-title">Your favorite apps. On your own servers.</h2><p>Deploy the tools you use with Docker Compose.</p></div>
+    <ul class="app-grid" role="list">{homepageApps.map((app) => <li><a href={app.url} title={app.description}><span class="example-logo" aria-hidden="true"><img class:list={{ 'example-logo-light': Boolean(app.logoDark), 'example-logo-invert': Boolean(app.invertLogoOnDark) }} src={app.logo} width="32" height="32" alt="" loading="lazy" decoding="async" />{app.logoDark && <img class="example-logo-dark" src={app.logoDark} width="32" height="32" alt="" loading="lazy" decoding="async" />}</span><span>{app.name}</span></a></li>)}</ul>
+    <a class="feature-link apps-browse" href="/compose-examples/">Browse apps <Fragment set:html={arrow} /></a>
+  </section>
+  <section class="wrap section faq" aria-labelledby="faq-title"><div class="section-heading"><h2 id="faq-title">Before you deploy.</h2><p>A few things you might want to know.</p></div><section class="accordion" aria-label="Frequently asked questions">{questions.map(item => <details><summary>{item.title}<Fragment set:html={chevron} /></summary><section><p>{item.answer}</p></section></details>)}</section></section>
+  <section class="wrap final-cta" aria-labelledby="cta-title"><h2 id="cta-title">Deploy on your own terms.</h2><p>Run devpush and your apps on infrastructure you control.</p><div><a class="btn" data-size="lg" href="/docs/self-hosting/">Get started <Fragment set:html={arrow} /></a><a class="btn" data-variant="outline" data-size="lg" href="https://github.com/hunvreus/devpush">View on GitHub</a></div></section>
 </Site>

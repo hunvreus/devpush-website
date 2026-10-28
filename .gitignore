@@ -1,7 +1,8 @@
-.*
-!.gitignore
-!.eleventy.js
-!.eleventyignore
-
-_site/
 node_modules/
+dist/
+.astro/
+.tmp/
+.env
+.env.*
+!.env.example
+.DS_Store

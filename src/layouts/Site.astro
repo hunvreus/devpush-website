@@ -1,5 +1,7 @@
 ---
 import Logo from '../components/Logo.astro';
+import { mainNavigation, footerNavigation } from '../content/navigation';
+import menu from 'lucide-static/icons/menu.svg?raw';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import basecoatJs from 'basecoat-css/all.min?url';
 interface Props { title?: string; description?: string; noindex?: boolean; }
@@ -39,24 +41,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <header class="site-header">
       <div class="wrap header-row">
         <Logo />
-        <nav aria-label="Main navigation">
-          <a class="btn" data-variant="ghost" data-size="sm" href="/#features">Features</a>
-          <a class="btn" data-variant="ghost" data-size="sm" href="/docs/">Docs</a>
-          <a class="btn nav-github" data-variant="ghost" data-size="sm" href="https://github.com/hunvreus/devpush">GitHub</a>
-          <a class="btn header-cta" data-size="sm" href="/docs/getting-started/">Get started</a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {mainNavigation.map(item => <a class="btn" data-variant="ghost" data-size="sm" href={item.href}>{item.label}</a>)}
         </nav>
+        <div class="header-actions"><a class="btn" data-size="sm" href="/docs/self-hosting/">Get started</a>
+          <div class="popover mobile-navigation" id="mobile-navigation"><button class="btn" data-variant="ghost" data-size="icon-sm" type="button" id="mobile-nav-trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav-content"><Fragment set:html={menu} /></button><div id="mobile-nav-content" data-popover data-align="end" aria-hidden="true"><nav aria-label="Mobile navigation">{mainNavigation.map(item => <a class="btn" data-variant="ghost" data-size="sm" href={item.href}>{item.label}</a>)}</nav></div></div>
+        </div>
       </div>
     </header>
     <main id="main"><slot /></main>
     <footer class="site-footer wrap">
-      <div class="footer-brand"><Logo /><p>Deploy on your own terms.<br />Open source. Your servers.</p></div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <div><h2>Product</h2><a href="/#features">Features</a><a href="/self-hosting/">Self-hosting</a><a href="/docs/compose-deployments/">Docker Compose</a><a href="/docs/backups/">Backups</a><a href="/docs/accounts-and-teams/">Teams and permissions</a><a href="/docs/api-and-mcp/">API and MCP</a></div>
-        <div><h2>Resources</h2><a href="/docs/">Documentation</a><a href="/docs/getting-started/">Quick start</a><a href="/docs/configuration/">Configuration</a><a href="https://github.com/hunvreus/devpush/blob/main/CHANGELOG.md">Changelog</a><a href="https://github.com/hunvreus/devpush/issues">Report an issue</a><a href="https://devpu.sh/chat">Community</a></div>
-        <div><h2>Compare</h2><a href="/compare/coolify/">devpush vs Coolify</a><a href="/compare/dokploy/">devpush vs Dokploy</a><a href="/compare/vercel/">devpush vs Vercel</a><a href="/compare/render/">devpush vs Render</a></div>
-        <div><h2>Project</h2><a href="/about/">About devpush</a><a href="/for/developers/">For developers</a><a href="/for/teams/">For teams</a><a href="/for/agencies/">For agencies</a><a href="https://github.com/hunvreus/devpush">Source code</a><a href="/about/#contributing">Contribute</a></div>
-      </nav>
-      <div class="footer-bottom"><p>Built by <a href="https://ronanberder.com">Ronan Berder</a>. MIT licensed.</p><div><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><ThemeToggle /></div></div>
+      <div class="footer-brand"><Logo /><p>Open-source deployments.<br />Your apps. Your servers.</p></div>
+      <nav class="footer-links" aria-label="Footer navigation">{footerNavigation.map(group => <div><h2>{group.label}</h2>{group.links.map(item => <a href={item.href}>{item.label}</a>)}</div>)}</nav>
+      <div class="footer-bottom"><p>A project by <a href="https://rotsu.com/">Rotsu</a>. MIT licensed.</p><div><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><ThemeToggle /></div></div>
     </footer>
     <script>
       const sentinel = document.querySelector('#header-sentinel');

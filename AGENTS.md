@@ -1,78 +1,19 @@
-# AI Agent Guidelines for /dev/push Documentation
+# Agent rules
 
-Guidelines for AI agents working on the documentation website.
-
-## Writing Style
-
-- **Concise**: Keep sentences short. Remove filler words.
-- **Direct**: Lead with the action or key information.
-- **Technical**: Assume readers are developers. Don't over-explain basics.
-
-## Structure
-
-### Alert Blocks
-
-Use alert blocks for important contextual information:
-
-```njk
-<div class="alert">
-  {% lucide "triangle-alert" %}
-  <h3>Alert title</h3>
-  <section>
-    <p>Alert content here.</p>
-  </section>
-</div>
-```
-
-### Contextual Links
-
-Add related documentation links at the end of sections:
-
-```njk
-<div class="flex flex-wrap gap-2 my-6">
-  <a href="/docs/configuration#ssl-providers" class="badge-outline">
-    SSL Providers
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-```
-
-### Tables
-
-Prefer tables over long lists when showing structured data (paths, permissions, options).
-
-### Code Blocks
-
-- Use `bash` for shell commands
-- Keep examples minimal—show only what's necessary
-- Add comments sparingly, only when the command isn't self-explanatory
-
-## Menu
-
-Update `docs/docs.json` when adding or reorganizing pages:
-
-```json
-{
-  "menu": [
-    {
-      "type": "group",
-      "label": "Getting started",
-      "items": ["index", "installation", "configuration"]
-    }
-  ]
-}
-```
-
-## File Organization
-
-- Main docs: `docs/`
-- Nested topics: `docs/<topic>/` (e.g., `docs/basics/`)
-- Each page needs frontmatter with `title` and `description`
-
-## Formatting
-
-- Use backticks for: file paths, commands, environment variables, code references
-- Use bold for: UI elements, key terms on first use
-- Use tables for: structured data, comparisons, reference lists
-- Avoid: excessive headings, redundant explanations, long paragraphs
-
+- Build the marketing site with Astro, ReallySimpleDocs and Basecoat Nova. Use the
+  app's imported Taupe theme. Keep the design sober, compact and product-focused.
+- Use Basecoat markup for UI primitives. Marketing layouts belong in site CSS;
+  do not recreate buttons, dialogs, search or documentation chrome.
+- Keep copy factual. Docker Compose is the supported runtime; do not advertise
+  Docker Swarm, Dockerfile-only projects, guaranteed zero downtime or a hosted
+  offering that is not available. Label illustrative product views.
+- Source docs live in `../devpush/docs/`. Import with `pnpm sync:docs`; do not edit
+  this site's generated docs or theme independently. Marketing copy stays here.
+- Preserve legal text unless a legal-policy change is explicitly requested.
+- Remove dead assets and dependencies after replacing functionality. Keep legacy
+  documentation redirects in `scripts/redirects.mjs`.
+- Run `pnpm test` and `pnpm build`. Verify desktop/mobile and light/dark in a
+  browser, including docs search, theme persistence and FAQ interactions.
+- Update README and CHANGELOG for workflow/structure changes. Keep backlog in the
+  product repo's TODO.md. Put temporary review notes under `.tmp/`.
+- Never close or kill the user's Chrome.

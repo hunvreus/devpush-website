@@ -1,0 +1,7 @@
+---
+import companies from '../content/community-logos.json';
+---
+<section class="wrap community-logos" aria-labelledby="community-logos-title">
+  <h2 id="community-logos-title">Starred by developers at</h2>
+  <ul role="list">{companies.map(company => <li><img src={company.image} width="24" height="24" alt="" loading="lazy" /><span>{company.name}</span></li>)}</ul>
+</section>

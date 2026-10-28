@@ -1,0 +1,23 @@
+---
+import Site from './Site.astro';
+interface Props {
+  title: string;
+  heading: string;
+  description: string;
+  noindex?: boolean;
+  wideContent?: boolean;
+}
+const { title, heading, description, noindex = false, wideContent = false } = Astro.props;
+---
+<Site title={title} description={description} noindex={noindex}>
+  <article class="wrap marketing-page">
+    <header class="page-intro">
+      <slot name="label" />
+      <h1>{heading}</h1>
+      <p>{description}</p>
+      <slot name="intro" />
+      {Astro.slots.has('actions') && <div class="hero-actions"><slot name="actions" /></div>}
+    </header>
+    {Astro.slots.has('default') && <div class:list={['page-content', { 'page-content-wide': wideContent }]}><slot /></div>}
+  </article>
+</Site>

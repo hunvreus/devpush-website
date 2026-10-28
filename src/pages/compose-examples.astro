@@ -1,0 +1,40 @@
+---
+import MarketingPage from '../layouts/MarketingPage.astro';
+import examples from '../content/compose-examples.json';
+import arrow from 'lucide-static/icons/arrow-up-right.svg?raw';
+const categories = [...new Set(examples.map(item => item.category))].sort();
+---
+<MarketingPage title="Apps to self-host" heading="Apps to self-host" description="Run popular open-source software on your own servers. Find official Docker Compose guides for GitLab, WordPress, n8n and more." wideContent>
+  <p slot="intro">Each app links to its official installation guide. Review its Compose configuration and requirements before deploying with devpush.</p>
+    <div class="example-filters"><div class="field"><label class="sr-only" for="example-search">Search apps</label><input class="input" type="search" id="example-search" placeholder="Search apps…" /></div><div class="field"><label class="sr-only" for="example-category">Filter by category</label><select class="select" id="example-category"><option value="">All categories</option>{categories.map(category => <option>{category}</option>)}</select></div></div>
+    <p class="example-count" aria-live="polite" id="example-count">{examples.length} apps</p>
+    <ul class="example-list" role="list">{examples.map(example => <li data-example data-category={example.category} data-search={`${example.name} ${example.description} ${example.category}`.toLowerCase()}><a class="item" data-variant="outline" href={example.url}><div class:list={['example-logo', { 'example-logo-backed': Boolean(example.lightLogoBackground) }]} aria-hidden="true"><img class:list={{ 'example-logo-light': Boolean(example.logoDark), 'example-logo-invert': Boolean(example.invertLogoOnDark) }} src={example.logo} width="32" height="32" alt="" loading="lazy" decoding="async" />{example.logoDark && <img class="example-logo-dark" src={example.logoDark} width="32" height="32" alt="" loading="lazy" decoding="async" />}</div><section><h2>{example.name}</h2><p>{example.description}</p><span class="badge example-category" data-variant="secondary">{example.category}</span></section><aside aria-hidden="true"><Fragment set:html={arrow} /></aside></a></li>)}</ul>
+    <section class="empty" id="example-empty" hidden><header><h2>No matching apps</h2><p>Try a different name or category.</p></header><footer><button class="btn" data-variant="outline" type="button" id="reset-examples">Reset filters</button></footer></section>
+
+</MarketingPage>
+<script>
+  const search = document.querySelector<HTMLInputElement>('#example-search');
+  const category = document.querySelector<HTMLSelectElement>('#example-category');
+  const entries = [...document.querySelectorAll<HTMLElement>('[data-example]')];
+  const count = document.querySelector('#example-count');
+  const empty = document.querySelector<HTMLElement>('#example-empty');
+  function filterExamples() {
+    const query = search?.value.trim().toLowerCase() ?? '';
+    let visible = 0;
+    for (const entry of entries) {
+      const matches = (entry.dataset.search ?? '').includes(query) && (!category?.value || entry.dataset.category === category.value);
+      entry.hidden = !matches;
+      if (matches) visible++;
+    }
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'app' : 'apps'}`;
+    if (empty) empty.hidden = visible > 0;
+  }
+  search?.addEventListener('input', filterExamples);
+  category?.addEventListener('change', filterExamples);
+  document.querySelector('#reset-examples')?.addEventListener('click', () => {
+    if (search) search.value = '';
+    if (category) category.value = '';
+    filterExamples();
+    search?.focus();
+  });
+</script>

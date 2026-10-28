@@ -2,7 +2,9 @@
 import branch from 'lucide-static/icons/git-branch.svg?raw';
 import link from 'lucide-static/icons/link-2.svg?raw';
 import check from 'lucide-static/icons/circle-check.svg?raw';
-import timer from 'lucide-static/icons/clock.svg?raw';
+import timer from 'lucide-static/icons/timer.svg?raw';
+import trigger from 'lucide-static/icons/zap.svg?raw';
+import commit from 'lucide-static/icons/git-commit-horizontal.svg?raw';
 import sparkle from 'lucide-static/icons/sparkle.svg?raw';
 import plus from 'lucide-static/icons/plus.svg?raw';
 import chevron from 'lucide-static/icons/chevron-down.svg?raw';
@@ -18,9 +20,8 @@ const { kind } = Astro.props;
 ---
 <div class:list={['feature-preview', `feature-preview-${kind}`]} aria-hidden="true" inert>
   {kind === 'deploy' && <div class="mini-deployment">
-    <div class="mini-inline"><span class="mini-success"><Fragment set:html={check} /> Succeeded</span><span class="mini-muted mini-inline"><Fragment set:html={timer} /> 24s</span><span class="badge" data-variant="secondary"><Fragment set:html={sparkle} /> Current</span></div>
-    <div class="mini-inline mini-muted"><span class="mini-inline"><i class="mini-dot"></i>Production</span><span class="mini-inline"><Fragment set:html={branch} />main</span></div>
-    <div class="mini-commit"><code>a82f9c1</code><span>Update checkout flow</span></div>
+    <div class="mini-inline"><span class="mini-success"><Fragment set:html={check} /> Succeeded</span><span class="mini-muted mini-inline"><Fragment set:html={timer} /> 24s (5 minutes ago)</span><span class="badge" data-variant="secondary"><Fragment set:html={sparkle} /> Current</span></div>
+    <div class="mini-inline mini-muted"><span class="mini-inline"><i class="mini-dot"></i>Production</span><span class="mini-inline"><Fragment set:html={trigger} />Commit by @hunvreus</span><span class="mini-inline"><Fragment set:html={branch} />main</span><span class="mini-inline"><Fragment set:html={commit} />feat: add user authentication middleware</span></div>
   </div>}
   {kind === 'compose' && <div class="mini-form">
     <label>Compose file path<input class="input" value="compose.yml" readonly tabindex="-1" /></label>

@@ -1,0 +1,248 @@
+[
+  {
+    "name": "Gitea",
+    "category": "Development",
+    "description": "Git hosting with repositories, issues and code review.",
+    "url": "https://docs.gitea.com/installation/install-with-docker/",
+    "logo": "/logos/apps/gitea.svg"
+  },
+  {
+    "name": "Forgejo",
+    "category": "Development",
+    "description": "A community-driven software forge for Git repositories.",
+    "url": "https://forgejo.org/docs/latest/admin/installation/docker/",
+    "logo": "/logos/apps/forgejo.svg"
+  },
+  {
+    "name": "GitLab",
+    "category": "Development",
+    "description": "Git hosting, code review and CI/CD in one platform.",
+    "url": "https://docs.gitlab.com/install/docker/installation/",
+    "logo": "/logos/apps/gitlab.svg"
+  },
+  {
+    "name": "WordPress",
+    "category": "Publishing",
+    "description": "A CMS for websites, blogs and publishing.",
+    "url": "https://github.com/docker-library/docs/blob/master/wordpress/README.md",
+    "logo": "/logos/apps/wordpress.svg"
+  },
+  {
+    "name": "Ghost",
+    "category": "Publishing",
+    "description": "Publishing, newsletters and memberships.",
+    "url": "https://github.com/TryGhost/ghost-docker",
+    "logo": "/logos/apps/ghost.webp",
+    "invertLogoOnDark": true
+  },
+  {
+    "name": "Directus",
+    "category": "Publishing",
+    "description": "A data platform and API with a content management interface.",
+    "url": "https://directus.com/docs/self-hosting/deploying#docker-compose-examples",
+    "logo": "/logos/apps/directus.svg"
+  },
+  {
+    "name": "n8n",
+    "category": "Automation",
+    "description": "Workflow automation connecting services and APIs.",
+    "url": "https://docs.n8n.io/hosting/installation/server-setups/docker-compose/",
+    "logo": "/logos/apps/n8n.svg"
+  },
+  {
+    "name": "Activepieces",
+    "category": "Automation",
+    "description": "Visual workflows for automating work across applications.",
+    "url": "https://www.activepieces.com/docs/install/options/docker-compose",
+    "logo": "/logos/apps/activepieces.svg"
+  },
+  {
+    "name": "Uptime Kuma",
+    "category": "Monitoring",
+    "description": "Uptime monitoring and status pages for your services.",
+    "url": "https://github.com/louislam/uptime-kuma/blob/master/compose.yaml",
+    "logo": "/logos/apps/uptime-kuma.svg"
+  },
+  {
+    "name": "Beszel",
+    "category": "Monitoring",
+    "description": "Server monitoring with a hub and lightweight host agents.",
+    "url": "https://beszel.dev/guide/getting-started",
+    "logo": "/logos/apps/beszel.svg",
+    "logoDark": "/logos/apps/beszel-light.svg"
+  },
+  {
+    "name": "Grafana",
+    "category": "Monitoring",
+    "description": "Dashboards for metrics, logs and other data sources.",
+    "url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/#run-grafana-via-docker-compose",
+    "logo": "/logos/apps/grafana.svg"
+  },
+  {
+    "name": "Vaultwarden",
+    "category": "Personal tools",
+    "description": "A self-hosted password vault compatible with Bitwarden clients.",
+    "url": "https://github.com/dani-garcia/vaultwarden/wiki/Using-Docker-Compose",
+    "logo": "/logos/apps/vaultwarden.svg",
+    "logoDark": "/logos/apps/vaultwarden-light.svg"
+  },
+  {
+    "name": "Immich",
+    "category": "Media",
+    "description": "Photo and video backup, browsing and sharing.",
+    "url": "https://docs.immich.app/install/docker-compose/",
+    "logo": "/logos/apps/immich.svg"
+  },
+  {
+    "name": "Nextcloud",
+    "category": "Personal tools",
+    "description": "File synchronization, sharing and collaboration.",
+    "url": "https://github.com/nextcloud/docker#using-the-docker-compose-tool",
+    "logo": "/logos/apps/nextcloud.svg"
+  },
+  {
+    "name": "Jellyfin",
+    "category": "Media",
+    "description": "A personal media server for your own collection.",
+    "url": "https://jellyfin.org/docs/general/installation/container/#using-docker-compose",
+    "logo": "/logos/apps/jellyfin.svg"
+  },
+  {
+    "name": "Audiobookshelf",
+    "category": "Media",
+    "description": "An audiobook and podcast server.",
+    "url": "https://audiobookshelf.org/docs/documentation/install/docker/",
+    "logo": "/logos/apps/audiobookshelf.svg"
+  },
+  {
+    "name": "Homepage",
+    "category": "Personal tools",
+    "description": "A dashboard for your applications and services.",
+    "url": "https://gethomepage.dev/installation/docker/",
+    "logo": "/logos/apps/homepage.webp"
+  },
+  {
+    "name": "Mealie",
+    "category": "Personal tools",
+    "description": "Recipe management and meal planning.",
+    "url": "https://mealie.io/documentation/getting-started/installation/installation-checklist/",
+    "logo": "/logos/apps/mealie.svg"
+  },
+  {
+    "name": "linkding",
+    "category": "Personal tools",
+    "description": "A bookmark manager with tagging and search.",
+    "url": "https://linkding.link/installation/",
+    "logo": "/logos/apps/linkding.svg"
+  },
+  {
+    "name": "Paperless-ngx",
+    "category": "Personal tools",
+    "description": "Document management with OCR and full-text search.",
+    "url": "https://docs.paperless-ngx.com/setup/#docker",
+    "logo": "/logos/apps/paperless-ngx.svg",
+    "lightLogoBackground": true
+  },
+  {
+    "name": "Outline",
+    "category": "Personal tools",
+    "description": "A collaborative knowledge base for team documentation.",
+    "url": "https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t",
+    "logo": "/logos/apps/outline.svg"
+  },
+  {
+    "name": "Memos",
+    "category": "Personal tools",
+    "description": "Lightweight notes and a personal knowledge journal.",
+    "url": "https://usememos.com/docs/deploy/docker-compose",
+    "logo": "/logos/apps/memos.svg"
+  },
+  {
+    "name": "Plausible",
+    "category": "Monitoring",
+    "description": "Privacy-friendly website analytics without cookies.",
+    "url": "https://github.com/plausible/community-edition",
+    "logo": "/logos/apps/plausible.svg"
+  },
+  {
+    "name": "Stirling PDF",
+    "category": "Personal tools",
+    "description": "PDF editing, conversion and document processing in your browser.",
+    "url": "https://docs.stirlingpdf.com/Server/Install/Docker/",
+    "logo": "/logos/apps/stirling-pdf.svg"
+  },
+  {
+    "name": "Metabase",
+    "category": "Monitoring",
+    "description": "Dashboards and business intelligence.",
+    "url": "https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker",
+    "logo": "/logos/apps/metabase.svg"
+  },
+  {
+    "name": "Mattermost",
+    "category": "Collaboration",
+    "description": "Team messaging. Official Docker setup for evaluation and development.",
+    "url": "https://github.com/mattermost/docker",
+    "logo": "/logos/apps/mattermost.svg"
+  },
+  {
+    "name": "Penpot",
+    "category": "Collaboration",
+    "description": "Collaborative interface design and prototyping.",
+    "url": "https://help.penpot.app/technical-guide/getting-started/docker/",
+    "logo": "/logos/apps/penpot.svg",
+    "logoDark": "/logos/apps/penpot-light.svg"
+  },
+  {
+    "name": "Open WebUI",
+    "category": "AI",
+    "description": "A self-hosted interface for AI models.",
+    "url": "https://docs.openwebui.com/getting-started/quick-start/?setup-method=docker-compose",
+    "logo": "/logos/apps/open-webui.svg",
+    "logoDark": "/logos/apps/open-webui-light.svg"
+  },
+  {
+    "name": "Hermes Agent",
+    "category": "AI",
+    "description": "An AI agent with persistent memory, tools and messaging integrations.",
+    "url": "https://github.com/NousResearch/hermes-agent/blob/main/docker-compose.yml",
+    "logo": "/logos/apps/hermes-agent-alt.svg",
+    "logoDark": "/logos/apps/hermes-agent-alt-light.svg"
+  },
+  {
+    "name": "Strapi",
+    "category": "Publishing",
+    "description": "A headless CMS for managing content and APIs.",
+    "url": "https://docs.strapi.io/cms/installation/docker",
+    "logo": "/logos/apps/strapi.svg"
+  },
+  {
+    "name": "Bitwarden",
+    "category": "Personal tools",
+    "description": "Password management for individuals and teams.",
+    "url": "https://bitwarden.com/help/install-on-premise-linux/",
+    "logo": "/logos/apps/bitwarden.svg"
+  },
+  {
+    "name": "PostHog",
+    "category": "Monitoring",
+    "description": "Product analytics and session replay. Self-hosting is unsupported and intended for hobby use.",
+    "url": "https://posthog.com/docs/self-host",
+    "logo": "/logos/apps/posthog.svg",
+    "logoDark": "/logos/apps/posthog-light.svg"
+  },
+  {
+    "name": "Home Assistant",
+    "category": "Automation",
+    "description": "Home automation with local devices and integrations. Container installation requires host networking and may need device access.",
+    "url": "https://www.home-assistant.io/installation/linux/",
+    "logo": "/logos/apps/home-assistant.svg"
+  },
+  {
+    "name": "AppFlowy",
+    "category": "Collaboration",
+    "description": "A collaborative workspace for notes, documents and projects.",
+    "url": "https://docs.appflowy.io/docs/documentation/appflowy-cloud/deployment",
+    "logo": "/logos/apps/appflowy.svg"
+  }
+]
