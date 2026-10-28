@@ -6,7 +6,7 @@ export const mainNavigation = [
   { label: 'Apps', href: '/compose-examples/' },
   { label: 'Docs', href: '/docs/' },
   { label: 'GitHub', href: 'https://github.com/hunvreus/devpush' },
-  { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/development/CHANGELOG.md' },
+  { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/main/CHANGELOG.md' },
   { label: 'Sponsor', href: sponsorUrl },
   { label: 'Self-host', href: '/docs/self-hosting/' },
 ];
@@ -19,7 +19,7 @@ export const footerNavigation = [
   ] },
   { label: 'Project', links: [
     { label: 'GitHub', href: 'https://github.com/hunvreus/devpush' },
-    { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/development/CHANGELOG.md' },
+    { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/main/CHANGELOG.md' },
     { label: 'Contributing', href: '/docs/development/' },
     { label: 'Sponsor', href: sponsorUrl },
   ] },
