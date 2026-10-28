@@ -2,18 +2,18 @@
 description: Run the open-source application as a dependency in your own project.
 ---
 
-# Package integration (preview)
+# Package integration
 
 The `devpush` package contains the application, build integration and migrations. Your project owns its configuration, credentials and any plugins; plugins are optional.
 
-The beta package is available from [GitHub Releases](https://github.com/hunvreus/devpush/releases/tag/v1.0.0-beta.3). For package development, use a locally packed tarball. The guided source-checkout installation is described in [Installation](/docs/self-hosting/).
+For the guided setup, see [Installation](/docs/self-hosting/).
 
 ## Create a project
 
-Use Node.js 22.12+ and pnpm 10.17+. Install the pinned beta tarball:
+Use Node.js 22.12+ and pnpm 10.17+. Install devpush:
 
 ```sh
-pnpm add https://github.com/hunvreus/devpush/releases/download/v1.0.0-beta.3/devpush-1.0.0-beta.3.tgz
+pnpm add --save-exact devpush
 ```
 
 Install its peer dependencies and Vite, plus Wrangler if you target Workers. Then create `vite.config.mjs`:
@@ -85,4 +85,4 @@ Pin the exact package version and commit the lockfile. To upgrade:
 3. Apply new migrations.
 4. Rebuild.
 
-Upgrade composed plugins together with the app. Agents are installed from the app's pinned [agent release](/docs/agent-releases/).
+Upgrade composed plugins together with the app. The app selects the matching [agent release](/docs/agent-releases/).

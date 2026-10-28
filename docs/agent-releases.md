@@ -39,16 +39,19 @@ Verification requires matching artifacts for both architectures. The Docker agen
 
 ## Publish
 
-Pushing a `v{version}` tag runs the release workflow. The workflow:
+Create the release commit with its version, changelog and generated agent manifest, then push a matching `v{version}` tag. GitHub Actions handles publication; no manual `npm publish` is needed. The workflow:
 
 1. Builds with the pinned compiler.
 2. Runs both binaries, using QEMU for ARM64, and checks their metadata and hashes.
 3. Runs the app and agent checks.
 4. Attaches the binaries, manifest, checksums and app package tarball to a GitHub Release.
 5. Downloads the public agent assets and verifies their published checksums.
+6. Publishes the verified app package to npm through trusted publishing.
 
 Tags with a prerelease suffix (for example, `v1.0.0-beta.3`) produce prereleases and do not replace the latest stable release.
 
-The workflow rejects mismatched tags or pins and never overwrites an existing release. It does not publish to npm or deploy the dashboard.
+The workflow rejects mismatched tags or pins and never overwrites an existing release. Dashboard deployment is separate.
 
 If an installation has no local binaries, publish the release before you enroll servers. Don't rename the manifest URLs unless you rebuild the release artifacts.
+
+npm authenticates GitHub Actions through OIDC, without a stored npm token. Prereleases use the `beta` npm tag; stable releases use `latest`. The package trusts `hunvreus/devpush`, workflow `release.yml`, with direct publishing enabled.
