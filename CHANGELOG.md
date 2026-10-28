@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Compose the README demo image directly from source assets at native resolution.
+
 - Open the current product demo in a video modal from the existing homepage screenshot.
 
 - Expand mobile navigation below the header with larger links and a close toggle.

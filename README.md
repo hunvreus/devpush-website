@@ -164,3 +164,9 @@ source license notices when changing these assets.
 ## Production
 
 Run `pnpm run deploy` to build and deploy the site to the devpush Cloudflare account at `devpu.sh`. The hosted dashboard is `app.devpu.sh`.
+
+## README demo image
+
+Run `node scripts/generate-readme-image.mjs` to compose the README thumbnail from
+the original dark dashboard screenshot and wallpaper, with a play overlay. The
+output preserves the dashboard’s native resolution; no browser capture is used.
