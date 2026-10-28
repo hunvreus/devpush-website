@@ -1,9 +1,11 @@
+export const hostedAppUrl = 'https://app.devpu.sh';
 export const sponsorUrl = 'https://github.com/sponsors/hunvreus';
 
 export const mainNavigation = [
   { label: 'Features', href: '/#features' },
   { label: 'Apps', href: '/compose-examples/' },
   { label: 'Docs', href: '/docs/' },
+  { label: 'GitHub', href: 'https://github.com/hunvreus/devpush' },
   { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/development/CHANGELOG.md' },
   { label: 'Sponsor', href: sponsorUrl },
   { label: 'Self-host', href: '/docs/self-hosting/' },
@@ -16,7 +18,7 @@ export const footerNavigation = [
     { label: 'Documentation', href: '/docs/' },
   ] },
   { label: 'Project', links: [
-    { label: 'Source code', href: 'https://github.com/hunvreus/devpush' },
+    { label: 'GitHub', href: 'https://github.com/hunvreus/devpush' },
     { label: 'Changelog', href: 'https://github.com/hunvreus/devpush/blob/development/CHANGELOG.md' },
     { label: 'Contributing', href: '/docs/development/' },
     { label: 'Sponsor', href: sponsorUrl },

@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Open the current product demo in a video modal from the existing homepage screenshot.
+
+- Expand mobile navigation below the header with larger links and a close toggle.
+
+- Add GitHub navigation and pair online and self-hosting calls to action.
+
 - Replace redundant marketing pages with links and redirects to the docs.
 - Point footer installation and contributing links directly to their guides.
 - Sync the latest docs, fix documentation links and replace unavailable Cloud signup links with installation links.

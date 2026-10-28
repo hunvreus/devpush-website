@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "devpush-website",
+  "account_id": "d5501407543cc81a9966378a3a7cbd2d",
+  "compatibility_date": "2026-10-28",
+  "assets": {
+    "directory": "./dist"
+  },
+  "workers_dev": true,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "devpu.sh/*",
+      "zone_id": "21ee5f1072be4a59a856747a87246cf7"
+    }
+  ]
+}

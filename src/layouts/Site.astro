@@ -1,7 +1,8 @@
 ---
 import Logo from '../components/Logo.astro';
-import { mainNavigation, footerNavigation } from '../content/navigation';
+import { mainNavigation, footerNavigation, hostedAppUrl } from '../content/navigation';
 import menu from 'lucide-static/icons/menu.svg?raw';
+import close from 'lucide-static/icons/x.svg?raw';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import basecoatJs from 'basecoat-css/all.min?url';
 interface Props { title?: string; description?: string; noindex?: boolean; }
@@ -44,9 +45,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <nav class="desktop-nav" aria-label="Main navigation">
           {mainNavigation.map(item => <a class="btn" data-variant="ghost" data-size="sm" href={item.href}>{item.label}</a>)}
         </nav>
-        <div class="header-actions"><a class="btn" data-size="sm" href="/docs/self-hosting/">Get started</a>
-          <div class="popover mobile-navigation" id="mobile-navigation"><button class="btn" data-variant="ghost" data-size="icon-sm" type="button" id="mobile-nav-trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav-content"><Fragment set:html={menu} /></button><div id="mobile-nav-content" data-popover data-align="end" aria-hidden="true"><nav aria-label="Mobile navigation">{mainNavigation.map(item => <a class="btn" data-variant="ghost" data-size="sm" href={item.href}>{item.label}</a>)}</nav></div></div>
+        <div class="header-actions"><a class="btn" data-size="sm" href={hostedAppUrl}>Try online</a>
+          <button class="btn mobile-navigation-trigger" data-variant="ghost" data-size="icon" type="button" id="mobile-nav-trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav-content">
+            <span class="menu-open-icon" aria-hidden="true"><Fragment set:html={menu} /></span>
+            <span class="menu-close-icon" aria-hidden="true"><Fragment set:html={close} /></span>
+          </button>
         </div>
+      </div>
+      <div id="mobile-nav-content" class="mobile-navigation-panel" hidden>
+        <nav class="wrap" aria-label="Mobile navigation">
+          {mainNavigation.map(item => <a class="btn" data-variant="ghost" href={item.href}>{item.label}</a>)}
+        </nav>
       </div>
     </header>
     <main id="main"><slot /></main>
@@ -56,6 +65,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <div class="footer-bottom"><p>A project by <a href="https://rotsu.com/">Rotsu</a>. MIT licensed.</p><div><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><ThemeToggle /></div></div>
     </footer>
     <script>
+      const trigger = document.querySelector<HTMLButtonElement>('#mobile-nav-trigger');
+      const panel = document.querySelector<HTMLElement>('#mobile-nav-content');
+      if (trigger && panel) {
+        const setOpen = (open: boolean) => {
+          panel.hidden = !open;
+          trigger.setAttribute('aria-expanded', String(open));
+          trigger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        };
+        trigger.addEventListener('click', () => setOpen(panel.hidden));
+        panel.addEventListener('click', (event) => {
+          if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !panel.hidden) {
+            setOpen(false);
+            trigger.focus();
+          }
+        });
+        const desktop = matchMedia('(min-width: 1051px)');
+        desktop.addEventListener('change', () => { if (desktop.matches) setOpen(false); });
+      }
       const sentinel = document.querySelector('#header-sentinel');
       const header = document.querySelector('.site-header');
       if (sentinel && header) new IntersectionObserver(([entry]) => {

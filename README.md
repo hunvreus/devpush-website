@@ -53,16 +53,11 @@ orange in both themes; avoid decorative eyebrows. Workflow numbers identify sequ
 - `src/components/FeaturePreview.astro`: small static UI excerpts adapted from the
   original feature partials and checked against current app controls. They use
   fictitious example data, are inert and stay out of the keyboard/accessibility tree.
-- `src/components/ProductPreview.astro`: real deployment screenshots in both themes, framed over a faded desert wallpaper.
-  The play control opens the existing YouTube demo in a new tab. Replace its URL
-  when a recording of the current app is available.
-  Captures come from the local app and are not a live embedded dashboard.
+- `src/components/ProductPreview.astro`: light/dark deployment screenshots over the desert backdrop. The play button opens the current demo in a Basecoat dialog. Playback starts on click and stops/resets when closed, including Escape and backdrop clicks. The video is not preloaded.
+- `public/screenshots/` and `public/images/deployment-wallpaper.jpg`: homepage screenshots and backdrop.
+- `public/videos/`: optimized 1080p MP4, poster and source credits. Replace both video assets when updating the demo; keep the full-quality master outside the website.
 - `src/layouts/Site.astro`: sticky marketing navigation, metadata and grouped footer.
   The header border appears after scrolling; the theme toggle lives in the footer.
-- `public/screenshots/`: product captures at 1550 × 872 (approximately 16:9). Refresh both from the deployment detail view in the
-  running app when its UI changes; fit the viewport to the page content (including
-  its normal bottom padding) so there is no outer scrollbar or added blank height.
-  Do not redraw the interface in marketing HTML.
 - `src/styles/site.css`: marketing layout and typography; components use Basecoat.
 - `src/components/Docs*.astro`: ReallySimpleDocs branding and navigation slots.
   Docs, marketing header and footer share the same logo styles (16px mark and wordmark).
@@ -82,11 +77,6 @@ remains `https://devpu.sh/chat`; its redirect is managed outside this repository
 and must be preserved during the domain/account migration.
 
 No production deployment or DNS change is performed by the build or docs import.
-
-The desert wallpaper and fictional collaborator portraits are generated with the built-in imagegen tool,
-not an asset copied from Cursor. The wallpaper asset is
-`public/images/deployment-wallpaper.jpg`. Keep it separate from the unedited app
-captures. The wallpaper surrounds the image; it does not cover or crop the interface.
 
 The closing CTA uses centered text and actions on the page background. Keep section
 separation primarily in spacing; reserve faint rules for FAQ rows and the footer.
@@ -124,8 +114,7 @@ tokens are painted once on both the perimeter and internal dividers.
   Reduced motion shows final states. Mobile stacks copy/tabs above the preview; without JavaScript,
   all three illustrations remain visible. Commands are abbreviated examples;
   repository names, commits and logs are illustrative data, not live controls.
-- Main preview cards use a 12px radius. The demo button combines translation and
-  scaling in one transform so it stays centered on hover and keyboard focus.
+- Main preview cards and the video player use a 12px radius.
 - The FAQ uses Basecoat's `accordion` markup and runtime. Avoid bespoke disclosure
   styling or behavior. Tabs, popovers, items, empty states, fields, buttons and
   badges also use the installed Nova components where applicable.
@@ -171,3 +160,7 @@ Marks come from [Simple Icons](https://github.com/simple-icons/simple-icons)
 (CC0) and the Microsoft mark from [SVGL](https://github.com/pheralb/svgl)
 (MIT). Brand marks remain trademarks of their respective owners. Preserve the
 source license notices when changing these assets.
+
+## Production
+
+Run `pnpm run deploy` to build and deploy the site to the devpush Cloudflare account at `devpu.sh`. The hosted dashboard is `app.devpu.sh`.
