@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Publish separate API/MCP guides, complete endpoint and tool references, and collapsible documentation navigation.
+
 - Sync installation and release documentation with the current OSS checkout.
 
 - Use the current centered white logo on orange for marketing and docs social cards; keep icons aligned with the app and version branding URLs.
