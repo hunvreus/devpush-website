@@ -29,3 +29,16 @@ test('installation and removal redirects retain their original purpose', () => {
   assert.equal(redirects['/docs/installation'], '/docs/self-hosting/');
   assert.equal(redirects['/docs/uninstalling'], '/docs/production-operations/#uninstall');
 });
+
+test('marketing and docs use the current social card and versioned branding assets', () => {
+  const layout = readFileSync(new URL('src/layouts/Site.astro', root), 'utf8');
+  const config = readFileSync(new URL('astro.config.mjs', root), 'utf8');
+  for (const asset of ['favicon.svg', 'apple-touch-icon.png', 'social.png']) {
+    assert.ok(layout.includes(`/${asset}?v=2`));
+    assert.ok(config.includes(`/${asset}?v=2`));
+    assert.ok(readFileSync(new URL(`public/${asset}`, root)).length > 0);
+  }
+  assert.ok(layout.includes('property="og:image"'));
+  assert.ok(layout.includes('name="twitter:image"'));
+  assert.ok(layout.includes('content="summary_large_image"'));
+});

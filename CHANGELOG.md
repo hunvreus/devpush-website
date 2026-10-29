@@ -4,6 +4,10 @@
 
 ### Changed
 
+- Sync installation and release documentation with the current OSS checkout.
+
+- Use the current centered white logo on orange for marketing and docs social cards; keep icons aligned with the app and version branding URLs.
+
 - Compose the README demo image directly from source assets at native resolution.
 
 - Open the current product demo in a video modal from the existing homepage screenshot.
