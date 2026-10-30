@@ -47,7 +47,8 @@
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
 .product-stage { display: block; width: 100%; border: 0; color: inherit; cursor: pointer; position: relative; padding: 4.5% 8%; background: #b7b0a0 url("/images/deployment-wallpaper.jpg") center / cover; border-radius: .75rem; }
 .product-figure { margin: 3rem 0 0; }
-.product-stage:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+.product-stage:focus { outline: none; }
+.product-stage:focus-visible .demo-play { outline: 2px solid var(--ring); outline-offset: 4px; }
 .product-image { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: .75rem; box-shadow: 0 12px 40px rgb(0 0 0 / 22%); }
 .product-image-dark, .dark .product-image-light { display: none; }
 .dark .product-image-dark { display: block; }
@@ -58,7 +59,8 @@
 .demo-dialog > div { width: min(72rem, calc(100vw - 2rem), calc((100dvh - 7rem) * 16 / 9)); max-width: none; padding: 0; gap: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
 .demo-dialog > div > section { padding: 0; }
 .demo-dialog > div > form { top: -3rem; right: 0; }
-.demo-dialog > div > form > button { width: 2.75rem; height: 2.75rem; color: white; background: transparent; border: 0; box-shadow: none; opacity: .5; }
+.demo-dialog > div > form > button { width: 2rem; height: 2rem; padding: 0; color: white; background: transparent; border: 0; box-shadow: none; opacity: .5; }
+.demo-dialog > div > form > button.btn > svg { width: 2rem; height: 2rem; }
 .demo-dialog > div > form > button:is(:hover, :focus-visible) { background: transparent; opacity: 1; }
 .product-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #11100f; }
 .section { padding-block: var(--section-space); }

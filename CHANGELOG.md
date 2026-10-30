@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Enlarge the video close icon and align it with the video edge; show keyboard focus on the play icon instead of outlining the cover.
+
 - Make the entire homepage preview open the video, including the surrounding image background.
 
 - Publish separate API/MCP guides, complete endpoint and tool references, and collapsible documentation navigation.
