@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Make the entire homepage preview open the video, including the surrounding image background.
+
 - Publish separate API/MCP guides, complete endpoint and tool references, and collapsible documentation navigation.
 
 - Sync installation and release documentation with the current OSS checkout.

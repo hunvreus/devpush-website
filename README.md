@@ -53,7 +53,7 @@ orange in both themes; avoid decorative eyebrows. Workflow numbers identify sequ
 - `src/components/FeaturePreview.astro`: small static UI excerpts adapted from the
   original feature partials and checked against current app controls. They use
   fictitious example data, are inert and stay out of the keyboard/accessibility tree.
-- `src/components/ProductPreview.astro`: light/dark deployment screenshots over the desert backdrop. The play button opens the current demo in a Basecoat dialog. Playback starts on click and stops/resets when closed, including Escape and backdrop clicks. The video is not preloaded.
+- `src/components/ProductPreview.astro`: light/dark deployment screenshots over the desert backdrop. The entire preview opens the current demo in a Basecoat dialog. Playback starts on click and stops/resets when closed, including Escape and backdrop clicks. The video is not preloaded.
 - `public/screenshots/` and `public/images/deployment-wallpaper.jpg`: homepage screenshots and backdrop.
 - `public/videos/`: optimized 1080p MP4, poster and source credits. Replace both video assets when updating the demo; keep the full-quality master outside the website.
 - `src/layouts/Site.astro`: sticky marketing navigation, metadata and grouped footer.

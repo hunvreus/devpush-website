@@ -45,14 +45,14 @@
 .hero h1 { font-size: clamp(1.875rem, 3vw, 2.5rem); line-height: 1.18; font-weight: 450; letter-spacing: -.035em; }
 .hero-description { margin-top: 1.25rem; font-size: 1rem; line-height: 1.75; max-width: 37rem; color: var(--muted-foreground); text-wrap: pretty; }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
-.product-stage { position: relative; padding: 4.5% 8%; background: #b7b0a0 url("/images/deployment-wallpaper.jpg") center / cover; border-radius: .75rem; }
+.product-stage { display: block; width: 100%; border: 0; color: inherit; cursor: pointer; position: relative; padding: 4.5% 8%; background: #b7b0a0 url("/images/deployment-wallpaper.jpg") center / cover; border-radius: .75rem; }
 .product-figure { margin: 3rem 0 0; }
-.product-image-link { display: block; cursor: zoom-in; }
+.product-stage:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 .product-image { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: .75rem; box-shadow: 0 12px 40px rgb(0 0 0 / 22%); }
 .product-image-dark, .dark .product-image-light { display: none; }
 .dark .product-image-dark { display: block; }
 .marketing .demo-play { position: absolute; inset: 50% auto auto 50%; transform: translate(-50%, -50%) scale(1); width: 4rem; height: 4rem; border-radius: 50%; background: color-mix(in oklch, var(--background) 88%, transparent); color: var(--foreground); border: 1px solid color-mix(in oklch, var(--foreground) 12%, transparent); backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgb(0 0 0 / 18%); transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease; }
-.marketing .demo-play:is(:hover, :focus-visible) { background: var(--background); transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 6px 28px rgb(0 0 0 / 25%); }
+.marketing .product-stage:is(:hover, :focus-visible) .demo-play { background: var(--background); transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 6px 28px rgb(0 0 0 / 25%); }
 .marketing .demo-play svg { width: 1.375rem; height: 1.375rem; fill: currentColor; margin-left: .15rem; }
 .demo-dialog::backdrop { background: rgb(0 0 0 / 90%); backdrop-filter: blur(12px); }
 .demo-dialog > div { width: min(72rem, calc(100vw - 2rem), calc((100dvh - 7rem) * 16 / 9)); max-width: none; padding: 0; gap: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }

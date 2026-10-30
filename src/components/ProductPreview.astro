@@ -3,11 +3,11 @@ import play from 'lucide-static/icons/play.svg?raw';
 import close from 'lucide-static/icons/x.svg?raw';
 ---
 <figure class="product-figure">
-  <div class="product-stage">
-    <a class="product-image-link product-image-light" href="/screenshots/deployment-light.jpg" aria-label="View the full-size deployment screenshot"><img class="product-image" src="/screenshots/deployment-light.jpg" width="1550" height="872" alt="devpush deployment details showing a successful production deployment, its server, branch and build logs." fetchpriority="high" /></a>
-    <a class="product-image-link product-image-dark" href="/screenshots/deployment-dark.jpg" aria-label="View the full-size deployment screenshot"><img class="product-image" src="/screenshots/deployment-dark.jpg" width="1550" height="872" alt="devpush deployment details showing a successful production deployment, its server, branch and build logs." fetchpriority="high" /></a>
-    <button class="btn demo-play" data-size="icon-lg" type="button" aria-label="Watch the devpush demo" aria-haspopup="dialog" aria-controls="demo-dialog"><Fragment set:html={play.replace('<svg', '<svg aria-hidden="true"')} /></button>
-  </div>
+  <button class="product-stage" type="button" data-demo-trigger aria-label="Watch the devpush demo" aria-haspopup="dialog" aria-controls="demo-dialog">
+    <img class="product-image product-image-light" src="/screenshots/deployment-light.jpg" width="1550" height="872" alt="devpush deployment details showing a successful production deployment, its server, branch and build logs." fetchpriority="high" />
+    <img class="product-image product-image-dark" src="/screenshots/deployment-dark.jpg" width="1550" height="872" alt="devpush deployment details showing a successful production deployment, its server, branch and build logs." fetchpriority="high" />
+    <span class="btn demo-play" data-size="icon-lg" aria-hidden="true"><Fragment set:html={play.replace('<svg', '<svg aria-hidden="true"')} /></span>
+  </button>
 </figure>
 
 <dialog id="demo-dialog" class="dialog demo-dialog" aria-labelledby="demo-title" aria-describedby="demo-description">
@@ -27,7 +27,7 @@ import close from 'lucide-static/icons/x.svg?raw';
 <script>
   const dialog = document.querySelector<HTMLDialogElement>('#demo-dialog');
   const video = dialog?.querySelector<HTMLVideoElement>('video');
-  const trigger = document.querySelector<HTMLButtonElement>('.demo-play');
+  const trigger = document.querySelector<HTMLButtonElement>('[data-demo-trigger]');
   if (dialog && video && trigger) {
     trigger.addEventListener('click', () => {
       dialog.showModal();
