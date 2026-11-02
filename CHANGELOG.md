@@ -4,6 +4,10 @@
 
 ### Changed
 
+- Keep the docs sidebar logo compact and linked, without a hover background.
+
+- Simplify installation around the npm setup command and add a self-hosting FAQ.
+
 - Enlarge the video close icon and align it with the video edge; show keyboard focus on the play icon instead of outlining the cover.
 
 - Make the entire homepage preview open the video, including the surrounding image background.

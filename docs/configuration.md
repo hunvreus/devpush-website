@@ -4,13 +4,14 @@ description: Configure installation URLs, authentication, storage and agents.
 
 # Configuration
 
-Run `pnpm configure` from the repository root and choose a target. The wizard writes Git-ignored configuration files. It can also create Cloudflare resources after you confirm. It does not deploy.
+Run `npm run configure` inside an [installation](/docs/self-hosting/). The wizard writes Git-ignored configuration files and offers to deploy. It asks before creating Cloudflare resources.
 
 | Target | Configuration |
 | --- | --- |
-| Local Node | `app/.env` |
-| Docker Compose | `deploy/.env.production` |
-| Cloudflare | `app/wrangler.jsonc` and `app/.cloudflare-secrets.json` |
+| Docker Compose | `.env` |
+| Cloudflare | `wrangler.jsonc` and `.cloudflare-secrets.json` |
+
+Contributors use `pnpm configure` from the source checkout: local Node writes `app/.env`, Docker writes `deploy/.env.production`, and Cloudflare writes its files under `app/`. That workflow configures without deploying.
 
 Reuse existing values during upgrades. A public installation needs:
 
@@ -59,7 +60,15 @@ Register these URLs, replacing the example origin with yours:
 
 Sign-in callbacks use the authentication origin. Installation callbacks and webhooks use the public dashboard origin. Local callbacks can use `http://localhost:7429`, but webhooks need an endpoint reachable from the internet. For Lima origins, see [Local development](/docs/local-setup/#local-deployment-vm).
 
-For assisted setup, run `pnpm setup:github-app`. A manually created app must match the generated manifest:
+For assisted setup, run `npm run configure` inside your installation and choose GitHub App creation. The wizard starts a temporary loopback callback on the machine running setup. If that machine is reached over SSH, leave setup running and forward the port shown in its approval URL from another terminal on your computer:
+
+```sh
+ssh -N -L PORT:127.0.0.1:PORT user@server
+```
+
+Replace both `PORT` values with the displayed port, then open the wizard's URL in your local browser. The public dashboard does not need to be running for this step.
+
+A manually created app must match the generated manifest:
 
 - A private app.
 - **Contents: read-only** and **Metadata: read-only** permissions.
@@ -125,6 +134,7 @@ The installer writes `/etc/devpush/agent.env`. Process environment values take p
 | `DEVPUSH_GIT_CLONE_BASE_URL` | Clone origin; default `https://github.com`. Testing-only; keep the default for normal installations. |
 | `DOCKER_HOST` | Optional Docker endpoint. Access to it is host-level privilege. |
 | `DEVPUSH_DISABLE_INACTIVE_REDIRECTS` | Set `true` to keep inactive deployment URLs at a local 404 instead of redirecting to the dashboard. Default `false`; restart the agent after changing it. |
+| `DEVPUSH_JOB_POLL_INTERVAL` | Agent job check interval (`1s`–`1m`); default `10s`. Idle checks return immediately. Failed checks back off to at most five minutes. |
 | `DEVPUSH_RUNTIME_LOG_QUEUE_BYTES` | Runtime-log queue budget; default 128 MiB. |
 
 To move a host to another installation, [switch an empty server](/docs/agent-maintenance/#switch-an-empty-server). Editing the URL is not enough.

@@ -11,6 +11,7 @@ import arrowSvg from 'lucide-static/icons/arrow-right.svg?raw';
 const arrow = arrowSvg.replace('<svg', '<svg aria-hidden="true"');
 const questions = [
   { title: 'What can I deploy?', answer: 'Web apps, APIs, workers and databases defined in Docker Compose. Use the languages and frameworks you prefer. A Dockerfile can be used by a Compose service; Dockerfile-only projects and Docker Swarm are not supported yet.' },
+  { title: 'How do I self-host devpush?', answer: 'Run npx devpush@latest init. Choose Docker Compose or Cloudflare Workers and follow the setup wizard.' },
   { title: 'Is self-hosting free?', answer: 'Yes. devpush is MIT licensed, including its API and MCP server. You pay your providers for servers, storage and control-plane hosting.' },
   { title: 'What does my server need?', answer: 'A supported Linux host, Docker with Compose, and an outbound connection to your devpush installation. The agent supports AMD64 and ARM64. Choose enough memory and storage for the applications and builds you plan to run.' },
   { title: 'What happens if devpush goes offline?', answer: 'Existing containers keep running on their servers. New deployments and dashboard operations wait until the connection returns. Application requests go directly to your servers, not through the devpush control plane.' },
